@@ -1,0 +1,5 @@
+CONEXIÓN DE SESIÓN ANTERIOR:
+- Rama actual: feat/bootstrap (Con commit realizado y limpio).
+- Estado de Infraestructura: Next.js 16, Tailwind 4 y Prisma v7 configurados.
+- Base de datos: PostgreSQL local ("menu_qr_db") activa y poblada mediante un seed inteligente e idempotente (1 restaurante, 2 categorías, 4 platos).
+- Objetivo de la nueva sesión: Iniciar la Fase 1 del Frontend creando el endpoint de la API pública en `/api/menu` para extraer estos platos y mostrarlos en el navegador.
