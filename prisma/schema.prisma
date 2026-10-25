@@ -1,0 +1,81 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum AllergenPresence {
+  CONTAINS
+  MAY_CONTAIN
+}
+
+model Restaurant {
+  id         String     @id @default(uuid()) @db.Uuid
+  slug       String     @unique @db.VarChar(80)
+  name       String     @db.VarChar(160)
+  currency   String     @default("EUR") @db.VarChar(3)
+  createdAt  DateTime   @default(now()) @db.Timestamptz(6)
+  updatedAt  DateTime   @updatedAt @db.Timestamptz(6)
+  categories Category[]
+  dishes     Dish[]
+}
+
+model Category {
+  id           String     @id @default(uuid()) @db.Uuid
+  restaurantId String     @db.Uuid
+  name         String     @db.VarChar(120)
+  slug         String     @db.VarChar(120)
+  description  String?
+  sortOrder    Int        @default(0)
+  isActive     Boolean    @default(true)
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  dishes       Dish[]
+
+  @@unique([restaurantId, id])
+  @@unique([restaurantId, slug])
+  @@index([restaurantId, isActive, sortOrder])
+}
+
+model Dish {
+  id           String         @id @default(uuid()) @db.Uuid
+  restaurantId String         @db.Uuid
+  categoryId   String         @db.Uuid
+  name         String         @db.VarChar(160)
+  slug         String         @db.VarChar(160)
+  description  String?
+  price        Decimal        @db.Decimal(10, 2)
+  imageUrl     String?
+  sortOrder    Int            @default(0)
+  isAvailable  Boolean        @default(true)
+  createdAt    DateTime       @default(now()) @db.Timestamptz(6)
+  updatedAt    DateTime       @updatedAt @db.Timestamptz(6)
+  restaurant   Restaurant     @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  category     Category       @relation(fields: [restaurantId, categoryId], references: [restaurantId, id], onDelete: Restrict)
+  allergens    DishAllergen[]
+
+  @@unique([restaurantId, id])
+  @@unique([restaurantId, slug])
+  @@index([restaurantId, categoryId, isAvailable, sortOrder])
+}
+
+model Allergen {
+  id     String         @id @default(uuid()) @db.Uuid
+  code   String         @unique @db.VarChar(40)
+  name   String         @db.VarChar(100)
+  dishes DishAllergen[]
+}
+
+model DishAllergen {
+  restaurantId String           @db.Uuid
+  dishId       String           @db.Uuid
+  allergenId   String           @db.Uuid
+  presence     AllergenPresence @default(CONTAINS)
+  dish         Dish             @relation(fields: [restaurantId, dishId], references: [restaurantId, id], onDelete: Cascade)
+  allergen     Allergen         @relation(fields: [allergenId], references: [id], onDelete: Restrict)
+
+  @@id([restaurantId, dishId, allergenId])
+  @@index([allergenId])
+}

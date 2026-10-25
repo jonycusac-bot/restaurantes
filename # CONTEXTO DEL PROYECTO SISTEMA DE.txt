@@ -1,0 +1,28 @@
+# CONTEXTO DEL PROYECTO: SISTEMA DE MENÚ QR PARA RESTAURANTES (OPEN SOURCE)
+
+## 1. OBJETIVO DEL PROYECTO Y FASES
+El objetivo final es desarrollar una plataforma de menú digital mediante código QR utilizando tecnologías modernas de JavaScript. El proyecto se abordará de manera incremental para mitigar la complejidad inicial:
+*   **Fase 1 (MVP Actual):** Un sistema exclusivo de visualización de menú (catálogo digital). El cliente escanea el QR y solo ve categorías, platos, descripciones, alérgenos y precios. No hay carritos, ni pedidos, ni pasarelas de pago.
+*   **Fase 2 (Escalabilidad de Negocio):** Transformar el sistema en un modelo SaaS (Multi-tenant). La base de datos y las rutas deben prepararse (o preverse) para albergar múltiples restaurantes independientes bajo una misma plataforma.
+*   **Fase 3 (Interactividad):** Incorporar pedidos en tiempo real a la cocina (WebSockets) y pasarelas de pago o integración con WhatsApp.
+
+## 2. PERFIL DEL DESARROLLADOR Y ENTORNO
+*   **Tecnologías:** Entorno basado en Node.js y React / Next.js (ya instalados y listos en la máquina local).
+*   **Disponibilidad de tiempo:** Limitada. 1 hora al día de lunes a viernes (para tareas atómicas, corrección de bugs o componentes aislados) y de 3 a 4 horas por día los fines de semana (para arquitectura, flujos complejos y despliegues). Total: ~8-10 horas semanales.
+
+## 3. REPOSITORIOS DE REFERENCIA EN GITHUB
+Se han evaluado dos estrategias principales basadas en código abierto para acelerar el desarrollo:
+1.  **AtlasQR (ildrm/atlas-qr-menu-service):** Arquitectura SaaS robusta (Next.js, NestJS, PostgreSQL, Redis). Ventaja: Ya es multi-tenant y escalable. Desventaja: Curva de aprendizaje inicial alta para el tiempo disponible.
+2.  **MenuQR (dustinwloring1988/menuqr):** Estructura monolítica más simple y directa basada en Next.js 14 y PostgreSQL. Ventaja: Resultados visuales rápidos (~2 semanas). Desventaja: Habrá que refactorizar la base de datos para hacerla multi-restaurante en la Fase 2.
+
+---
+
+# INSTRUCCIÓN PARA LA IA (AI STUDIO)
+
+Actúa como un CTO y Arquitecto de Software experto en React, Next.js y bases de datos relacionales. Tu objetivo es guiarme paso a paso en las sesiones de desarrollo respetando mi cronograma de tiempo limitado.
+
+Para empezar a trabajar en la **Fase 1 (Visualizador de Menú para un solo restaurante)** pero con la mente puesta en la **Fase 2 (SaaS / Multi-tenant)**, realiza las siguientes tareas en nuestra primera sesión:
+
+1. **Definición de Arquitectura y Base de Datos:** Propón un diseño de base de datos (preferiblemente PostgreSQL/Prisma o el enfoque que consideres óptimo para Next.js) que sea simple para un restaurante hoy, pero que añadir la columna `restaurant_id` en el futuro sea trivial.
+2. **Estructura del Proyecto:** Define la estructura de carpetas ideal para un proyecto de Next.js (App Router) orientado a este modelo.
+3. **Plan para el primer Fin de Semana (Bloque de 3-4 horas):** Dame la lista de comandos iniciales y los primeros archivos de configuración que debo crear para dejar el backend/base de datos conectado y corriendo localmente.

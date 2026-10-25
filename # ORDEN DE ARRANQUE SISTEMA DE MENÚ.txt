@@ -1,0 +1,43 @@
+# ORDEN DE ARRANQUE: SISTEMA DE MENÚ QR PARA RESTAURANTE (FASE 1)
+
+## 1. CONTEXTO Y ENTORNO DE TRABAJO
+Estamos desarrollando un sistema de menú digital por código QR en esta carpeta local. 
+- Stack Tecnológico: Node.js, React, Next.js (App Router), Tailwind CSS y PostgreSQL con Prisma ORM.
+- Restricción de tiempo del desarrollador humano: Desarrollo incremental en bloques atómicos (~8-10 horas semanales).
+- Infraestructura de IA: Este entorno cuenta con el respaldo de una suscripción activa a ChatGPT Plus (OpenAI Codex).
+
+## 2. OBJETIVOS E INCREMENTOS DEL PROYECTO
+El desarrollo se dividirá en fases estrictas para evitar deuda técnica:
+- Fase 1 (Actual): Catálogo digital visual y público (Categorías, platos, descripciones, alérgenos y precios). Sin carritos, pagos ni pedidos.
+- Fase 2 (Futura): Mutación a modelo SaaS Multi-tenant. Toda la arquitectura web y la base de datos de la Fase 1 debe diseñarse pensando en que en el futuro se agregará un ID de restaurante para soportar múltiples negocios independientes.
+
+## 3. CONFIGURACIÓN DEL SISTEMA MULTI-AGENTE (HERMES)
+Activa tu sistema de subagentes delegados y organízate bajo la siguiente estructura de roles:
+
+- Agente 1: Orquestador (Manager / Tú mismo)
+  * Modelo: GPT principal de la suscripción Plus.
+  * Función: Diseñar el plan global, coordinar las subtareas de los subagentes, asegurar la consistencia de las variables y revisar y compilar el código final antes de guardarlo en el disco.
+  
+- Agente 2: Subagente Backend (Especialista en Datos)
+  * Función: Diseñar los modelos de Prisma, la conexión a PostgreSQL y los endpoints API mínimos para la Fase 1.
+  * Restricción: Solo opera y edita archivos dentro de carpetas de configuración de datos (ej. `/prisma`, `/src/app/api`).
+
+- Agente 3: Subagente Frontend (Especialista en UI)
+  * Función: Diseñar los componentes visuales de la carta del restaurante utilizando Tailwind CSS y renderizado eficiente en Next.js.
+  * Restricción: Solo opera en carpetas de vistas (ej. `/src/components`, `/src/app/[public-menu]`).
+
+## 4. RESTRICCIONES DE COORDINACIÓN SEVERAS
+1. Trabajo Aislado: Los subagentes no pueden escribir en la misma rama o archivo simultáneamente. El Frontend debe esperar a que el Backend defina el esquema de datos para usar exactamente las mismas variables y propiedades.
+2. Control de Versiones implícito: Todo el trabajo se estructurará bajo el concepto de ramas de tareas. Avisa al usuario cuando una tarea atómica termine con éxito para proceder a registrarla.
+
+---
+
+# PRIMERA TAREA REQUERIDA (NO ESCRIBIR CÓDIGO AÚN)
+
+Antes de crear o modificar un solo archivo en el escritorio, actúa como el Agente Orquestador y realiza lo siguiente junto con tus subagentes en tu respuesta de texto:
+
+1. Propón un esquema de base de datos de Prisma (`schema.prisma`) para PostgreSQL que sirva para la Fase 1 (un restaurante), pero que ya deje el campo listo para la Fase 2 (SaaS) mediante relaciones bien estructuradas.
+2. Define el árbol/estructura de carpetas ideal de Next.js (App Router) adaptado para este desarrollo modular.
+3. Diseña el plan detallado para nuestro primer bloque de trabajo del fin de semana (3-4 horas), indicando los comandos exactos de inicialización que el Subagente Backend ejecutará en la terminal para poner en marcha el entorno.
+
+Espera mi aprobación del plan antes de modificar el sistema de archivos local.
