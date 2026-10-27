@@ -1,0 +1,1 @@
+"Retomamos en la rama feat/bootstrap. Toda la infraestructura, base de datos y la API en /api/menu están creadas, validadas y con commit hecho. Iniciemos la Fase 1 del Frontend: Diseñar la página principal pública (src/app/page.tsx) con componentes de React y Tailwind v4 para pintar de forma bonita en el móvil las hamburguesas y bebidas que nos devuelve la API".
