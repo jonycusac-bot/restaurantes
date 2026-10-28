@@ -6,6 +6,7 @@ import * as React from "react";
 import * as jsxRuntime from "react/jsx-runtime";
 import { renderToStaticMarkup } from "react-dom/server";
 import ts from "typescript";
+import DishCard from "../src/components/DishCard";
 
 async function mountMenu(fetchMenu: typeof fetch) {
   const path = "src/components/MenuDisplay.tsx";
@@ -35,6 +36,7 @@ async function mountMenu(fetchMenu: typeof fetch) {
     require: (name: string) => {
       if (name === "react") return hooks;
       if (name === "react/jsx-runtime") return jsxRuntime;
+      if (name === "./DishCard") return { default: DishCard };
       throw new Error(`Unexpected import: ${name}`);
     },
     fetch: fetchMenu,
@@ -61,7 +63,9 @@ test("MenuDisplay fetches /api/menu on mount and displays the restaurant name", 
       categories: [
         {
           id: "burgers", name: "Hamburguesas Gourmet", isActive: true,
-          dishes: [{ id: "bestia", name: "Burger La Bestia", description: "Carne madurada y cheddar.", price: "12.9", isAvailable: true }],
+          dishes: [{ id: "bestia", name: "Burger La Bestia", description: "Carne madurada y cheddar.", price: "12.9", isAvailable: true,
+            allergens: [{ presence: "CONTAINS", allergen: { code: "MILK", name: "Lácteos" } }],
+          }],
         },
         {
           id: "drinks", name: "Bebidas y Refrescos", isActive: true,
@@ -84,6 +88,9 @@ test("MenuDisplay fetches /api/menu on mount and displays the restaurant name", 
   assert.match(html, /href="#category-burgers"/);
   assert.match(html, /id="category-burgers"/);
   assert.doesNotMatch(html, /Menú cargado:/);
+  assert.match(html, /data-dish-card/);
+  assert.match(html, /Contiene: Lácteos/);
+  assert.match(html, /Consulta al personal antes de pedir/);
   if (typeof view.cleanup === "function") view.cleanup();
 });
 

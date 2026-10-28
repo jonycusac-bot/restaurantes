@@ -10,6 +10,15 @@ export async function GET(): Promise<Response> {
           include: {
             dishes: {
               orderBy: { price: "asc" },
+              include: {
+                allergens: {
+                  orderBy: { allergen: { code: "asc" } },
+                  select: {
+                    presence: true,
+                    allergen: { select: { code: true, name: true } },
+                  },
+                },
+              },
             },
           },
         },

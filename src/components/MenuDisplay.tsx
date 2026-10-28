@@ -1,20 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
-type Dish = {
-  id: string;
-  name: string;
-  description: string | null;
-  price: string | number;
-  isAvailable: boolean;
-};
+import DishCard, { type MenuDish } from "./DishCard";
 type Category = {
   id: string;
   name: string;
   description: string | null;
   isActive: boolean;
-  dishes: Dish[];
+  dishes: MenuDish[];
 };
 type Menu = { name: string; currency: string; categories: Category[] };
 
@@ -45,7 +38,6 @@ export default function MenuDisplay() {
     return <p className="menu-status" role="status">Cargando menú...</p>;
   }
 
-  const currency = new Intl.NumberFormat("es-ES", { style: "currency", currency: menu.currency });
   const categories = menu.categories.filter((category) => category.isActive);
 
   return (
@@ -88,19 +80,21 @@ export default function MenuDisplay() {
               </div>
               <span className="menu-category-count">{category.dishes.length} {category.dishes.length === 1 ? "opción" : "opciones"}</span>
             </div>
-            <ul className="menu-dishes">
+            <ul className="menu-dishes grid grid-cols-1 gap-4 min-[641px]:grid-cols-2">
               {category.dishes.length === 0 && <li className="menu-empty">Todavía no hay platos en esta categoría.</li>}
               {category.dishes.map((dish) => (
-                <li key={dish.id} className="menu-dish">
-                  <div className="menu-dish-top"><h3>{dish.name}</h3><span className="menu-price">{currency.format(Number(dish.price))}</span></div>
-                  {dish.description && <p>{dish.description}</p>}
-                  {!dish.isAvailable && <span className="menu-unavailable">No disponible</span>}
+                <li key={dish.id}>
+                  <DishCard dish={dish} currency={menu.currency} />
                 </li>
               ))}
             </ul>
           </section>
         ))}
       </div>
+      <aside className="mt-8 flex items-start gap-3 rounded-2xl border border-menu-border bg-menu-soft p-5 text-sm leading-relaxed text-menu-muted" aria-label="Información sobre alérgenos">
+        <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full border border-current text-xs font-semibold" aria-hidden="true">i</span>
+        <p><strong className="font-semibold text-foreground">¿Tienes alguna alergia?</strong> Consulta al personal antes de pedir. Los chips muestran los alérgenos registrados y distinguen entre «Contiene» y «Puede contener».</p>
+      </aside>
       <footer className="menu-footer"><span>{menu.name}</span><a href="#inicio">Volver arriba <span aria-hidden="true">↑</span></a></footer>
     </div>
   );

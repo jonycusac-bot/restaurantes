@@ -11,6 +11,11 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-menu-accent: var(--menu-accent);
+  --color-menu-muted: var(--menu-muted);
+  --color-menu-border: var(--menu-border);
+  --color-menu-surface: #fffcf7;
+  --color-menu-soft: #f3e9da;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -52,13 +57,7 @@ a:focus-visible { outline: 3px solid var(--menu-accent); outline-offset: 5px; }
 .menu-category h2 { font-family: Georgia, 'Times New Roman', serif; font-size: clamp(26px, 3vw, 34px); line-height: 1.2; letter-spacing: -0.8px; overflow-wrap: anywhere; }
 .menu-category-description { font-size: 13px; line-height: 1.6; color: var(--menu-muted); margin-top: 8px; }
 .menu-category-count { font-size: 11px; color: var(--menu-muted); margin-left: auto; white-space: nowrap; }
-.menu-dishes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; list-style: none; }
-.menu-dish { padding: 24px; border: 1px solid var(--menu-border); background: #fffcf7; border-radius: 6px; }
-.menu-dish-top { display: flex; align-items: baseline; justify-content: space-between; gap: 18px; }
-.menu-dish h3 { min-width: 0; overflow-wrap: anywhere; font-size: 16px; font-weight: 650; line-height: 1.4; letter-spacing: -0.3px; }
-.menu-price { color: var(--menu-accent); white-space: nowrap; font-size: 15px; font-weight: 650; font-variant-numeric: tabular-nums; }
-.menu-dish p { margin-top: 12px; max-width: 44ch; color: var(--menu-muted); font-size: 13px; line-height: 1.7; }
-.menu-unavailable { display: inline-block; margin-top: 14px; font-size: 11px; color: var(--menu-accent); background: #f8e5df; padding: 4px 8px; border-radius: 4px; }
+
 .menu-empty { color: var(--menu-muted); font-size: 14px; padding: 24px 0; }
 .menu-footer { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-top: 52px; padding: 24px 0 12px; border-top: 1px solid var(--menu-border); font-size: 11px; color: var(--menu-muted); }
 .menu-footer a { min-height: 44px; display: inline-flex; align-items: center; gap: 16px; white-space: nowrap; }
@@ -82,10 +81,7 @@ a:focus-visible { outline: 3px solid var(--menu-accent); outline-offset: 5px; }
   .menu-category { padding-top: 32px; }
   .menu-category-heading { flex-wrap: wrap; column-gap: 10px; row-gap: 8px; margin-bottom: 18px; }
   .menu-category-count { flex-basis: 100%; margin-left: 28px; }
-  .menu-dishes { grid-template-columns: minmax(0, 1fr); gap: 10px; }
-  .menu-dish { padding: 20px; }
-  .menu-dish h3 { font-size: 15px; }
-  .menu-price { font-size: 14px; }
+
   .menu-footer { margin-top: 32px; font-size: 10px; gap: 14px; }
 }
 
