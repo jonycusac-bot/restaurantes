@@ -55,12 +55,64 @@ test("MenuDisplay fetches /api/menu on mount and displays the restaurant name", 
   const requests: string[] = [];
   const view = await mountMenu(async (url) => {
     requests.push(String(url));
-    return Response.json({ name: "Burger & Co Central" });
+    return Response.json({
+      name: "Burger & Co Central",
+      currency: "EUR",
+      categories: [
+        {
+          id: "burgers", name: "Hamburguesas Gourmet", isActive: true,
+          dishes: [{ id: "bestia", name: "Burger La Bestia", description: "Carne madurada y cheddar.", price: "12.9", isAvailable: true }],
+        },
+        {
+          id: "drinks", name: "Bebidas y Refrescos", isActive: true,
+          dishes: [{ id: "cola", name: "Refresco de Cola", description: null, price: "2.5", isAvailable: true }],
+        },
+      ],
+    });
   });
   assert.match(view.initial, /Cargando/);
   assert.deepEqual(requests, ["/api/menu"]);
-  assert.match(view.render(), /Menú cargado: .*Burger &amp; Co Central/);
+  const html = view.render();
+  assert.match(html, /<h1[^>]*>Burger &amp; Co Central<\/h1>/);
+  assert.match(html, /Hamburguesas Gourmet/);
+  assert.match(html, /Bebidas y Refrescos/);
+  assert.match(html, /Burger La Bestia/);
+  assert.match(html, /Carne madurada y cheddar/);
+  assert.match(html, /Refresco de Cola/);
+  assert.match(html, /12,90\s*€/);
+  assert.match(html, /2,50\s*€/);
+  assert.match(html, /href="#category-burgers"/);
+  assert.match(html, /id="category-burgers"/);
+  assert.doesNotMatch(html, /Menú cargado:/);
   if (typeof view.cleanup === "function") view.cleanup();
+});
+
+test("MenuDisplay hides inactive categories and labels unavailable dishes", async () => {
+  const view = await mountMenu(async () => Response.json({
+    name: "Prueba", currency: "EUR", categories: [
+      { id: "hidden", name: "Categoría oculta", isActive: false, dishes: [] },
+      { id: "visible", name: "Carta", isActive: true, dishes: [
+        { id: "sold-out", name: "Plato agotado", price: "8", description: null, isAvailable: false },
+      ] },
+    ],
+  }));
+  const html = view.render();
+  assert.doesNotMatch(html, /Categoría oculta|#category-hidden/);
+  assert.match(html, /Plato agotado/);
+  assert.match(html, /No disponible/);
+});
+
+test("MenuDisplay explains when the menu has no active categories or dishes", async () => {
+  const view = await mountMenu(async () => Response.json({
+    name: "Prueba", currency: "EUR", categories: [],
+  }));
+  assert.match(view.render(), /La carta estará disponible pronto/);
+  const emptyCategory = await mountMenu(async () => Response.json({
+    name: "Prueba", currency: "EUR", categories: [
+      { id: "empty", name: "Entrantes", isActive: true, dishes: [] },
+    ],
+  }));
+  assert.match(emptyCategory.render(), /Todavía no hay platos en esta categoría/);
 });
 
 test("MenuDisplay shows an error when the backend returns a failure", async () => {
