@@ -6,6 +6,10 @@ Este repositorio `Restaurantes` contiene ahora la carta de INCH como página pri
 
 ## Producto
 
+### Organización en revisión local (sin publicar)
+
+Petición del usuario: dos pestañas superiores «Carta» y «Sushi», sin «Toda la carta». Inicio en Carta → Entrantes. Carta: Entrantes, Ensaladas, Sopas, Salteados, Curry, Arroces, Noodles, Menú infantil. Sushi: Entradas, Tartar, Poke Bowls, Sashimi, Nigiris, Maki, Temaki, Gunkan, Uramaki. Los 25 platos existentes se conservan repartidos una sola vez. Las categorías sin datos indican que sus platos están pendientes de incorporar. La selección de sección y categoría funciona también en inglés y alemán. No publicar esta reorganización hasta que el usuario lo pida.
+
 Carta pública para consultar después de escanear un QR. Prioridad: fotos, nombres y precios; descripciones breves, categorías y buscador. Estética aprobada: papel marfil, tipografía con carácter, líneas finas, acentos bermellón y fotografías debajo de los títulos. No convertir en página promocional. No añadir pedidos, pagos o reservas sin petición.
 
 ## Datos y fotos

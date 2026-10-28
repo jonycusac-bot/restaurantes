@@ -1,9 +1,9 @@
 export type Dish = { name: string; description: string; price: number; note?: string; image?: string; imageAlt?: string };
-export type Category = { id: string; name: string; subtitle: string; dishes: Dish[] };
+export type Category = { id: string; name: string; subtitle?: string; dishes: Dish[] };
 
 // Selección transcrita de la carta pública enlazada el 28/10/2026.
 // No sustituye la validación de precios, disponibilidad o alérgenos por el restaurante.
-export const categories: Category[] = [
+const prototypeCategories: Category[] = [
   { id: "entrantes", name: "Para empezar", subtitle: "Pequeños bocados. Grandes comienzos.", dishes: [
     { name: "Edamame", description: "Un clásico para abrir el apetito.", price: 6 },
     { name: "Poh Pia", description: "Rollitos fritos de verduras.", price: 6.3, note: "2 piezas" },
@@ -39,4 +39,31 @@ export const categories: Category[] = [
     { name: "Massaman de ternera", description: "Curry del centro de Tailandia. Arroz al vapor adicional: 3 €.", price: 15.65 },
     { name: "Katsukarē", description: "Curry japonés con pollo crujiente. Arroz al vapor adicional: 3 €.", price: 15.65 },
   ] },
+];
+
+export type MenuSection = "carta" | "sushi";
+export const menuSections: { id: MenuSection; categoryIds: string[] }[] = [
+  { id: "carta", categoryIds: ["entrantes", "ensaladas", "sopas", "salteados", "curry", "arroces", "noodles", "infantil"] },
+  { id: "sushi", categoryIds: ["entradas", "tartar", "poke", "sashimi", "nigiris", "maki", "temaki", "gunkan", "uramaki"] },
+];
+
+const existing = (id: string) => prototypeCategories.find(c => c.id === id)!.dishes;
+export const categories: Category[] = [
+  { id: "entrantes", name: "Entrantes", dishes: existing("entrantes").filter(d => d.name !== "Edamame") },
+  { id: "ensaladas", name: "Ensaladas", dishes: [] },
+  { id: "sopas", name: "Sopas", dishes: existing("ramen") },
+  { id: "salteados", name: "Salteados", dishes: [] },
+  { id: "curry", name: "Curry", dishes: existing("curry") },
+  { id: "arroces", name: "Arroces", dishes: [] },
+  { id: "noodles", name: "Noodles", dishes: existing("noodles") },
+  { id: "infantil", name: "Menú infantil", dishes: [] },
+  { id: "entradas", name: "Entradas", dishes: existing("entrantes").filter(d => d.name === "Edamame") },
+  { id: "tartar", name: "Tartar", dishes: [] },
+  { id: "poke", name: "Poke Bowls", dishes: [] },
+  { id: "sashimi", name: "Sashimi", dishes: existing("sushi").filter(d => d.name.startsWith("Sashimi")) },
+  { id: "nigiris", name: "Nigiris", dishes: existing("sushi").filter(d => d.name.startsWith("Nigiri")) },
+  { id: "maki", name: "Maki", dishes: [] },
+  { id: "temaki", name: "Temaki", dishes: [] },
+  { id: "gunkan", name: "Gunkan", dishes: [] },
+  { id: "uramaki", name: "Uramaki", dishes: existing("sushi").filter(d => !d.name.startsWith("Sashimi") && !d.name.startsWith("Nigiri")) },
 ];

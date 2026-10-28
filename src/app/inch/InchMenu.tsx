@@ -2,15 +2,15 @@
 
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from "react";
-import { categories } from "./menu";
+import { categories, menuSections, type MenuSection } from "./menu";
 import { dishTranslations, languages, ui, type Language } from "./translations";
 
 const normalize = (text: string) => text.toLocaleLowerCase("es").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-const orderedCategories = [...categories].sort((a, b) => Number(b.id === "sushi") - Number(a.id === "sushi"));
 
 export default function InchMenu() {
   const [language, setLanguage] = useState<Language>("es");
-  const [active, setActive] = useState("todos");
+  const [section, setSection] = useState<MenuSection>("carta");
+  const [active, setActive] = useState("entrantes");
   const [search, setSearch] = useState("");
   const t = ui[language];
   const labels: Record<string, string> = t.categories;
@@ -23,10 +23,16 @@ export default function InchMenu() {
   }
   const euro = (price: number) => new Intl.NumberFormat(t.locale, { style: "currency", currency: "EUR" }).format(price);
   const localize = (name: string, description: string) => language === "es" ? [name, description] : dishTranslations[name][language];
-  const visible = orderedCategories.filter(c => active === "todos" || c.id === active).map(c => ({
+  const sectionCategories = menuSections.find(s => s.id === section)!.categoryIds.map(id => categories.find(c => c.id === id)!);
+  const visible = sectionCategories.filter(c => c.id === active).map(c => ({
     ...c,
     dishes: c.dishes.filter(d => normalize(localize(d.name, d.description).join(" ")).includes(normalize(search))).sort((a, b) => Number(Boolean(b.image)) - Number(Boolean(a.image))),
-  })).filter(c => c.dishes.length);
+  }));
+  function changeSection(next: MenuSection) {
+    setSection(next);
+    setActive(next === "carta" ? "entrantes" : "entradas");
+    setSearch("");
+  }
 
   return (
     <main className="inch-page" id="inch-inicio" lang={language}>
@@ -46,22 +52,33 @@ export default function InchMenu() {
           <span aria-hidden="true">✳</span>
         </section>
         <section id="inch-carta" aria-label={t.dishes} className="inch-menu">
+          <div className="inch-sectionTabs" role="tablist" aria-label={t.sectionsLabel}>
+            {menuSections.map(s => <button type="button" role="tab" key={s.id} id={`inch-tab-${s.id}`} tabIndex={section === s.id ? 0 : -1} aria-selected={section === s.id} aria-controls="inch-section-panel" onClick={() => changeSection(s.id)} onKeyDown={event => {
+              if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+              event.preventDefault();
+              const next = event.key === "Home" ? "carta" : event.key === "End" ? "sushi" : section === "carta" ? "sushi" : "carta";
+              changeSection(next);
+              document.getElementById(`inch-tab-${next}`)?.focus();
+            }}>{t.sections[s.id]}</button>)}
+          </div>
+          <div id="inch-section-panel" role="tabpanel" aria-labelledby={`inch-tab-${section}`}>
           <div className="inch-menuControls">
             <div className="inch-filters" role="group" aria-label={t.filter}>
-              {[{ id: "todos", name: t.all }, ...orderedCategories.map(c => ({ id: c.id, name: labels[c.id] }))].map(c => <button key={c.id} type="button" aria-pressed={active === c.id} onClick={() => setActive(c.id)}>{c.name}</button>)}
+              {sectionCategories.map(c => <button key={c.id} type="button" aria-pressed={active === c.id} onClick={() => { setActive(c.id); setSearch(""); }}>{labels[c.id]}</button>)}
             </div>
             <label className="inch-search"><span aria-hidden="true">⌕</span><span className="inch-srOnly">{t.search}</span><input type="search" placeholder={t.search} value={search} onChange={e => setSearch(e.target.value)} /></label>
           </div>
           <div aria-live="polite" aria-atomic="false">
-            {visible.length === 0 && <p className="inch-empty">{t.empty}</p>}
             {visible.map(c => <section className="inch-category" key={c.id} aria-labelledby={`inch-${c.id}`}>
               <div className="inch-categoryHeading"><span aria-hidden="true" /> <h2 id={`inch-${c.id}`}>{labels[c.id]}</h2><span aria-hidden="true" /></div>
+              {c.dishes.length === 0 && <p className="inch-empty">{search ? t.empty : t.categoryEmpty}</p>}
               <ul className="inch-dishList">{c.dishes.map(d => <li className={`inch-dish ${d.image ? "inch-dishWithPhoto" : "inch-dishCompact"}`} key={d.name}>
                 <div className="inch-dishLine"><h3>{localize(d.name, d.description)[0]}</h3><span className="inch-price">{euro(d.price)}</span></div>
                 {d.image && <figure className="inch-dishFigure"><img src={`/inch/${d.image}.webp`} alt={language === "es" ? d.imageAlt ?? d.name : `${t.sample}: ${localize(d.name, d.description)[0]}`} width="1100" height="825" loading="lazy" /><figcaption>{t.sample}</figcaption></figure>}
                 <div className="inch-dishDescription"><p>{localize(d.name, d.description)[1]}</p>{d.note && <span className="inch-portion">{d.note.split(" ")[0]} {t.pieces}</span>}</div>
               </li>)}</ul>
             </section>)}
+          </div>
           </div>
           <details className="inch-allergens"><summary>{t.information} <span aria-hidden="true">+</span></summary><p>{t.allergy}</p><p>{t.photos}</p></details>
         </section>
