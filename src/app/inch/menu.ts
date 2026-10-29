@@ -1,4 +1,4 @@
-export type Dish = { name: string; description: string; price: number; note?: string; image?: string; imageAlt?: string };
+export type Dish = { id?: string; name: string; description: string; price: number; note?: string; image?: string; imageSrc?: string; imageAlt?: string };
 export type Category = { id: string; name: string; subtitle?: string; dishes: Dish[] };
 
 // Selección transcrita de la carta pública enlazada el 28/10/2026.
