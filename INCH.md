@@ -1,5 +1,7 @@
 # Carta digital exclusiva de INCH
 
+> Estado actual para retomar sin leer el chat: **[RETOMAR-MANANA.md](RETOMAR-MANANA.md)**, actualizado el 29/10/2026. Este archivo conserva notas históricas; las secciones posteriores sustituyen el estado de las primeras demos.
+
 ## Dirección del proyecto
 
 Este repositorio `Restaurantes` contiene ahora la carta de INCH como página principal (`/`). `/inch` conserva la misma carta para que los enlaces de la demo sigan funcionando. No es un proyecto separado ni un servicio de varios restaurantes.

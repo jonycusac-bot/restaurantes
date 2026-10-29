@@ -1,4 +1,19 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# INCH · Carta digital
+
+**Para retomar el trabajo, leer primero [RETOMAR-MANANA.md](RETOMAR-MANANA.md).** Contiene el estado comprobado al 29/10/2026, decisiones aprobadas, despliegue, archivos, límites y próximos pasos. No hace falta recuperar el chat.
+
+- Carpeta: `C:/Users/Usuario/Desktop/Restaurantes`.
+- GitHub: https://github.com/jonycusac-bot/restaurantes/tree/feat/bootstrap
+- Carta: https://restaurant-management-82d26f.netlify.app/
+- Panel: https://restaurant-management-82d26f.netlify.app/admin
+- Historial ampliado: [INCH.md](INCH.md).
+- Fotos, capturas y fuentes: [design/inch/README.md](design/inch/README.md).
+
+La carta y el panel privado están publicados. PostgreSQL Netlify ya está creado en plan Free, pero todavía no está conectado al panel. Los borradores siguen en el navegador; «Publicar cambios» está deshabilitado. Credenciales y respuestas privadas permanecen solo en el PC y Netlify, fuera de GitHub.
+
+Publicación vigente: `npm run build:inch` y Netlify CLI **incluyendo funciones**; consultar el documento de continuación. El ZIP histórico y el build general Next no son el procedimiento actual.
+
+## Instrucciones originales de Next.js (referencia del arranque)
 
 ## Getting Started
 

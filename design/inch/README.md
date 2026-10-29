@@ -1,6 +1,8 @@
 # INCH · propuesta de carta digital
 
-Demo independiente en `/inch`. No requiere base de datos: la selección de 25 platos reside en `src/app/inch/menu.ts`. La carta original del proyecto sigue en `/`.
+Estado al 29/10/2026: `/` y `/inch` muestran la carta exclusiva INCH; el panel privado está en `/admin`. Los 25 platos siguen en `src/app/inch/menu.ts`. La base Netlify ya está creada, todavía sin conectar al panel. Para retomar, leer `../../RETOMAR-MANANA.md`.
+
+Las capturas conservan la evolución del diseño. `carta-netlify.zip` es un paquete histórico anterior al panel protegido: no publicarlo como versión actual; falta la función de servidor.
 
 ## Dirección visual
 
