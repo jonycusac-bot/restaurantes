@@ -92,3 +92,11 @@ Se ha creado la base PostgreSQL del sitio `ac9fb853-0dbd-4589-b007-8e685e2ed9b7`
 Esto provisiona la base de datos; aún no hay esquema de INCH ni conexión del panel a ella. El panel continúa utilizando borradores del navegador y Publicar sigue deshabilitado. Siguiente trabajo: esquema de platos y versiones borrador/publicada, endpoints protegidos, almacenamiento de imágenes y cambio del panel/carta para leer y publicar datos del servidor. No trasladar automáticamente los borradores locales o alterar la carta publicada sin revisar ese flujo.
 
 Referencias oficiales: https://docs.netlify.com/manage/accounts-and-billing/billing/billing-for-credit-based-plans/credit-based-pricing-plans/ y https://docs.netlify.com/build/data-and-storage/netlify-database/billing-and-usage/.
+
+## Prueba Cloudflare · 29/10/2026
+
+Por petición del usuario se detuvo la integración PostgreSQL de Netlify antes de activar permisos de escritura. Después se autorizó probar Cloudflare preservando la edición desde el panel. Estado vigente y procedimientos: `CLOUDFLARE.md`.
+
+Demo publicada: https://inch-carta-demo.pages.dev/ y panel https://inch-carta-demo.pages.dev/admin. Pages clásico + D1, sin activar R2 ni pagos. Hay guardado compartido de borradores, fotos optimizadas en una tabla BLOB separada, control de revisión y publicación de una instantánea HTML independiente. Los originales y borradores del navegador se conservan; Netlify no se ha modificado.
+
+Pruebas: trece unitarias correctas y una integración PostgreSQL omitida; TypeScript y ESLint correctos. Verificado de extremo a extremo con D1 local y remota: sesión, origen, validación, imágenes, separación borrador/publicación, conflictos y lectura desde otra sesión. Carta inicial restaurada al terminar. El documento de continuación y AGENTS apuntan ahora al estado Cloudflare.

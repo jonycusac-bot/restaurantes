@@ -1,6 +1,10 @@
 # INCH · Carta digital
 
-**Para retomar el trabajo, leer primero [RETOMAR-MANANA.md](RETOMAR-MANANA.md).** Contiene el estado comprobado al 29/10/2026, decisiones aprobadas, despliegue, archivos, límites y próximos pasos. No hace falta recuperar el chat.
+**Para retomar el trabajo, leer primero [CLOUDFLARE.md](CLOUDFLARE.md).** Estado vigente al 29/10/2026: prueba Cloudflare Pages + D1 con panel editable, fotos, borradores y publicación. El trabajo de conexión PostgreSQL Netlify se detuvo. [RETOMAR-MANANA.md](RETOMAR-MANANA.md) conserva el contexto anterior.
+
+- Prueba de carta: https://inch-carta-demo.pages.dev/
+- Administrador: https://inch-carta-demo.pages.dev/admin
+- Desarrollo Cloudflare: `npm run build:cloudflare` y `npm run dev:cloudflare` (puerto 8788).
 
 - Carpeta: `C:/Users/Usuario/Desktop/Restaurantes`.
 - GitHub: https://github.com/jonycusac-bot/restaurantes/tree/feat/bootstrap

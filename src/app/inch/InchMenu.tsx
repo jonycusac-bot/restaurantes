@@ -4,14 +4,14 @@
 import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { categories, menuSections, type MenuSection } from "./menu";
 import { dishTranslations, languages, ui, type Language } from "./translations";
-import { applyDraftToMenu, parseDraft, readLocalPreviewSnapshot, serverDraftSnapshot, subscribeToDraft } from "../../lib/inch-draft";
+import { applyDraftToMenu, parseDraft, readLocalPreviewSnapshot, serverDraftSnapshot, subscribeToDraft, type AdminDish } from "../../lib/inch-draft";
 
 const normalize = (text: string) => text.toLocaleLowerCase("es").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
-export default function InchMenu() {
-  const rawDraft = useSyncExternalStore(subscribeToDraft, readLocalPreviewSnapshot, serverDraftSnapshot);
+export default function InchMenu({ publishedDishes, publicOnly = false }: { publishedDishes?: AdminDish[]; publicOnly?: boolean } = {}) {
+  const rawDraft = useSyncExternalStore(subscribeToDraft, publicOnly ? serverDraftSnapshot : readLocalPreviewSnapshot, serverDraftSnapshot);
   const localDraft = useMemo(() => parseDraft(rawDraft), [rawDraft]);
-  const menuCategories = useMemo(() => localDraft ? applyDraftToMenu(localDraft) : categories, [localDraft]);
+  const menuCategories = useMemo(() => localDraft ? applyDraftToMenu(localDraft) : publishedDishes ? applyDraftToMenu(publishedDishes) : categories, [localDraft, publishedDishes]);
   const [language, setLanguage] = useState<Language>("es");
   const [section, setSection] = useState<MenuSection>("carta");
   const [active, setActive] = useState("entrantes");

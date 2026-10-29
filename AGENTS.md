@@ -1,6 +1,6 @@
 ## Contexto del proyecto INCH
 
-Antes de trabajar, leer `RETOMAR-MANANA.md` en esta carpeta. Resume estado actual, decisiones, despliegue y tareas pendientes sin necesitar el historial del chat. `INCH.md` conserva el historial ampliado. No publicar ni mostrar credenciales de `.env*` o `.netlify/`.
+Antes de trabajar, leer `CLOUDFLARE.md` (estado vigente de la prueba) y, si hace falta contexto anterior, `RETOMAR-MANANA.md`. La integración Netlify se detuvo por petición del usuario. `INCH.md` conserva el historial ampliado. No publicar ni mostrar credenciales de `.env*`, `.dev.vars*`, `.cloudflare-build/` o `.netlify/`.
 
 <!-- BEGIN:nextjs-agent-rules -->
 

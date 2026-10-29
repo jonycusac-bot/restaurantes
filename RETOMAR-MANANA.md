@@ -1,10 +1,10 @@
 # INCH · Documento para retomar el proyecto
 
-**Actualizado: 29/10/2026, Europe/Madrid.** Leer primero este documento. Resume el estado actual y prevalece sobre las primeras demos descritas en `INCH.md`. No es necesario recuperar el chat.
+**Actualizado: 29/10/2026, Europe/Madrid.** Estado vigente posterior: **leer primero `CLOUDFLARE.md`**. La integración PostgreSQL Netlify se detuvo y ahora se prueba Cloudflare Pages con D1, edición, fotos y publicación. Este archivo conserva el contexto histórico; no hace falta recuperar el chat.
 
 ## Objetivo y decisiones aprobadas
 
-- Carta digital exclusiva de INCH para abrir al escanear un QR. El repositorio conserva el nombre Restaurantes y código del prototipo, pero no se está creando una plataforma de múltiples restaurantes.
+- Carta digital exclusiva de INCH. El repositorio conserva el nombre Restaurantes y código del prototipo, pero no se está creando una plataforma de múltiples restaurantes.
 - «Diseño ante todo»: CARTA, no página promocional. Papel marfil, tinta oscura, bermellón, títulos serif, líneas finas, descripciones cortas y fotografías protagonistas debajo del nombre del plato. Referencia visual: carta retro Burger & Co. del chat; consultar las capturas guardadas.
 - No añadir pedidos, reservas ni pagos sin petición. No rehacer desde cero la estética aprobada.
 - Dos pestañas superiores, **Carta** y **Sushi**, sin «Toda la carta».
@@ -26,10 +26,8 @@
 | Proyecto Netlify | `restaurant-management-82d26f` |
 | ID sitio | `ac9fb853-0dbd-4589-b007-8e685e2ed9b7` |
 | Último deploy comprobado | `6ae38a6bfe1214b59761ab58` |
-| QR estable | `design/inch/qr-inch.png` |
 | Historial y fuentes | `INCH.md`, `design/inch/README.md` |
 
-`/` y `/inch` muestran la misma carta. No cambiar la URL del QR. No hay despliegue automático GitHub → Netlify configurado por nosotros: un push no publica la web.
 
 ## Qué funciona
 
@@ -37,7 +35,6 @@
 
 25 platos de ejemplo en código, filtros de sección y categoría, búsqueda sin depender de acentos e idiomas español/inglés/alemán. Hay categorías vacías con aviso. Las traducciones cubren los platos originales; los textos de platos nuevos o modificados permanecen en español si no coinciden con el original, evitando traducciones antiguas engañosas.
 
-Cinco fotos reales de ejemplo aportadas por el usuario y convertidas a WebP. Confirmar con el restaurante correspondencia, precios, composición, disponibilidad y alérgenos antes del uso definitivo. No se han deducido alérgenos de las fotografías. Se mantiene `noindex`. No se ha comprobado físicamente el QR desde un teléfono fuera de la red local.
 
 ### Panel
 
@@ -163,7 +160,6 @@ El respaldo GitHub incluye código, documentación, fotos del proyecto, capturas
 4. Almacenamiento de fotos y referencias a archivos; evitar imágenes Base64 grandes en filas de platos.
 5. Importación explícita del borrador local sin perder datos; gestión de conflictos entre administradores.
 6. Carta pública que lea solo la versión publicada, con recuperación ante errores y evitando consultas innecesarias que gasten créditos.
-7. Prueba completa crear/editar/ocultar, foto/precio, guardar/previsualizar/publicar, conservando la URL del QR.
 8. Validar contenido definitivo con restaurante y decidir retirada de `noindex`.
 
 Para retomar: **«Lee RETOMAR-MANANA.md y continuamos conectando el panel a la base de datos, manteniendo el plan gratuito».** La petición de cierre actual solo guarda y documenta; no ha iniciado esa integración.

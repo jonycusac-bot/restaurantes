@@ -16,7 +16,7 @@ export function parseDraft(raw: string): AdminDish[] | null {
   try {
     const value: unknown = JSON.parse(raw);
     if (!Array.isArray(value) || value.length > 500 || new Set(value.map(d => d?.id)).size !== value.length) return null;
-    if (!value.every(d => d && typeof d.id === "string" && d.id.length > 0 && categories.some(c => c.id === d.categoryId) && typeof d.name === "string" && d.name.trim().length > 0 && typeof d.description === "string" && typeof d.price === "number" && Number.isFinite(d.price) && d.price >= 0 && d.price <= 999999.99 && typeof d.hidden === "boolean" && typeof d.imageName === "string" && typeof d.imageSrc === "string" && (!d.imageSrc || /^\/inch\/[a-z0-9-]+\.webp$/.test(d.imageSrc) || /^data:image\/(png|jpeg|webp);base64,/.test(d.imageSrc)))) return null;
+    if (!value.every(d => d && typeof d.id === "string" && d.id.length > 0 && categories.some(c => c.id === d.categoryId) && typeof d.name === "string" && d.name.trim().length > 0 && typeof d.description === "string" && typeof d.price === "number" && Number.isFinite(d.price) && d.price >= 0 && d.price <= 999999.99 && typeof d.hidden === "boolean" && typeof d.imageName === "string" && typeof d.imageSrc === "string" && (!d.imageSrc || /^\/inch\/[a-z0-9-]+\.webp$/.test(d.imageSrc) || /^\/media\/[a-f0-9]{64}\.(webp|jpg|png)$/.test(d.imageSrc) || /^data:image\/(png|jpeg|webp);base64,/.test(d.imageSrc)))) return null;
     return value as AdminDish[];
   } catch { return null; }
 }

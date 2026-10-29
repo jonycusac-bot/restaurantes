@@ -8,7 +8,10 @@
     "build:inch": "tsx scripts/build-inch.tsx",
     "preview:inch": "node scripts/preview-inch.mjs",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "build:cloudflare": "tsx scripts/build-cloudflare.tsx",
+    "dev:cloudflare": "wrangler pages dev dist-cloudflare --port 8788",
+    "deploy:cloudflare": "npm run build:cloudflare && wrangler pages deploy dist-cloudflare --project-name inch-carta-demo"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.10.1",
@@ -20,16 +23,17 @@
     "react-dom": "19.3.0"
   },
   "devDependencies": {
-    "esbuild": "^0.28.2",
     "@tailwindcss/turbopack": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "esbuild": "^0.28.2",
     "eslint": "^9",
     "eslint-config-next": "16.4.3",
     "prisma": "^7.10.1",
     "tailwindcss": "^4",
     "tsx": "^4.23.15",
-    "typescript": "^5"
+    "typescript": "^5",
+    "wrangler": "^4.156.0"
   }
 }

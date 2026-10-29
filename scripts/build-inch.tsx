@@ -31,7 +31,7 @@ async function main() {
   const adminDocument = (mode: string, content: string) => `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>INCH · Administración</title><link rel="stylesheet" href="/admin.css"></head><body><div id="admin-root" data-mode="${mode}">${content}</div><script type="module" src="/admin.js"></script></body></html>`;
   await mkdir(path.join(root, ".netlify/inch-functions"), { recursive: true });
   await writeFile(path.join(root, ".netlify/inch-html.mjs"), `export const adminHtml=${JSON.stringify(adminDocument("admin", renderToString(<AdminPreview />)))};\nexport const loginHtml=${JSON.stringify(adminDocument("login", renderToString(<LoginForm />)))};`);
-  await build({ entryPoints: [path.join(root, "scripts/admin-function.ts")], outfile: path.join(root, ".netlify/inch-functions/admin.mjs"), bundle: true, platform: "node", format: "esm", target: ["node22"], define: { "process.env.NODE_ENV": '"production"' } });
+  await build({ entryPoints: [path.join(root, "scripts/admin-function.ts")], outfile: path.join(root, ".netlify/inch-functions/admin.mjs"), bundle: true, platform: "node", format: "esm", external: ["pg"], target: ["node22"], define: { "process.env.NODE_ENV": '"production"' } });
   const styles = await readFile(path.join(root, "src/app/inch/inch.css"), "utf8");
   await writeFile(path.join(destination, "carta.css"), `${preflight}\nhtml{scroll-behavior:smooth}body{margin:0}\n${styles}`, "utf8");
   const photos = new Set(categories.flatMap(c => c.dishes.flatMap(d => d.image ? [`${d.image}.webp`] : [])));
@@ -42,7 +42,7 @@ async function main() {
   await writeFile(path.join(destination, "index.html"), html, "utf8");
   await writeFile(path.join(destination, "_redirects"), "/inch / 200\n", "utf8");
   await writeFile(path.join(destination, "_headers"), "/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  X-Robots-Tag: noindex, nofollow\n", "utf8");
-  console.log(`Carta y panel preparados en ${destination}. ${photos.size} fotografías. Acceso privado mediante función de servidor; sin base de datos.`);
+  console.log(`Carta y panel preparados en ${destination}. ${photos.size} fotografías. Borradores privados en PostgreSQL; carta pública estática.`);
 }
 
 main().catch(error => { console.error(error); process.exitCode = 1; });

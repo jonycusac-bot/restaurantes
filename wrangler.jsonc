@@ -1,0 +1,12 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "inch-carta-demo",
+  "pages_build_output_dir": "./dist-cloudflare",
+  "compatibility_date": "2026-10-29",
+  "d1_databases": [{
+    "binding": "DB",
+    "database_name": "inch-carta-demo",
+    "database_id": "c66f1733-19cb-4e41-b5c1-f4491fedc914",
+    "migrations_dir": "cloudflare/migrations"
+  }]
+}
