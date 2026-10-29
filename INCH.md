@@ -80,3 +80,13 @@ Al importar variables, redirigir la salida del CLI a un archivo privado bajo `.n
 Validación: build específico, TypeScript y ESLint correctos; pruebas de contraseña, sesión, manipulación, caducidad, origen, cierre, dimensiones y borradores correctas. Dos pruebas históricas de `/api/menu` requieren la base PostgreSQL anterior y fallan por acceso a esa base; no se usan en INCH.
 
 Publicado y comprobado en el dominio estable. Deploy: `6ae38855004dd70e44035182`. Verificados formulario de acceso, contraseña, sesión y listado de platos en `/admin`. Evidencia: `design/inch/panel-admin-publicado.png`.
+
+## Base de datos Netlify creada · 29/10/2026
+
+El usuario autorizó crearla solo si podía usarse gratis. Comprobado con la API oficial: el sitio pertenece al equipo Comunidades (`690e1577945a3c93d1e73725`), plan `Free`, 300 créditos incluidos y `accumulate_overages.included=false`. La documentación del plan confirma límite estricto, sin recarga automática; al agotar créditos los proyectos se pausan. No se ha cambiado el plan, contratado una suscripción ni activado pagos.
+
+Se ha creado la base PostgreSQL del sitio `ac9fb853-0dbd-4589-b007-8e685e2ed9b7` mediante `createSiteDatabase`. Conexión verificada con `SELECT 1`. Ajustes devueltos por `getSiteDatabaseComputeSettings`: `min_cu=0.25`, `max_cu=0.25`, `sleep_timeout_seconds=300`. Las respuestas privadas y la conexión están exclusivamente bajo `.netlify/`, ignorado por Git: nunca añadirlas a recursos públicos, registros compartidos ni commits.
+
+Esto provisiona la base de datos; aún no hay esquema de INCH ni conexión del panel a ella. El panel continúa utilizando borradores del navegador y Publicar sigue deshabilitado. Siguiente trabajo: esquema de platos y versiones borrador/publicada, endpoints protegidos, almacenamiento de imágenes y cambio del panel/carta para leer y publicar datos del servidor. No trasladar automáticamente los borradores locales o alterar la carta publicada sin revisar ese flujo.
+
+Referencias oficiales: https://docs.netlify.com/manage/accounts-and-billing/billing/billing-for-credit-based-plans/credit-based-pricing-plans/ y https://docs.netlify.com/build/data-and-storage/netlify-database/billing-and-usage/.
