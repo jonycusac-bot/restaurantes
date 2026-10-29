@@ -1,5 +1,7 @@
 # INCH · Carta digital
 
+**Cierre para mañana viernes 30/10/2026:** [VIERNES-2026-10-30.md](VIERNES-2026-10-30.md).
+
 **Para retomar el trabajo, leer primero [CLOUDFLARE.md](CLOUDFLARE.md).** Estado vigente al 29/10/2026: prueba Cloudflare Pages + D1 con panel editable, fotos, borradores y publicación. El trabajo de conexión PostgreSQL Netlify se detuvo. [RETOMAR-MANANA.md](RETOMAR-MANANA.md) conserva el contexto anterior.
 
 - Prueba de carta: https://inch-carta-demo.pages.dev/

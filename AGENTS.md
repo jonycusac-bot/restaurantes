@@ -1,5 +1,7 @@
 ## Contexto del proyecto INCH
 
+Cierre del 29/10/2026: leer también `VIERNES-2026-10-30.md`, con avances guardados y pendientes para el viernes. No ejecutar pruebas de escritura contra la carta remota del dueño para verificar solo documentación.
+
 Antes de trabajar, leer `CLOUDFLARE.md` (estado vigente de la prueba) y, si hace falta contexto anterior, `RETOMAR-MANANA.md`. La integración Netlify se detuvo por petición del usuario. `INCH.md` conserva el historial ampliado. No publicar ni mostrar credenciales de `.env*`, `.dev.vars*`, `.cloudflare-build/` o `.netlify/`.
 
 <!-- BEGIN:nextjs-agent-rules -->

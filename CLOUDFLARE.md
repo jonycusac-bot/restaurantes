@@ -1,5 +1,9 @@
 # INCH · Prueba Cloudflare
 
+Para la siguiente sesión: **`VIERNES-2026-10-30.md`**, con el cierre del jueves, próximos pasos y ubicación de las copias de respaldo.
+
+Respaldo puntual del 29/10/2026: D1 exportada y verificada en SQLite en memoria en `backups-private/2026-10-29/inch-d1-cierre.sql`. Carpeta excluida de GitHub. Al repetir una exportación, redirigir el registro a un archivo privado: Wrangler muestra un enlace temporal firmado para descargar la copia. No pegar ese enlace en documentación ni respuestas.
+
 Estado al **29/10/2026**. Esta es la continuación vigente del proyecto. `RETOMAR-MANANA.md` e `INCH.md` contienen la historia anterior de Netlify. El usuario decidió probar Cloudflare, conservando el panel editable por el dueño. La gestión de enlaces y códigos dinámicos queda fuera de este proyecto por decisión del usuario.
 
 ## Direcciones
