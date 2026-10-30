@@ -7,8 +7,8 @@ async function cloudResponse(response: Response): Promise<CloudDraft> {
   const data = await response.json();
   if (!response.ok) throw new Error(data.error ?? "No se pudo acceder al borrador de la nube.");
   const dishes = parseCloudDishes(data.dishes);
-  if (!dishes || !Number.isSafeInteger(data.revision) || data.revision < 1 || typeof data.updatedAt !== "string") throw new Error("La respuesta de la nube no es válida. Tu copia local se conserva.");
-  return { dishes, revision: data.revision, updatedAt: data.updatedAt, imageStorage: data.imageStorage === true, canPublish: data.canPublish === true };
+  if (!dishes || !Number.isSafeInteger(data.revision) || data.revision < 1 || typeof data.updatedAt !== "string" || (data.publishedRevision !== undefined && data.publishedRevision !== null && (!Number.isSafeInteger(data.publishedRevision) || data.publishedRevision < 1))) throw new Error("La respuesta de la nube no es válida. Tu copia local se conserva.");
+  return { dishes, revision: data.revision, updatedAt: data.updatedAt, imageStorage: data.imageStorage === true, canPublish: data.canPublish === true, ...(data.publishedRevision === undefined ? {} : { publishedRevision: data.publishedRevision }) };
 }
 const message = (error: unknown) => error instanceof Error ? error.message : "No se pudo conectar. Tu borrador local se conserva.";
 
@@ -16,12 +16,14 @@ export function useCloudDraft(enabled = true) {
   const [cloud, setCloud] = useState<CloudDraft | null>(null);
   const [pending, setPending] = useState<CloudDraft | null>(null);
   const [busy, setBusy] = useState(enabled);
+  const [error, setError] = useState(false);
   const [status, setStatus] = useState(enabled ? "Conectando con el borrador de la nube…" : "Borrador local. La conexión PostgreSQL quedó detenida.");
   useEffect(() => {
     if (!enabled) return;
     const controller = new AbortController();
     void fetch("/api/admin/draft", { cache: "no-store", signal: controller.signal }).then(cloudResponse).then(data => {
       if (controller.signal.aborted) return;
+      setError(false);
       setCloud(data);
       if (!readDraftSnapshot()) {
         // Only initialize an empty browser; never replace an existing local draft.
@@ -29,13 +31,13 @@ export function useCloudDraft(enabled = true) {
         window.localStorage.setItem(cloudRevisionKey, String(data.revision));
         setStatus("Borrador de la nube cargado. Los cambios que hagas deben guardarse en la nube con el botón correspondiente.");
       } else setStatus("Conectado. Tu borrador de este navegador se conserva. Puedes guardarlo en la nube o cargar la copia de la nube.");
-    }).catch(error => { if (!controller.signal.aborted) setStatus(message(error)); }).finally(() => { if (!controller.signal.aborted) setBusy(false); });
+    }).catch(error => { if (!controller.signal.aborted) { setError(true); setStatus(message(error)); } }).finally(() => { if (!controller.signal.aborted) setBusy(false); });
     return () => controller.abort();
   }, [enabled]);
 
   async function save(dishes: AdminDish[]) {
     if (!cloud || busy) return;
-    setBusy(true); setPending(null);
+    setError(false); setBusy(true); setPending(null);
     try {
       const revision = Number(window.localStorage.getItem(cloudRevisionKey)) || cloud.revision;
       const normalized = cloud.imageStorage ? await uploadPhotos(dishes) : draftForCloud(dishes, cloud.dishes);
@@ -54,33 +56,36 @@ export function useCloudDraft(enabled = true) {
       window.localStorage.setItem(cloudRevisionKey, String(data.revision));
       setCloud(data);
       setStatus(`Borrador guardado en la nube · versión ${data.revision}. La carta pública no ha cambiado.${!data.imageStorage && dishes.some(d => d.imageSrc.startsWith("data:")) ? " Las fotos nuevas siguen solo en este navegador, pendientes del paso 2." : ""}`);
-    } catch (error) { setStatus(message(error)); }
+    } catch (error) { setError(true); setStatus(message(error)); }
     finally { setBusy(false); }
   }
   async function publish(dishes: AdminDish[]) {
     if (!cloud || !cloud.canPublish || busy) return;
-    if (JSON.stringify(dishes) !== JSON.stringify(cloud.dishes)) { setStatus("Guarda primero todos los cambios del borrador en la nube antes de publicar."); return; }
-    setBusy(true);
+    if (JSON.stringify(dishes) !== JSON.stringify(cloud.dishes)) { setError(true); setStatus("Guarda primero todos los cambios del borrador en la nube antes de publicar."); return; }
+    setError(false); setBusy(true);
     try {
       const response = await fetch("/api/admin/publish", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ revision: cloud.revision }) });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error ?? "No se pudo publicar.");
+      if (data.ok !== true || data.sourceRevision !== cloud.revision) throw new Error("No se pudo confirmar la revisión publicada. Tu copia local se conserva.");
+      setCloud(current => current && current.revision === data.sourceRevision ? { ...current, publishedRevision: data.sourceRevision } : current);
       setStatus("Carta publicada. Ya puedes abrir «Ver carta pública» para comprobar los cambios.");
-    } catch (error) { setStatus(message(error)); }
+    } catch (error) { setError(true); setStatus(message(error)); }
     finally { setBusy(false); }
   }
   async function requestLoad() {
     if (busy) return;
-    setBusy(true);
+    setError(false); setBusy(true);
     try {
       const data = await cloudResponse(await fetch("/api/admin/draft", { cache: "no-store" }));
       setCloud(data); setPending(data);
       setStatus("Copia de la nube disponible. Confirma abajo si quieres sustituir el listado local; se conservará una copia anterior en este navegador.");
-    } catch (error) { setStatus(message(error)); }
+    } catch (error) { setError(true); setStatus(message(error)); }
     finally { setBusy(false); }
   }
   function acceptLoad() {
     if (!pending) return;
+    setError(false);
     try {
       const raw = readDraftSnapshot();
       const local = parseDraft(raw) ?? [];
@@ -93,19 +98,20 @@ export function useCloudDraft(enabled = true) {
       window.localStorage.setItem(cloudRevisionKey, String(pending.revision));
       setPending(null);
       setStatus(pending.imageStorage ? "Copia de la nube cargada con sus fotos. Tu copia anterior se puede recuperar. La carta pública no ha cambiado." : "Copia de la nube cargada. Las fotos nuevas que ya tenías se conservan en este navegador. La carta pública no ha cambiado.");
-    } catch { setStatus("No se pudo cargar la copia de la nube: el almacenamiento local puede estar lleno. El borrador anterior se conserva."); }
+    } catch { setError(true); setStatus("No se pudo cargar la copia de la nube: el almacenamiento local puede estar lleno. El borrador anterior se conserva."); }
   }
   function restoreBackup() {
+    setError(false);
     try {
       const draft = parseDraft(window.localStorage.getItem(beforeCloudLoadKey) ?? "");
-      if (!draft) { setStatus("No hay una copia anterior a la carga de la nube."); return; }
+      if (!draft) { setError(true); setStatus("No hay una copia anterior a la carga de la nube."); return; }
       saveLocalDraft(draft);
       const revision = window.localStorage.getItem(`${beforeCloudLoadKey}-revision`);
       if (revision) window.localStorage.setItem(cloudRevisionKey, revision); else window.localStorage.removeItem(cloudRevisionKey);
       setPending(null); setStatus("Copia local anterior recuperada. No se ha escrito en la nube.");
-    } catch { setStatus("No se pudo recuperar la copia anterior."); }
+    } catch { setError(true); setStatus("No se pudo recuperar la copia anterior."); }
   }
-  return { cloud, busy, status, pending, save, publish, requestLoad, acceptLoad, restoreBackup, cancelLoad: () => setPending(null) };
+  return { cloud, busy, status, error, pending, save, publish, requestLoad, acceptLoad, restoreBackup, cancelLoad: () => setPending(null) };
 }
 
 async function uploadPhotos(dishes: AdminDish[]): Promise<AdminDish[]> {

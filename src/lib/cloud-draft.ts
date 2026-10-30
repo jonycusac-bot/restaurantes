@@ -1,6 +1,6 @@
 import { initialDraft, parseDraft, type AdminDish } from "./inch-draft";
 
-export type CloudDraft = { dishes: AdminDish[]; revision: number; updatedAt: string; imageStorage?: boolean; canPublish?: boolean };
+export type CloudDraft = { dishes: AdminDish[]; revision: number; updatedAt: string; imageStorage?: boolean; canPublish?: boolean; publishedRevision?: number | null };
 export const cloudRevisionKey = "inch-admin-cloud-revision-v1";
 export const beforeCloudLoadKey = "inch-admin-before-cloud-load-v1";
 

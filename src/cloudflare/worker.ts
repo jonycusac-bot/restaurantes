@@ -44,10 +44,14 @@ function snapshot(row: Row): CloudDraft {
   if (!dishes) throw new Error("INVALID_STORED_MENU");
   return { dishes, revision: row.revision, updatedAt: row.updated_at, imageStorage: true, canPublish: true };
 }
+async function publishedRevision(env: Env): Promise<number | null> {
+  const row = await env.DB.prepare("SELECT source_revision FROM inch_publication WHERE id = 'inch'").first<{ source_revision: number }>();
+  return row?.source_revision ?? null;
+}
 async function readDraft(env: Env) {
   const row = await env.DB.prepare("SELECT dishes, revision, updated_at FROM inch_draft WHERE id = 'inch'").first<Row>();
   if (!row) throw new HttpError(503, "La carta de prueba todavía no está inicializada.");
-  return snapshot(row);
+  return { ...snapshot(row), publishedRevision: await publishedRevision(env) };
 }
 export function imageType(bytes: Uint8Array): { type: string; extension: string } | null {
   if (bytes.length < 16) return null;
@@ -109,7 +113,7 @@ async function handle(request: Request, env: Env): Promise<Response> {
       if (!dishes) throw new HttpError(422, "Revisa los datos de los platos y sube las fotos antes de guardar.");
       const row = await env.DB.prepare("UPDATE inch_draft SET dishes = ?, revision = revision + 1, updated_at = strftime('%Y-%m-%dT%H:%M:%fZ','now') WHERE id = 'inch' AND revision = ? RETURNING dishes, revision, updated_at").bind(JSON.stringify(dishes), expected).first<Row>();
       if (!row) throw new HttpError(409, "Hay cambios más recientes en la nube. Tu copia local se conserva; carga la nube antes de guardar.");
-      return json(snapshot(row));
+      return json({ ...snapshot(row), publishedRevision: await publishedRevision(env) });
     }
     if (path === "/api/admin/publish" && request.method === "POST") {
       const expected = revision((await readJson(request, 1024)).revision);

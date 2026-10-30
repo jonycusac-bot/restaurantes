@@ -1,0 +1,27 @@
+[
+  {
+    "id": "MOB-01",
+    "severity": "Medium",
+    "category": "UX",
+    "status": "observed_in_browser",
+    "title": "Las acciones e instrucciones desplazan los platos fuera de la primera pantalla",
+    "viewport": "390x844",
+    "evidence": "screenshots/panel-390x844.png"
+  },
+  {
+    "id": "MOB-02",
+    "severity": "High",
+    "category": "Functional",
+    "status": "source_review_only",
+    "title": "Cambiar de categoría, sección o plato puede descartar la edición sin confirmar",
+    "evidence": "src/app/admin/preview/AdminPreview.tsx:25-26,73-77"
+  },
+  {
+    "id": "MOB-03",
+    "severity": "Medium",
+    "category": "UX",
+    "status": "source_review_only",
+    "title": "El editor no muestra una previsualización de la fotografía seleccionada",
+    "evidence": "src/app/admin/preview/AdminPreview.tsx:40-49,77"
+  }
+]

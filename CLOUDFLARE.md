@@ -126,4 +126,30 @@ Para continuar basta con pedir: **«Lee CLOUDFLARE.md y continuamos la prueba de
 
 ## Publicación comprobada
 
-Último despliegue de esta prueba: https://32ec3957.inch-carta-demo.pages.dev/ (dominio estable https://inch-carta-demo.pages.dev/). Comprobados además en navegador el acceso, la carga de D1, «Guardar borrador en nube» y «Publicar cambios». Capturas: `design/inch/cloudflare-admin-publicado.png` y `design/inch/cloudflare-carta-publicada.png`. La carta inicial permanece restaurada; los borradores antiguos de localhost no se han trasladado automáticamente.
+Último despliegue de esta prueba: https://259d0430.inch-carta-demo.pages.dev/ (dominio estable https://inch-carta-demo.pages.dev/), 30/10/2026. Incluye el editor de platos a pantalla completa en móvil y panel lateral en escritorio, con corrección del retorno de foco. También corrige la pantalla de acceso en blanco: las reglas de diálogo cerrado se limitan a `dialog.admin-editor`, sin ocultar la sección compartida del login. El formulario público sin sesión se comprobó visible en navegador tras el despliegue. Se verificaron por HTTP los nuevos assets del panel, el acceso privado y la carta pública: el HTML publicado conserva exactamente el SHA-256 anterior al despliegue. No se ejecutaron migraciones, semillas ni escrituras de contenido en D1. La validación del nuevo editor en un iPhone físico queda pendiente del usuario. La comprobación funcional anterior de guardar/publicar conserva sus capturas en `design/inch/cloudflare-admin-publicado.png` y `design/inch/cloudflare-carta-publicada.png`; los borradores antiguos de localhost no se han trasladado automáticamente. Detalles del cambio y sus pruebas locales: `design/inch/revision-movil/editor-corregido.md`. Este despliegue se hizo con cambios locales (`--commit-dirty=true`); en ese momento todavía no había un commit ni push de esta corrección.
+
+### Segundo despliegue del 30/10/2026 (toolbar de estados) — autorizado por el usuario
+
+Con autorización explícita del usuario se desplegó de nuevo **solo código** (assets + worker), sin migrar, sembrar, restaurar ni publicar catálogo:
+
+```
+npx wrangler pages deploy dist-cloudflare --project-name inch-carta-demo --branch feat/bootstrap --commit-dirty=true --commit-message "Simplify admin save publish flow and preserve mobile editor"
+```
+
+- URL del despliegue: **https://8c6fd1e5.inch-carta-demo.pages.dev/**
+- Dominio estable verificado: https://inch-carta-demo.pages.dev/
+
+Este despliegue añade, sobre lo ya publicado (editor móvil + login), el nuevo toolbar (**Guardar cambios / Publicar carta**, enlace *Ver carta pública*, recuperación dentro de `<details>` cerrado «Copias y recuperación»), el helper de estados `src/lib/admin-panel-state.ts` (`local|connecting|offline|pending|busy|dirty|published|saved`) y `publishedRevision` leído de `SELECT source_revision` existente (**sin migración**).
+
+Verificación por HTTP tras el despliegue (30/10/2026), sin credenciales:
+
+- `admin.js` y `admin.css` servidos en el dominio estable coinciden **byte a byte** con los generados por `npm run build:cloudflare` (`admin.js` sha256 `4915a87a…3462c`; `admin.css` sha256 `c9a0899a…3028`).
+- `/admin` sin sesión sigue mostrando el formulario de acceso visible (`name="password"`/`type="password"`).
+- `GET /api/admin/draft` sin sesión sigue devolviendo **401**.
+- El HTML de la carta pública conserva **exactamente el mismo SHA-256** antes y después (`7f93aa8d…d651`): la publicación no cambió.
+
+No se ejecutaron migraciones, semillas, restauración ni publicación de catálogo en D1. La marca `--commit-dirty=true` es solo metadato de Wrangler, **no** un commit de Git.
+
+Git: los cambios de hoy (código, pruebas y documentación) se guardan en la rama `feat/bootstrap` con un commit conventional en español y se empujan a `origin` (GitHub `jonycusac-bot/restaurantes`) tras este despliegue. Como este documento viaja *dentro* de ese mismo commit, aquí no se fija su SHA: se verifica después con `git rev-list HEAD` y `git ls-remote origin feat/bootstrap`. El resultado no sensible de la operación queda en `.cloudflare-build/release-result.json` (ignorado por Git).
+
+La validación del nuevo toolbar y del editor en un **iPhone físico** (teclado, cámara/galería, recuperación) sigue pendiente del usuario. En esta sesión tampoco se probó el panel Cloudflare **autenticado** contra la D1 remota.
