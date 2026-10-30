@@ -4,7 +4,7 @@ import { build } from "esbuild";
 import { runInNewContext } from "node:vm";
 import { resolve } from "node:path";
 import { initialDraft, storageKey } from "../src/lib/inch-draft";
-import { beforeCloudLoadKey } from "../src/lib/cloud-draft";
+import { beforeCloudLoadKey, cloudRevisionKey } from "../src/lib/cloud-draft";
 import worker from "../src/cloudflare/worker";
 import { loginCookie } from "../src/cloudflare/auth";
 import type { Env, Statement } from "../src/cloudflare/types";
@@ -20,7 +20,7 @@ async function hookHarness(data: unknown = snapshot, local = dishes) {
   const states: unknown[] = [];
   const effects: (() => unknown)[] = [];
   let cursor = 0;
-  const storage = new Map<string, string>([[storageKey, JSON.stringify(local)]]);
+  const storage = new Map<string, string>([[storageKey, JSON.stringify(local)], [cloudRevisionKey, "3"]]);
   const failWrites = new Set<string>();
   let fetcher: (url: string, init?: RequestInit) => Promise<Response> = async () => Response.json(data);
   const compiled = await build({

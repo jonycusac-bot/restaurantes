@@ -39,3 +39,9 @@ npx tsx scripts/check-admin-publication.ts
 Ejecuta el Worker compilado con Miniflare y una D1 temporal, sin descubrir configuraciones de Wrangler ni leer secretos reales. El script genera autenticación exclusiva de prueba en memoria y no admite una URL de destino: no puede apuntarse a la carta remota. Comprueba rechazo sin sesión, subida y lectura de foto, edición sin guardar, guardado separado de la publicación, conflicto de revisión 409 y estado publicado persistente tras recargar. Cierra el Worker y descarta la base temporal al terminar, también si falla una aserción.
 
 La prueba D1 verifica la API y el cálculo de estados; no sustituye una prueba del panel autenticado en Safari. Las regresiones del componente y el acceso descritas arriba se han repetido después de simplificar la cabecera. La nueva barra también tiene cobertura SSR en `tests/admin-toolbar.test.ts`.
+
+## Revisión de conflictos en el componente real
+
+Abrir `http://127.0.0.1:8791/?conflict=1` y ejecutar `await window.checkAdminConflict()`. Esta fixture usa el componente y el hook reales con una frontera HTTP **simulada**, nunca la nube del dueño. Se comprueban el primer PUT con la revisión local antigua, la comparación visible, cancelar sin sustituir copias, confirmación antes del guardado, otro 409 si la nube avanza durante la revisión y una nueva confirmación antes de guardar la copia elegida. También comprueba el respaldo real de ambas copias en el almacenamiento del origen QA y cero llamadas a publicar. Se ejecutó correctamente a 320×568, 390×844 y 1440×900.
+
+Recargar `?conflict=1` reinicia sus datos de prueba. No ejecutar los checks ordinarios del editor contra esta fixture de conflicto; usar `/` y el catálogo inicial de QA para esas regresiones. No equivale a integración navegador→D1 real; la prueba API/D1 temporal se ejecuta aparte con `scripts/check-admin-publication.ts`.

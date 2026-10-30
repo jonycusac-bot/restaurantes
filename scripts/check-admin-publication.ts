@@ -38,15 +38,29 @@ async function check(base: string) {
   assert.equal(getAdminPanelState(saved.dishes, saved, options).label, "Guardado, pendiente de publicar");
   assert.equal(await (await request("/")).text(), before, "Guardar no cambia la carta pública");
   assert.equal((await request("/api/admin/draft", "PUT", { revision: original.revision, dishes: original.dishes })).status, 409);
-  const publish = await request("/api/admin/publish", "POST", { revision: saved.revision });
+  // Conflict resolution contract: re-read the latest cloud copy, then retry the
+  // save explicitly with the reviewed revision. Resolving must never publish.
+  const reread: CloudDraft = await (await request("/api/admin/draft")).json();
+  assert.equal(reread.revision, saved.revision, "the re-read returns the latest cloud revision for review");
+  assert.equal(await (await request("/")).text(), before, "re-reading the conflict does not change the public menu");
+  const reviewedLocal = changed.map((dish, index) => index === 0 ? { ...dish, name: `${marker} revisado` } : dish);
+  const retry = await request("/api/admin/draft", "PUT", { revision: reread.revision, dishes: reviewedLocal });
+  assert.equal(retry.status, 200, "an explicit retry with the reviewed revision saves without a 409 loop");
+  const retried: CloudDraft = await retry.json();
+  assert.equal(retried.dishes[0].name, reviewedLocal[0].name, "the explicitly chosen local edit is the copy that persists");
+  assert.equal(retried.publishedRevision, original.revision, "publication metadata stays truthful after resolution");
+  assert.equal(getAdminPanelState(retried.dishes, retried, options).label, "Guardado, pendiente de publicar");
+  assert.equal(await (await request("/")).text(), before, "resolving the conflict overwrites the draft but never publishes");
+  assert.equal((await request("/api/admin/draft", "PUT", { revision: reread.revision, dishes: reread.dishes })).status, 409, "the old revision still conflicts after the retry");
+  const publish = await request("/api/admin/publish", "POST", { revision: retried.revision });
   assert.equal(publish.status, 200);
   const reloaded: CloudDraft = await (await request("/api/admin/draft")).json();
-  assert.equal(reloaded.publishedRevision, saved.revision);
+  assert.equal(reloaded.publishedRevision, retried.revision);
   assert.equal(getAdminPanelState(reloaded.dishes, reloaded, options).label, "Carta publicada");
   const after = await (await request("/")).text();
   assert.ok(after.includes(marker));
   assert.ok(after.includes(imageSrc));
-  console.log("QA D1 aislada: edición → guardado con foto → publicación → recarga conserva el estado; conflicto 409 intacto. Sin escrituras remotas.");
+  console.log("QA D1 aislada: edición → guardado con foto → publicación → recarga conserva el estado; conflicto 409, relectura y reintento explícito intactos; publicar solo tras resolver. Sin escrituras remotas.");
 }
 async function main() {
   // Start our own Worker and ephemeral D1: no Wrangler discovery, real secrets,

@@ -3,6 +3,10 @@ import { initialDraft, parseDraft, type AdminDish } from "./inch-draft";
 export type CloudDraft = { dishes: AdminDish[]; revision: number; updatedAt: string; imageStorage?: boolean; canPublish?: boolean; publishedRevision?: number | null };
 export const cloudRevisionKey = "inch-admin-cloud-revision-v1";
 export const beforeCloudLoadKey = "inch-admin-before-cloud-load-v1";
+// Set before the reviewer overwrites the cloud with their own copy: it holds the
+// reviewed local draft plus the cloud copy about to be replaced, so both are
+// recoverable through the existing recovery controls.
+export const conflictBackupKey = "inch-admin-conflict-backup-v1";
 
 // Uploaded photos remain in the browser until file storage is implemented.
 export function draftForCloud(dishes: AdminDish[], previous = initialDraft): AdminDish[] {

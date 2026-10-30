@@ -1,6 +1,7 @@
 import { createRoot } from "react-dom/client";
 import AdminPreview from "../../src/app/admin/preview/AdminPreview";
 import LoginForm from "../../src/app/admin/LoginForm";
+import { startConflictQA } from "./admin-conflict";
 import "tailwindcss/preflight.css";
 import "../../src/app/admin/preview/admin.css";
 
@@ -10,7 +11,8 @@ if (location.hostname !== "127.0.0.1" || location.port !== "8791") {
 }
 
 const loginMode = new URLSearchParams(location.search).has("login");
-createRoot(document.getElementById("root")!).render(loginMode ? <LoginForm /> : <AdminPreview />);
+if (new URLSearchParams(location.search).has("conflict")) startConflictQA();
+else createRoot(document.getElementById("root")!).render(loginMode ? <LoginForm /> : <AdminPreview />);
 
 const settle = () => new Promise<void>((resolve) => setTimeout(resolve, 50));
 function check(value: unknown, message: string): asserts value {

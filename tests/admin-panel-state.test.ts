@@ -40,3 +40,12 @@ test("computed states and action gates follow precedence without mutating photos
   }
   assert.equal(JSON.stringify(photo), before);
 });
+
+test("an open revision conflict asks for resolution and blocks save and publish", () => {
+  const state = getAdminPanelState([{ ...dishes[0], name: "Editado" }], cloud, { ...idle, conflict: true });
+  assert.equal(state.kind, "conflict");
+  assert.equal(state.label, "Resolver conflicto");
+  assert.equal(state.canSave, false);
+  assert.equal(state.canPublish, false);
+  assert.ok(state.description);
+});

@@ -4,7 +4,8 @@ import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type FormEv
 import { categories, menuSections, type MenuSection } from "../../inch/menu";
 import { initialDraft, parseDraft, readDraftSnapshot, saveLocalDraft, serverDraftSnapshot, subscribeToDraft, type AdminDish } from "../../../lib/inch-draft";
 import { prepareDishImage } from "../../../lib/prepare-dish-image";
-import { useCloudDraft } from "./useCloudDraft";
+import { diffDraft } from "../../../lib/cloud-conflict";
+import { useCloudDraft, type CloudConflict } from "./useCloudDraft";
 import { getAdminPanelState } from "../../../lib/admin-panel-state";
 
 const money = (n: number) => new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR" }).format(n);
@@ -17,15 +18,23 @@ export default function AdminPreview({ cloudflare = false }: { cloudflare?: bool
   const drafts = useMemo(() => parseDraft(rawDraft) ?? initialDraft, [rawDraft]);
   const [editing, setEditing] = useState<AdminDish | null>(null);
   const [status, setStatus] = useState("");
+  const [confirmation, setConfirmation] = useState<{ review: CloudConflict; choice: "keepLocal" | "useCloud" } | null>(null);
   const [imageLoading, setImageLoading] = useState(false);
   const editorRef = useRef<HTMLDialogElement>(null);
   const editorTriggerRef = useRef<HTMLButtonElement | null>(null);
   const editorOpen = editing !== null;
   const cloud = useCloudDraft(cloudflare);
-  const panelState = getAdminPanelState(drafts, cloud.cloud, { enabled: cloudflare, busy: cloud.busy, pending: !!cloud.pending });
+  const panelState = getAdminPanelState(drafts, cloud.cloud, { enabled: cloudflare, busy: cloud.busy, pending: !!cloud.pending, conflict: !!cloud.conflict });
   const sectionCategories = menuSections.find(s => s.id === section)!.categoryIds.map(id => categories.find(c => c.id === id)!);
   const category = categories.find(c => c.id === categoryId)!;
   const rows = drafts.filter(d => d.categoryId === categoryId);
+  const activeConflict = cloud.conflict;
+  const conflictConfirm = confirmation?.review === activeConflict ? confirmation?.choice : "none";
+  function setConflictConfirm(choice: "none" | "keepLocal" | "useCloud") {
+    setConfirmation(choice === "none" || !activeConflict ? null : { review: activeConflict, choice });
+  }
+  const conflictDiff = activeConflict ? diffDraft(activeConflict.local, activeConflict.cloud.dishes) : null;
+  const conflictChanges = conflictDiff ? conflictDiff.dishes.filter(d => d.status !== "same") : [];
 
   useEffect(() => {
     const dialog = editorRef.current;
@@ -53,6 +62,7 @@ export default function AdminPreview({ cloudflare = false }: { cloudflare?: bool
       editorTriggerRef.current?.focus({ preventScroll: true });
     };
   }, [editorOpen]);
+
 
   function changeCategory(id: string) { setCategoryId(id); setEditing(null); setStatus(""); }
   function changeSection(next: MenuSection) { setSection(next); changeCategory(next === "carta" ? "entrantes" : "entradas"); }
@@ -91,12 +101,42 @@ export default function AdminPreview({ cloudflare = false }: { cloudflare?: bool
       <div className="admin-sections" role="group" aria-label="Sección de la carta"><button type="button" aria-pressed={section === "carta"} onClick={() => changeSection("carta")}>Carta</button><button type="button" aria-pressed={section === "sushi"} onClick={() => changeSection("sushi")}>Sushi</button></div>
       <div className="admin-save-state" role="status" data-state={panelState.kind}><strong>{panelState.label}</strong><span>{panelState.description}</span></div>
       <div className="admin-primary-actions">
-        <button type="button" disabled={!!editing || cloud.busy || (cloudflare && !panelState.canSave)} onClick={() => cloudflare ? cloud.save(drafts) : saveDraft()}>Guardar cambios</button>
+        <button type="button" disabled={!!editing || cloud.busy || (cloudflare && !panelState.canSave)} onClick={() => { if (cloudflare) { setStatus(""); void cloud.save(drafts); } else saveDraft(); }}>Guardar cambios</button>
         <button type="button" disabled={!!editing || !panelState.canPublish} onClick={() => cloud.publish(drafts)}>Publicar carta</button>
       </div>
     </div>
     {cloudflare && cloud.error && <p className="admin-feedback admin-feedback-error" role="alert">{cloud.status}</p>}
     {status && <p className="admin-status" role="status">{status}</p>}
+    {cloudflare && activeConflict && conflictDiff && <section className="admin-conflict" aria-label="Revisar diferencias del conflicto de revisiones">
+      <h2>Revisar diferencias antes de continuar</h2>
+      <p>La nube tiene cambios más recientes (versión {activeConflict.cloud.revision}). Compara tu copia con la de la nube. Nada se ha modificado todavía: tu borrador local sigue intacto.</p>
+      <p className="admin-conflict-summary">{conflictDiff.added} solo en tu copia · {conflictDiff.removed} solo en la nube · {conflictDiff.changed} con cambios de campos.</p>
+      {conflictChanges.length ? <ul className="admin-conflict-list">{conflictChanges.map(d => <li key={d.id}>
+        <div className="admin-conflict-dish"><span className="admin-conflict-name">{d.name || d.id}</span><span className={`admin-conflict-badge admin-conflict-badge-${d.status}`}>{d.status === "added" ? "Solo en tu copia" : d.status === "removed" ? "Solo en la nube" : "Cambios"}</span></div>
+        {d.fields.some(f => f.field !== "photo") && <ul className="admin-conflict-fields">{d.fields.filter(f => f.field !== "photo").map(f => <li key={f.field}><strong>{f.label}:</strong> <span className="admin-conflict-local">Tu copia: {f.local || "—"}</span> · <span className="admin-conflict-cloud">Nube: {f.cloud || "—"}</span></li>)}</ul>}
+        {d.photoChanged && <div className="admin-conflict-photos">
+          {/* These are validated local/data/media URLs, already optimized. No Next image service is deployed on Pages. */}
+          {/* eslint-disable @next/next/no-img-element */}
+          <figure><figcaption>Tu copia</figcaption>{d.localPhoto ? <img src={d.localPhoto} alt={`Foto de ${d.name} en tu copia`} loading="lazy" /> : <span className="admin-conflict-nophoto">Sin foto</span>}</figure>
+          <figure><figcaption>Nube</figcaption>{d.cloudPhoto ? <img src={d.cloudPhoto} alt={`Foto de ${d.name} en la nube`} loading="lazy" /> : <span className="admin-conflict-nophoto">Sin foto</span>}</figure>
+          {/* eslint-enable @next/next/no-img-element */}
+        </div>}
+        {d.localPhoto && !d.cloudPhoto && <p className="admin-conflict-note">La foto que ves como «Tu copia» puede ser una imagen de este navegador; se subirá al guardar.</p>}
+      </li>)}</ul> : <p className="admin-conflict-summary">Los datos coinciden; solo difieren los números de revisión.</p>}
+      <div className="admin-conflict-actions">
+        <button type="button" disabled={cloud.busy} onClick={() => { setConflictConfirm("none"); cloud.cancelConflict(); }}>Cancelar y conservar todo</button>
+        <button type="button" disabled={cloud.busy} onClick={() => setConflictConfirm("useCloud")}>Usar versión de la nube</button>
+        <button type="button" disabled={cloud.busy} onClick={() => setConflictConfirm("keepLocal")}>Guardar mi copia</button>
+      </div>
+      {conflictConfirm === "useCloud" && <div className="admin-conflict-confirm" role="alertdialog" aria-label="Confirmar uso de la versión de la nube">
+        <p>Sustituirá el borrador de este navegador por la versión {activeConflict.cloud.revision} de la nube. Tu copia local quedará disponible en «Copias y recuperación». No se publicará nada.</p>
+        <div><button type="button" disabled={cloud.busy} onClick={() => { cloud.acceptConflictCloud(); setConflictConfirm("none"); }}>Sí, usar la versión de la nube</button><button type="button" onClick={() => setConflictConfirm("none")}>Volver</button></div>
+      </div>}
+      {conflictConfirm === "keepLocal" && <div className="admin-conflict-confirm" role="alertdialog" aria-label="Confirmar guardado de tu copia">
+        <p>Esto sustituirá el borrador de la nube (versión {activeConflict.cloud.revision}) con tu copia local revisada y NO publicará la carta. Antes de escribir se guardará una copia de tu borrador y de la versión de la nube en este navegador. ¿Continuar?</p>
+        <div><button type="button" disabled={cloud.busy} onClick={() => { void cloud.saveLocalOverCloud(); setConflictConfirm("none"); }}>Sí, guardar mi copia encima</button><button type="button" onClick={() => setConflictConfirm("none")}>Volver</button></div>
+      </div>}
+    </section>}
     {cloudflare && <details className="admin-recovery">
       <summary>Copias y recuperación</summary>
       <div className="admin-recovery-content">
@@ -104,8 +144,11 @@ export default function AdminPreview({ cloudflare = false }: { cloudflare?: bool
         <div className="admin-recovery-actions">
           <button type="button" disabled={!!editing || cloud.busy} onClick={cloud.requestLoad}>Cargar versión guardada</button>
           <button type="button" disabled={!!editing || cloud.busy} onClick={cloud.restoreBackup}>Recuperar copia anterior</button>
+          <button type="button" disabled={!!editing || cloud.busy} onClick={cloud.restoreConflictBackup}>Recuperar mi copia del conflicto</button>
+          <button type="button" disabled={!!editing || cloud.busy} onClick={cloud.restoreConflictCloud}>Recuperar copia de la nube del conflicto</button>
         </div>
         <p>Al cargar otra versión, se conserva una copia del borrador anterior en este navegador.</p>
+        <p>Tras resolver un conflicto guardando tu copia, aquí se conserva tanto tu borrador como la versión de la nube que se sustituyó.</p>
         {!cloud.error && <p className="admin-recovery-status" role="status">{cloud.status}</p>}
       </div>
     </details>}

@@ -153,3 +153,11 @@ No se ejecutaron migraciones, semillas, restauración ni publicación de catálo
 Git: los cambios de hoy (código, pruebas y documentación) se guardan en la rama `feat/bootstrap` con un commit conventional en español y se empujan a `origin` (GitHub `jonycusac-bot/restaurantes`) tras este despliegue. Como este documento viaja *dentro* de ese mismo commit, aquí no se fija su SHA: se verifica después con `git rev-list HEAD` y `git ls-remote origin feat/bootstrap`. El resultado no sensible de la operación queda en `.cloudflare-build/release-result.json` (ignorado por Git).
 
 La validación del nuevo toolbar y del editor en un **iPhone físico** (teclado, cámara/galería, recuperación) sigue pendiente del usuario. En esta sesión tampoco se probó el panel Cloudflare **autenticado** contra la D1 remota.
+
+### Actualización correctiva del guardado por conflicto — 30/10/2026
+
+Último despliegue comprobado: **https://dd290f1b.inch-carta-demo.pages.dev/**, disponible en https://inch-carta-demo.pages.dev/admin. Corrige el bloqueo sin salida tras un 409: se muestran las diferencias y se permite cancelar, adoptar la nube con respaldo o guardar la copia local revisada con confirmación y respaldo de ambas versiones. No se cambia silenciosamente la revisión del borrador para eludir el conflicto; el servidor mantiene su control de revisión. Guardar sigue sin publicar.
+
+Revisión independiente acotada aprobada. Suite actual: **53 pruebas, 52 correctas, 1 omitida** de PostgreSQL preexistente; TypeScript, ESLint, build y la integración Worker/D1 temporal correctos. El flujo de revisión/confirmación se probó con el componente real en navegador aislado a 320, 390 y 1440 px, con HTTP simulado; no equivale a probar la sesión real del dueño ni Safari físico.
+
+Tras desplegar se comprobó que los hashes de `admin.js`/`admin.css` del dominio estable coinciden con el build nuevo, que el HTML de la carta pública es idéntico al baseline previo, que el login está presente y que la API privada mantiene el 401 sin sesión. Solo se desplegó código; sin migraciones, semillas, restauraciones ni publicación de catálogo. No se accedió al borrador real del teléfono. Detalles: `design/inch/revision-movil/conflicto-guardado.md`. Falta la prueba del usuario: recargar el panel sin borrar los datos del navegador y revisar las diferencias antes de escoger qué copia guardar.
