@@ -181,29 +181,25 @@ async function workerHarness(published: number | null) {
   return { queries, setConflict: () => { conflict = true; }, request: (path = "/api/admin/draft", method = "GET", payload?: unknown) => worker.fetch(new Request(`https://inch.test${path}`, { method, headers: { Cookie: cookie, Origin: "https://inch.test", "Content-Type": "application/json" }, ...(payload === undefined ? {} : { body: JSON.stringify(payload) }) }), env) };
 }
 
-test("draft reads and saves expose persisted publication source revision via read-only metadata", async () => {
+test("central reads expose persisted publication metadata without writes", async () => {
   for (const published of [null, 2, 3]) {
     const harness = await workerHarness(published);
-    const read = await harness.request();
+    const read = await harness.request("/api/admin/menu");
     assert.equal(read.status, 200);
-    assert.equal((await read.json()).publishedRevision, published);
-    const save = await harness.request(undefined, "PUT", { revision: 3, dishes });
-    assert.equal(save.status, 200);
-    const saved = await save.json();
-    assert.equal(saved.revision, 4);
-    assert.equal(saved.publishedRevision, published);
-    assert.deepEqual(saved.dishes, dishes);
+    const data = await read.json();
+    assert.equal(data.publishedRevision, published);
+    assert.equal(data.live, true);
+    assert.equal(data.canPublish, false);
     assert.ok(harness.queries.some(sql => sql.startsWith("SELECT") && sql.includes("inch_publication") && sql.includes("source_revision")));
-    assert.equal(harness.queries.some(sql => /^(UPDATE|INSERT|DELETE).*inch_publication/.test(sql)), false);
+    assert.equal(harness.queries.some(sql => /^(UPDATE|INSERT|DELETE)/.test(sql)), false);
   }
 });
 
-test("revision conflicts still reject draft save and publication at both server checks", async () => {
+test("retired whole-draft and separate publication writes require updating old tabs", async () => {
   const harness = await workerHarness(2);
-  harness.setConflict();
-  assert.equal((await harness.request(undefined, "PUT", { revision: 2, dishes })).status, 409);
-  assert.equal((await harness.request("/api/admin/publish", "POST", { revision: 2 })).status, 409);
-  assert.equal((await harness.request("/api/admin/publish", "POST", { revision: 3 })).status, 409);
-  assert.ok(harness.queries.some(sql => sql.startsWith("UPDATE inch_draft") && sql.includes("AND revision = ?")));
-  assert.ok(harness.queries.some(sql => sql.startsWith("UPDATE inch_publication") && sql.includes("EXISTS(SELECT 1 FROM inch_draft WHERE id = 'inch' AND revision = ?)")));
+  for (const revision of [2, 3]) {
+    assert.equal((await harness.request(undefined, "PUT", { revision, dishes })).status, 426);
+    assert.equal((await harness.request("/api/admin/publish", "POST", { revision })).status, 426);
+  }
+  assert.equal(harness.queries.some(sql => /^(UPDATE|INSERT|DELETE)/.test(sql)), false);
 });

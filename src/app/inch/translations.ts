@@ -1,3 +1,4 @@
+import {cartaDishTranslations} from "../../lib/carta-translations";
 export type Language = "es" | "en" | "de";
 
 export const languages: { code: Language; label: string; flag: string }[] = [
@@ -9,7 +10,7 @@ export const languages: { code: Language; label: string; flag: string }[] = [
 export const ui = {
   es: {
     sectionsLabel: "Secciones de la carta", sections: { carta: "Carta", sushi: "Sushi" }, categoryEmpty: "Categoría preparada. Platos pendientes de incorporar.",
-    locale: "es-ES", preview: "PROPUESTA DE CARTA · INCH", original: "Carta original", home: "INCH, inicio", tagline: "DE ASIA A TU MESA", title: "Nuestra", titleAccent: "carta.", all: "Toda la carta", search: "Buscar plato", dishes: "Platos de la carta", filter: "Filtrar por categoría", language: "Idioma", sample: "Foto de ejemplo", pieces: "piezas", back: "Volver arriba", empty: "No encontramos ese plato. Prueba con otro nombre o categoría.", information: "Alérgenos e información de la carta", allergy: "Consulta al personal antes de pedir si tienes alergias o intolerancias. La información de alérgenos, precios y disponibilidad está pendiente de validación con el restaurante.", photos: "Las cinco fotografías aportadas se utilizan como ejemplos visuales. Algunas muestran surtidos o variedades distintas del plato descrito. La carta original es la referencia para la selección de platos.", categories: { entrantes: "Entrantes", ensaladas: "Ensaladas", sopas: "Sopas", salteados: "Salteados", curry: "Curry", arroces: "Arroces", noodles: "Noodles", infantil: "Menú infantil", entradas: "Entradas", tartar: "Tartar", poke: "Poke Bowls", sashimi: "Sashimi", nigiris: "Nigiris", maki: "Maki", temaki: "Temaki", gunkan: "Gunkan", uramaki: "Uramaki" },
+    locale: "es-ES", preview: "PROPUESTA DE CARTA · INCH", original: "Carta original", home: "INCH, inicio", tagline: "DE ASIA A TU MESA", title: "Nuestra", titleAccent: "carta.", all: "Toda la carta", search: "Buscar plato", dishes: "Platos de la carta", filter: "Filtrar por categoría", language: "Idioma", sample: "Foto de ejemplo", pieces: "piezas", back: "Volver arriba", empty: "No encontramos ese plato. Prueba con otro nombre o categoría.", information: "Alérgenos e información de la carta", allergy: "Consulta al personal antes de pedir si tienes alergias o intolerancias. La información de alérgenos, precios y disponibilidad está pendiente de validación con el restaurante.", photos: "Las cinco fotografías aportadas se utilizan como ejemplos visuales. Algunas muestran surtidos o variedades distintas del plato descrito. La carta original es la referencia para la selección de platos.", categories: { entrantes: "Entrantes", ensaladas: "Ensaladas", sopas: "Sopas", salteados: "Salteados", curry: "Curry", arroces: "Arroces", noodles: "Tallarines", infantil: "Menú infantil", entradas: "Entradas", tartar: "Tartar", poke: "Poke Bowls", sashimi: "Sashimi", nigiris: "Nigiris", maki: "Maki", temaki: "Temaki", gunkan: "Gunkan", uramaki: "Uramaki" },
   },
   en: {
     sectionsLabel: "Menu sections", sections: { carta: "Menu", sushi: "Sushi" }, categoryEmpty: "Category ready. Dishes still to be added.",
@@ -48,5 +49,6 @@ export const dishTranslations: Record<string, { en: [string, string]; de: [strin
   "Curry de tofu y verduras": { en: ["Tofu & vegetable curry", "Choose yellow, red or green. Steamed rice: €3 extra."], de: ["Tofu-Gemüse-Curry", "Gelb, rot oder grün zur Wahl. Gedämpfter Reis: 3 € zusätzlich."] },
   "Massaman de ternera": { en: ["Beef Massaman", "Curry from central Thailand. Steamed rice: €3 extra."], de: ["Massaman mit Rindfleisch", "Curry aus Zentralthailand. Gedämpfter Reis: 3 € zusätzlich."] },
   "Katsukarē": { en: ["Katsukarē", "Japanese curry with crispy chicken. Steamed rice: €3 extra."], de: ["Katsukarē", "Japanisches Curry mit knusprigem Hähnchen. Gedämpfter Reis: 3 € zusätzlich."] },
+  ...cartaDishTranslations,
 };
 

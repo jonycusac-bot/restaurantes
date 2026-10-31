@@ -87,3 +87,16 @@
  .inch-dishList { grid-template-columns: minmax(0,1fr); row-gap: 23px; } .inch-dishLine h3 { font-size: 25px; } .inch-price { font-size: 23px; } .inch-dishFigure img { height: auto; aspect-ratio: 4 / 3; } .inch-dishDescription p { font-size: 13px; } .inch-dishCompact .inch-dishLine h3 { font-size: 22px; } .inch-dish { padding-bottom: 22px; } .inch-portion { font-size: 10px; } .inch-footer a { padding: 8px 0; } .inch-footer { align-items: center; }
 }
 @media(prefers-reduced-motion:reduce) { .inch-page { scroll-behavior: auto; } }
+.inch-dishTitle { min-width: 0; }
+.inch-dishTitle .inch-portion { display: inline-block; margin-top: 6px; }
+.inch-categoryNote { margin: -12px 0 25px; text-align: center; color: var(--muted); font-size: 12px; line-height: 1.6; }
+.inch-variants { list-style: none; padding: 0; margin: 12px 0 0; }
+.inch-variant { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; padding: 9px 0; border-bottom: 1px dotted var(--rule); font-size: 13px; line-height: 1.45; }
+.inch-variant:last-child { border-bottom: 0; padding-bottom: 0; }
+.inch-variant > div { min-width: 0; }
+.inch-variant p { margin-top: 4px; color: var(--muted); font-size: 12px; line-height: 1.6; }
+.inch-variantPrice { white-space: nowrap; font-variant-numeric: tabular-nums; font-weight: 600; }
+.inch-dishSupplement { grid-column: 1 / -1; padding: 17px 20px; border: 1px solid var(--rule); border-radius: 3px; }
+.inch-dishSupplement .inch-dishLine h3 { font-size: 19px; }
+.inch-dishSupplement .inch-price { font-size: 19px; }
+@media(max-width:760px) { .inch-variant { font-size: 14px; padding-block: 10px; } .inch-dishSupplement { padding: 15px; } }

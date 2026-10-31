@@ -1,0 +1,79 @@
+{
+  "scope": "Investigación parcial: SOPA. No se han descargado archivos al proyecto ni modificado catálogo público. Solo registro de candidatas y enlaces verificados.",
+  "delegation_blocker": "Un subagente falló con HTTP 402: límite de créditos concurrentes. Esta parte ha sido investigada directamente por el agente principal.",
+  "candidates": [
+    {
+      "section": "SOPA",
+      "dish": "Sopa de Miso",
+      "source": "https://commons.wikimedia.org/wiki/File:Miso_Soup_001.jpg",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e8/Miso_Soup_001.jpg/1280px-Miso_Soup_001.jpg",
+      "author": "Ocdp",
+      "license": "CC0",
+      "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "visual_review": "Cuenco rojo y negro con caldo, dados de tofu y algas; fondo claro. Candidata genérica, no fotografía del restaurante.",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "image_signature_valid": true,
+      "status": "candidate_not_uploaded",
+      "license_verification": "Wikimedia Commons imageinfo extmetadata consultado en directo; no inferido de la disponibilidad de la foto.",
+      "approval": "pending_owner_visual_review"
+    },
+    {
+      "section": "SOPA",
+      "dish": "Tom Yum",
+      "source": "https://commons.wikimedia.org/wiki/File:Tom_yam_kung_1.jpg",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/93/Tom_yam_kung_1.jpg/1280px-Tom_yam_kung_1.jpg",
+      "author": "Vee Satayamas",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0",
+      "visual_review": "Sopa roja en recipiente metálico con gambas y hierbas. Solo variante de gambas; conservar atribución y señalar cualquier recorte.",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "image_signature_valid": true,
+      "status": "candidate_not_uploaded",
+      "license_verification": "Wikimedia Commons imageinfo extmetadata consultado en directo; no inferido de la disponibilidad de la foto.",
+      "approval": "pending_owner_visual_review"
+    },
+    {
+      "section": "SOPA",
+      "dish": "Tom Kha",
+      "source": "https://commons.wikimedia.org/wiki/File:Tom_Kha_(Coconut_Soup)_with_prawns_-_Little_Thai,_Brighton_2024-03-21.jpg",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b6/Tom_Kha_%28Coconut_Soup%29_with_prawns_-_Little_Thai%2C_Brighton_2024-03-21.jpg/1280px-Tom_Kha_%28Coconut_Soup%29_with_prawns_-_Little_Thai%2C_Brighton_2024-03-21.jpg",
+      "author": "Andy Li",
+      "license": "CC0",
+      "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "visual_review": "Vista cenital, caldo blanco, setas y otros ingredientes parcialmente cubiertos. La fuente identifica gambas; no inferir ingredientes adicionales ni ración.",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "image_signature_valid": true,
+      "status": "candidate_not_uploaded",
+      "license_verification": "Wikimedia Commons imageinfo extmetadata consultado en directo; no inferido de la disponibilidad de la foto.",
+      "approval": "pending_owner_visual_review"
+    },
+    {
+      "section": "SOPA",
+      "dish": "Laksa Lemak",
+      "source": "https://commons.wikimedia.org/wiki/File:Katong_Laksa.jpg",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b3/Katong_Laksa.jpg/1280px-Katong_Laksa.jpg",
+      "author": "Meutia Chaerani / Indradi Soemardjan  http://www.indrani.net",
+      "license": "CC BY 2.5",
+      "license_url": "https://creativecommons.org/licenses/by/2.5",
+      "visual_review": "Referencia visual de Katong laksa, caldo claro y gambas. NO confirma pollo, huevo ni tofu de pescado frito de la receta INCH: pendiente, no aprobar como coincidencia exacta.",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "image_signature_valid": true,
+      "status": "candidate_not_uploaded",
+      "license_verification": "Wikimedia Commons imageinfo extmetadata consultado en directo; no inferido de la disponibilidad de la foto.",
+      "approval": "reference_only_recipe_mismatch"
+    }
+  ],
+  "remaining_in_this_batch": [
+    "Ensalada Inch: fotografía propia o coincidencia por comprobar",
+    "Yam Woonsen",
+    "Ensalada Ginger: fotografía propia o coincidencia por comprobar",
+    "Kapraw",
+    "Gai Pad Med",
+    "Morning Glory: receta de pak choi/espinacas/brotes, no sustituir por kangkung sin validar"
+  ],
+  "catalog_writes": false
+}

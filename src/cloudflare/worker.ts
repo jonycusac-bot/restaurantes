@@ -2,6 +2,7 @@ import { configured, hex, isAdmin, loginAllowed, loginCookie, logoutCookie, pass
 import { adminHtml, loginHtml, publicHtml } from "./html";
 import { parseCloudDishes } from "../lib/cloud-draft";
 import type { CloudDraft } from "../lib/cloud-draft";
+import { applyLiveEdit, validateLiveEditRequest } from "../lib/live-menu";
 import type { Env } from "./types";
 
 class HttpError extends Error { constructor(public status: number, message: string) { super(message); } }
@@ -34,10 +35,7 @@ async function readJson(request: Request, max = 2 * 1024 * 1024): Promise<Record
 function sameOrigin(request: Request) {
   if (request.headers.get("origin") !== new URL(request.url).origin) throw new HttpError(403, "Origen no permitido.");
 }
-function revision(value: unknown): number {
-  if (typeof value !== "number" || !Number.isSafeInteger(value) || value < 1) throw new HttpError(422, "Carga primero una versión válida de la nube.");
-  return value;
-}
+
 type Row = { dishes: string; revision: number; updated_at: string };
 function snapshot(row: Row): CloudDraft {
   const dishes = parseCloudDishes(JSON.parse(row.dishes));
@@ -52,6 +50,46 @@ async function readDraft(env: Env) {
   const row = await env.DB.prepare("SELECT dishes, revision, updated_at FROM inch_draft WHERE id = 'inch'").first<Row>();
   if (!row) throw new HttpError(503, "La carta de prueba todavía no está inicializada.");
   return { ...snapshot(row), publishedRevision: await publishedRevision(env) };
+}
+function renderPublishedSnapshot(html: string): string {
+  // Read only the data embedded in the published snapshot, never the draft.
+  // This also lets existing publications pick up presentation fixes without
+  // writing D1, publishing pending edits, or serving stale server-side ordering.
+  const embedded = html.match(/<script id="inch-menu-data" type="application\/json">([\s\S]*?)<\/script>/)?.[1];
+  if (embedded) {
+    try {
+      const dishes = parseCloudDishes(JSON.parse(embedded));
+      if (dishes) return publicHtml(dishes);
+    } catch { /* Preserve an unsupported old publication rather than substitute demo data. */ }
+  }
+  return html;
+}
+async function saveLive(request: Request, env: Env): Promise<Response> {
+  const edit = validateLiveEditRequest(await readJson(request));
+  if (!edit) throw new HttpError(422, "Revisa los datos del plato. No se ha guardado ningún cambio.");
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const current = await readDraft(env);
+    const merged = applyLiveEdit(current.dishes, edit);
+    if (!merged.ok) return json({ error: "Este dato cambió en otro dispositivo. Elige cuál quieres conservar.", conflicts: merged.conflicts, current }, 409);
+    if (!merged.changed) return json({ ...current, canPublish: false, live: true });
+    const dishes = parseCloudDishes(merged.dishes);
+    if (!dishes) throw new HttpError(422, "La carta no es válida o tiene demasiados platos.");
+    const html = publicHtml(dishes);
+    if (new TextEncoder().encode(html).byteLength > 1800000) throw new HttpError(413, "La carta es demasiado grande. Reduce las descripciones antes de guardar.");
+    const serialized = JSON.stringify(dishes);
+    const nextRevision = current.revision + 1;
+    // D1 executes the batch in one transaction. changes() gates publication on
+    // THIS draft UPDATE succeeding; a stale compare-and-swap publishes nothing.
+    // An error in either SQL statement rolls back the whole batch.
+    const result = await env.DB.batch([
+      env.DB.prepare("UPDATE inch_draft SET dishes = ?, revision = revision + 1, updated_at = strftime('%Y-%m-%dT%H:%M:%fZ','now') WHERE id = 'inch' AND revision = ?").bind(serialized, current.revision),
+      env.DB.prepare("INSERT INTO inch_publication (id,html,source_revision) SELECT 'inch', ?, ? WHERE changes() = 1 AND EXISTS(SELECT 1 FROM inch_draft WHERE id = 'inch' AND revision = ? AND dishes = ?) ON CONFLICT(id) DO UPDATE SET html = excluded.html, source_revision = excluded.source_revision, revision = inch_publication.revision + 1, updated_at = strftime('%Y-%m-%dT%H:%M:%fZ','now')").bind(html, nextRevision, nextRevision, serialized),
+    ]);
+    if (!result[0]?.meta.changes) continue;
+    if (result[1]?.meta.changes !== 1) throw new Error("LIVE_PUBLICATION_NOT_CONFIRMED");
+    return json({ ...await readDraft(env), canPublish: false, live: true });
+  }
+  throw new HttpError(503, "Se está guardando otro cambio. Tu edición se conserva; vuelve a pulsar Guardar.");
 }
 export function imageType(bytes: Uint8Array): { type: string; extension: string } | null {
   if (bytes.length < 16) return null;
@@ -85,7 +123,7 @@ async function handle(request: Request, env: Env): Promise<Response> {
     if (!["GET", "HEAD"].includes(request.method)) return new Response(null, { status: 405 });
     const row = await env.DB.prepare("SELECT html FROM inch_publication WHERE id = 'inch'").first<{ html: string }>();
     if (!row) throw new HttpError(503, "La carta de prueba todavía no está inicializada.");
-    return new Response(request.method === "HEAD" ? null : row.html, { headers: { ...privateHeaders, "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" } });
+    return new Response(request.method === "HEAD" ? null : renderPublishedSnapshot(row.html), { headers: { ...privateHeaders, "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" } });
   }
   if (["/api/admin/login", "/api/admin/logout"].includes(path)) {
     if (request.method !== "POST") throw new HttpError(405, "Método no permitido.");
@@ -105,26 +143,10 @@ async function handle(request: Request, env: Env): Promise<Response> {
     if (!await isAdmin(request, env)) throw new HttpError(401, "Tu sesión ha caducado. Vuelve a entrar; el borrador local se conserva.");
     if (request.method !== "GET") sameOrigin(request);
     if (path === "/api/admin/images" && request.method === "POST") return saveImage(request, env);
+    if (path === "/api/admin/menu" && request.method === "GET") return json({ ...await readDraft(env), canPublish: false, live: true });
+    if (path === "/api/admin/menu" && request.method === "PATCH") return saveLive(request, env);
     if (path === "/api/admin/draft" && request.method === "GET") return json(await readDraft(env));
-    if (path === "/api/admin/draft" && request.method === "PUT") {
-      const body = await readJson(request);
-      const expected = revision(body.revision);
-      const dishes = parseCloudDishes(body.dishes);
-      if (!dishes) throw new HttpError(422, "Revisa los datos de los platos y sube las fotos antes de guardar.");
-      const row = await env.DB.prepare("UPDATE inch_draft SET dishes = ?, revision = revision + 1, updated_at = strftime('%Y-%m-%dT%H:%M:%fZ','now') WHERE id = 'inch' AND revision = ? RETURNING dishes, revision, updated_at").bind(JSON.stringify(dishes), expected).first<Row>();
-      if (!row) throw new HttpError(409, "Hay cambios más recientes en la nube. Tu copia local se conserva; carga la nube antes de guardar.");
-      return json({ ...snapshot(row), publishedRevision: await publishedRevision(env) });
-    }
-    if (path === "/api/admin/publish" && request.method === "POST") {
-      const expected = revision((await readJson(request, 1024)).revision);
-      const draft = await readDraft(env);
-      if (draft.revision !== expected) throw new HttpError(409, "El borrador de la nube ha cambiado. Vuelve a cargarlo antes de publicar.");
-      const html = publicHtml(draft.dishes);
-      if (new TextEncoder().encode(html).byteLength > 1800000) throw new HttpError(413, "La carta es demasiado grande para esta prueba. Reduce las descripciones antes de publicar.");
-      const result = await env.DB.prepare("UPDATE inch_publication SET html = ?, revision = revision + 1, source_revision = ?, updated_at = strftime('%Y-%m-%dT%H:%M:%fZ','now') WHERE id = 'inch' AND EXISTS(SELECT 1 FROM inch_draft WHERE id = 'inch' AND revision = ?)").bind(html, expected, expected).run();
-      if (!result.meta.changes) throw new HttpError(409, "El borrador ha cambiado durante la publicación. Vuelve a cargarlo.");
-      return json({ ok: true, sourceRevision: expected });
-    }
+    if ((path === "/api/admin/draft" && request.method === "PUT") || (path === "/api/admin/publish" && request.method === "POST")) throw new HttpError(426, "Actualiza el panel para guardar con el nuevo editor. Tus copias locales se conservan.");
     throw new HttpError(405, "Operación no disponible.");
   }
   return env.ASSETS.fetch(request);

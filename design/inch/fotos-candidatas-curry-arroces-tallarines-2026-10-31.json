@@ -1,0 +1,173 @@
+{
+  "scope": "Investigación directa del agente principal tras fallo del subagente de Curry/Arroces/Tallarines/Infantil por HTTP 402. Candidatas, no aprobadas ni publicadas.",
+  "image_downloads": "Solo memoria y hoja temporal en scratch para revisión visual, fuera de los recursos del proyecto.",
+  "catalog_writes": false,
+  "reviewed": [
+    {
+      "file": "File:Green curry chicken, Cité Impériale, Paris 001.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Green_curry_chicken,_Cit%C3%A9_Imp%C3%A9riale,_Paris_001.jpg",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/03/Green_curry_chicken%2C_Cit%C3%A9_Imp%C3%A9riale%2C_Paris_001.jpg/1280px-Green_curry_chicken%2C_Cit%C3%A9_Imp%C3%A9riale%2C_Paris_001.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "author": "Guilhem Vellut  from Paris, France",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0",
+      "width": 5472,
+      "height": 3648,
+      "description": "Green Curry Chicken @ Cité Impériale @ Paris",
+      "dish": "Curry tailandés",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "decoded_size": [
+        1280,
+        853
+      ],
+      "image_format": "JPEG",
+      "status": "pending_owner_visual_review",
+      "visual_review": "La fuente identifica curry verde con pollo; salsa muy clara. Foto horizontal, plato decorado, fondo con objetos. No representa los tres colores ni todas las proteínas.",
+      "license_verified_by": "Wikimedia Commons API imageinfo/extmetadata consultada en directo"
+    },
+    {
+      "file": "File:Chicken Massaman Curry -Bangkok -Food (30363542667).jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Chicken_Massaman_Curry_-Bangkok_-Food_(30363542667).jpg",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/19/Chicken_Massaman_Curry_-Bangkok_-Food_%2830363542667%29.jpg/1280px-Chicken_Massaman_Curry_-Bangkok_-Food_%2830363542667%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "author": "Vee Satayamas  from Bangkok, Thailand",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0",
+      "width": 5354,
+      "height": 3570,
+      "description": "Chicken Massaman Curry #Bangkok #Food",
+      "dish": "Massaman",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "decoded_size": [
+        1280,
+        853
+      ],
+      "image_format": "JPEG",
+      "status": "pending_owner_visual_review",
+      "visual_review": "La fuente identifica pollo. Cuenco blanco con curry rojo-anaranjado y piezas grandes; encuadre horizontal limpio. No es foto del restaurante.",
+      "license_verified_by": "Wikimedia Commons API imageinfo/extmetadata consultada en directo"
+    },
+    {
+      "file": "File:Awa-odori Chicken Katsu Curry 02.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Awa-odori_Chicken_Katsu_Curry_02.jpg",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Awa-odori_Chicken_Katsu_Curry_02.jpg/1280px-Awa-odori_Chicken_Katsu_Curry_02.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "author": "ノボホショコロトソ",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0",
+      "width": 4032,
+      "height": 3024,
+      "description": "徳島県文化の森総合公園の三館棟にて、阿波尾鶏チキンカツカレー",
+      "dish": "Katsukaré",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "decoded_size": [
+        1280,
+        960
+      ],
+      "image_format": "JPEG",
+      "status": "pending_owner_visual_review",
+      "visual_review": "La fuente identifica chicken katsu curry. Se ve pollo empanado cortado con salsa y arroz; bandeja y cubiertos en el borde. Candidata para demo, no ración del restaurante.",
+      "license_verified_by": "Wikimedia Commons API imageinfo/extmetadata consultada en directo"
+    },
+    {
+      "file": "File:Khao Phat Kung.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Khao_Phat_Kung.jpg",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/72/Khao_Phat_Kung.jpg/1280px-Khao_Phat_Kung.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "author": "User:Mattes",
+      "license": "Public domain",
+      "license_url": "",
+      "width": 2112,
+      "height": 2816,
+      "description": "\"Khao Phat Kung\" (fried rice with shrimps) in a container - main dish of the  Thai cuisine  in a polystyrene food container.",
+      "dish": "Arroz Frito",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "decoded_size": [
+        1280,
+        1707
+      ],
+      "image_format": "JPEG",
+      "status": "rejected_presentation",
+      "visual_review": "Se ve arroz con gambas en envase de poliestireno para llevar y cuchara de plástico. Descartada para la presentación visual al dueño.",
+      "license_verified_by": "Wikimedia Commons API imageinfo/extmetadata consultada en directo"
+    },
+    {
+      "file": "File:Chicken Chow Mein.JPG",
+      "source": "https://commons.wikimedia.org/wiki/File:Chicken_Chow_Mein.JPG",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fe/Chicken_Chow_Mein.JPG/1280px-Chicken_Chow_Mein.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "author": "Miansari66",
+      "license": "CC0",
+      "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "width": 2816,
+      "height": 2112,
+      "description": "Chow Mein",
+      "dish": "Al Huevo",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "decoded_size": [
+        1280,
+        960
+      ],
+      "image_format": "JPEG",
+      "status": "reference_only_recipe_unconfirmed",
+      "visual_review": "Foto cenital de chow mein de pollo, fideos finos y verduras sobre plato blanco y mantel rojo. La fuente no confirma específicamente pasta de trigo al huevo: no aprobar automáticamente para Al Huevo.",
+      "license_verified_by": "Wikimedia Commons API imageinfo/extmetadata consultada en directo"
+    },
+    {
+      "file": "File:Yaki udon by redjar in Cambridge, Massachusetts.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Yaki_udon_by_redjar_in_Cambridge,_Massachusetts.jpg",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/26/Yaki_udon_by_redjar_in_Cambridge%2C_Massachusetts.jpg/1280px-Yaki_udon_by_redjar_in_Cambridge%2C_Massachusetts.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "author": "redjar  from Japanese restaurant  Wagamama  , on John F. Kennedy Street (the Galeria) in Harvard Square, Cambridge, Massachusetts",
+      "license": "CC BY-SA 2.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+      "width": 2304,
+      "height": 3072,
+      "description": "Yaki  udon  at the Japanese restaurant  Wagamama Boston One LLC   [2] , on John F. Kennedy Street (the Galeria) in  Harvard Square ,  Cambridge, Massachusetts",
+      "dish": "Udon Japonés",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "decoded_size": [
+        1280,
+        1707
+      ],
+      "image_format": "JPEG",
+      "status": "rejected_presentation",
+      "visual_review": "Retrato de una comensal levantando tallarines; no es una foto centrada únicamente en el plato. Descartada para carta visual y para evitar incluir personas.",
+      "license_verified_by": "Wikimedia Commons API imageinfo/extmetadata consultada en directo"
+    },
+    {
+      "file": "File:Phat thai - Chiang Mai - 2017-07-08 (002).jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Phat_thai_-_Chiang_Mai_-_2017-07-08_(002).jpg",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f8/Phat_thai_-_Chiang_Mai_-_2017-07-08_%28002%29.jpg/1280px-Phat_thai_-_Chiang_Mai_-_2017-07-08_%28002%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "author": "Iudexvivorum",
+      "license": "CC0",
+      "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "width": 4032,
+      "height": 3024,
+      "description": "Phat thai   (ผัดไทย) as sold in Chiang Mai, Thailand.",
+      "dish": "Pad Thai Original",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "decoded_size": [
+        1280,
+        960
+      ],
+      "image_format": "JPEG",
+      "status": "pending_owner_visual_review",
+      "visual_review": "Foto cenital de Pad Thai con brotes, lima y cuenco de cacahuetes; el plato queda parcialmente cortado. La proteína concreta no se confirma: no etiquetar una variante por suposición.",
+      "license_verified_by": "Wikimedia Commons API imageinfo/extmetadata consultada en directo"
+    }
+  ],
+  "missing": [
+    {
+      "dish": "Vermicelli de Singapur",
+      "status": "missing_faithful_candidate",
+      "reason": "La fuente Singapore Fried Noodles - Unithai especifica cerdo, no coincide con pollo+ternera+langostinos. Otras imágenes Singapore noodles no confirman fideos de guisantes. No sustituir por vermicelli de arroz."
+    },
+    {
+      "dish": "Menú infantil",
+      "status": "missing_faithful_candidate",
+      "reason": "Las búsquedas inicial y alternativa no aportan foto documentada de una ración infantil de las combinaciones permitidas. No rotular una ración adulta como infantil."
+    }
+  ]
+}

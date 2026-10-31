@@ -7,11 +7,18 @@ import { prepareDishImage } from "../../../lib/prepare-dish-image";
 import { diffDraft } from "../../../lib/cloud-conflict";
 import { useCloudDraft, type CloudConflict } from "./useCloudDraft";
 import { getAdminPanelState } from "../../../lib/admin-panel-state";
+import LiveAdminPreview from "./LiveAdminPreview";
 
 const money = (n: number) => new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR" }).format(n);
 const localPreview = process.env.NODE_ENV === "development";
 
 export default function AdminPreview({ cloudflare = false }: { cloudflare?: boolean } = {}) {
+  return cloudflare ? <LiveAdminPreview /> : <LegacyAdminPreview />;
+}
+
+// Retained for the separate local preview and its historical regression fixtures.
+// Cloudflare always uses the central, direct-save editor above.
+export function LegacyAdminPreview({ cloudflare = false }: { cloudflare?: boolean } = {}) {
   const [section, setSection] = useState<MenuSection>("carta");
   const [categoryId, setCategoryId] = useState("entrantes");
   const rawDraft = useSyncExternalStore(subscribeToDraft, readDraftSnapshot, serverDraftSnapshot);

@@ -1,5 +1,5 @@
 import { createRoot } from "react-dom/client";
-import AdminPreview from "../../src/app/admin/preview/AdminPreview";
+import { LegacyAdminPreview as AdminPreview } from "../../src/app/admin/preview/AdminPreview";
 import { initialDraft, saveLocalDraft, storageKey } from "../../src/lib/inch-draft";
 import { cloudRevisionKey, conflictBackupKey, type CloudDraft } from "../../src/lib/cloud-draft";
 

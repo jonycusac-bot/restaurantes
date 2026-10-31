@@ -3,12 +3,13 @@ import { categories, type Category, type Dish } from "../app/inch/menu";
 export type AdminDish = { id: string; categoryId: string; name: string; description: string; price: number; hidden: boolean; imageSrc: string; imageName: string };
 export const storageKey = "inch-admin-preview-draft-v1";
 const changeEvent = "inch-admin-preview-updated";
-export const initialDraft: AdminDish[] = categories.flatMap(c => c.dishes.map((d, i) => ({ id: `${c.id}-${i}`, categoryId: c.id, name: d.name, description: d.description, price: d.price, hidden: false, imageSrc: d.image ? `/inch/${d.image}.webp` : "", imageName: d.image ? `${d.image}.webp` : "Sin imagen" })));
+export const initialDraft: AdminDish[] = categories.flatMap(c => c.dishes.map((d, i) => ({ id: d.id ?? `${c.id}-${i}`, categoryId: c.id, name: d.name, description: d.description, price: d.price, hidden: false, imageSrc: d.image ? `/inch/${d.image}.webp` : "", imageName: d.image ? `${d.image}.webp` : "Sin imagen" })));
+const originals = new Map<string, Dish>(categories.flatMap(c => c.dishes.map((d, i) => [d.id ?? `${c.id}-${i}`, d] as const)));
+export function menuDishWithMetadata(dish: AdminDish): Dish {
+  return { ...originals.get(dish.id), id: dish.id, name: dish.name, description: dish.description, price: dish.price, image: undefined, imageSrc: dish.imageSrc };
+}
 export function applyDraftToMenu(dishes: AdminDish[]): Category[] {
-  const originals = new Map<string, Dish>(categories.flatMap(c => c.dishes.map((d, i) => [`${c.id}-${i}`, d] as const)));
-  return categories.map(c => ({ ...c, dishes: dishes.filter(d => d.categoryId === c.id && !d.hidden).map(d => ({
-    ...originals.get(d.id), id: d.id, name: d.name, description: d.description, price: d.price, image: undefined, imageSrc: d.imageSrc,
-  })) }));
+  return categories.map(c => ({ ...c, dishes: dishes.filter(d => d.categoryId === c.id && !d.hidden).map(menuDishWithMetadata) }));
 }
 
 export function parseDraft(raw: string): AdminDish[] | null {

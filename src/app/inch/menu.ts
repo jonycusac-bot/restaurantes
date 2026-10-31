@@ -1,5 +1,9 @@
-export type Dish = { id?: string; name: string; description: string; price: number; note?: string; image?: string; imageSrc?: string; imageAlt?: string };
-export type Category = { id: string; name: string; subtitle?: string; dishes: Dish[] };
+import type { PresentableDish } from "../../lib/menu-presentation";
+import { cartaOriginal } from "../../lib/carta-original";
+import { buildCartaCategories } from "../../lib/carta-menu";
+
+export type Dish = PresentableDish;
+export type Category = { id: string; name: string; subtitle?: string; note?: string; dishes: Dish[] };
 
 // Selección transcrita de la carta pública enlazada el 28/10/2026.
 // No sustituye la validación de precios, disponibilidad o alérgenos por el restaurante.
@@ -49,14 +53,7 @@ export const menuSections: { id: MenuSection; categoryIds: string[] }[] = [
 
 const existing = (id: string) => prototypeCategories.find(c => c.id === id)!.dishes;
 export const categories: Category[] = [
-  { id: "entrantes", name: "Entrantes", dishes: existing("entrantes").filter(d => d.name !== "Edamame") },
-  { id: "ensaladas", name: "Ensaladas", dishes: [] },
-  { id: "sopas", name: "Sopas", dishes: existing("ramen") },
-  { id: "salteados", name: "Salteados", dishes: [] },
-  { id: "curry", name: "Curry", dishes: existing("curry") },
-  { id: "arroces", name: "Arroces", dishes: [] },
-  { id: "noodles", name: "Noodles", dishes: existing("noodles") },
-  { id: "infantil", name: "Menú infantil", dishes: [] },
+  ...buildCartaCategories(cartaOriginal),
   { id: "entradas", name: "Entradas", dishes: existing("entrantes").filter(d => d.name === "Edamame") },
   { id: "tartar", name: "Tartar", dishes: [] },
   { id: "poke", name: "Poke Bowls", dishes: [] },

@@ -8,22 +8,11 @@ function cloudPanel() {
   return renderToStaticMarkup(createElement<{ cloudflare?: boolean }>(AdminPreview, { cloudflare: true }));
 }
 
-test("el panel muestra Guardar cambios y Publicar carta como únicas acciones principales", () => {
+test("el panel central explica Guardar directo sin controles de publicación ni copias completas", () => {
   const html = cloudPanel();
-  const primary = html.match(/<div class="admin-primary-actions">([\s\S]*?)<\/div>/)?.[1];
-  assert.ok(primary, "Debe existir un grupo claro de acciones principales");
-  assert.match(primary, />Guardar cambios<\/button>/);
-  assert.match(primary, />Publicar carta<\/button>/);
-  assert.equal((primary.match(/<button\b/g) ?? []).length, 2);
+  assert.match(html, /Los cambios se ven en la carta al guardar/);
+  assert.match(html, /Cargando carta/);
   assert.match(html, /Ver carta pública/);
-  assert.doesNotMatch(html, /Guardar borrador local|Borrador local cargado|Publicar cambios|Guardar borrador en nube/);
-  const recovery = html.match(/<details\b([^>]*)>([\s\S]*?)<\/details>/);
-  assert.ok(recovery, "La recuperación debe estar agrupada en un apartado plegable");
-  assert.doesNotMatch(recovery[1], /\bopen(?:\s|=|$)/);
-  assert.match(recovery[2], /<summary>Copias y recuperación<\/summary>/);
-  assert.match(recovery[2], /Cargar versión guardada/);
-  assert.match(recovery[2], /Recuperar copia anterior/);
-  const daily = html.replace(recovery[0], "");
-  assert.doesNotMatch(daily, /Cargar versión guardada|Recuperar copia anterior/);
-  assert.match(html, /data-state=/);
+  assert.doesNotMatch(html, /Publicar carta|Guardar cambios|Aplicar al borrador|Guardar mi copia|Usar versión de la nube|Copias y recuperación/);
+  assert.doesNotMatch(html, /Poh Pia/, "No mostrar un catálogo demo o un borrador antiguo mientras llega la carta central");
 });
