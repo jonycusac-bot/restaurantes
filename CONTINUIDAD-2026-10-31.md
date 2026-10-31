@@ -1,5 +1,7 @@
 # INCH · Continuidad del 31/10/2026
 
+> **Estado actualizado:** leer primero `CONTINUIDAD-ACTUAL-2026-10-31.md`. Las secciones históricas de este documento pueden describir un entorno anterior al despliegue y al commit/push.
+
 ## Corrección de fotos publicada y confirmada en iPhone
 
 El usuario informó desde Safari/iPhone de `No se pudo reducir esta imagen al tamaño permitido` al seleccionar una foto antigua de su teléfono; la foto de Pollo con Sésamo no quedó asociada, aunque el precio sí llegó a publicarse. En `src/lib/prepare-dish-image.ts` se añadió JPEG alternativo cuando la petición WebP devuelve PNG y reducción progresiva de dimensiones si el tamaño continúa excedido. `tests/prepare-dish-image.test.ts` falló con el mensaje original antes del cambio y pasó después; suite: 90 correctas, una omitida, TypeScript/ESLint/build correctos. En QA aislada se seleccionó una imagen sintética grande con WebP→PNG simulado, se obtuvo JPEG de menos de 750 KB y Guardar la publicó con foto servida por `/media/` en D1 temporal. Esa QA se detuvo para no dejar la foto de prueba. El subagente revisó y planteó asuntos adicionales (HEIC/MIME de origen, memoria, transparencia), no demostrados como causa de este error concreto; el servidor valida los bytes subidos y el resultado de la prueba cumplió el límite.
