@@ -2,6 +2,12 @@
 
 Este documento es la referencia **actual**; `CONTINUIDAD-2026-10-31.md`, `CLOUDFLARE.md` y `design/inch/revision-movil/carta-original-local.md` conservan detalles y etapas históricas, incluidas afirmaciones antiguas de «solo local» que ya no describen el estado de hoy.
 
+## Para retomar el domingo 1/11: grupos y fotografías (decisión pendiente)
+
+El usuario detectó que «Gyozas · 6 unidades» usa un encabezado con otra tipografía. Después señaló que **Tom Yum y Tom Kha no se pueden abrir pulsando su encabezado** en Administración. Ambos, como Gyozas, son grupos visuales: **solo las filas de sus variantes Pollo/Gambas son botones editables**. Los precios y fotos se guardan en cada variante, no en el encabezado. La carta pública muestra **la primera variante en orden que tenga foto** (`groupMenuDishes` en `src/lib/menu-presentation.ts`), no la primera foto subida cronológicamente; si ambas tienen imagen, se muestra Pollo antes que Gambas. El usuario dijo «no lo sé, voy a probar» y pidió continuar mañana. **No se cambió código, estilo, foto ni estructura por esta conversación.** Preguntar por el resultado de su prueba antes de decidir si el encabezado debe abrir un editor de foto/descripción común y cómo elegir una foto representativa; no asumir que quiere fusionar los precios.
+
+Respaldo privado de cierre, anterior a cualquier prueba que haga después: `backups-private/2026-10-31-release-live/closing-snapshot.sql`, exportado y comprobado con SQLite (`integrity_check=ok`; revisiones borrador 28/publicación 25, origen 28; doce imágenes binarias). Ignorado por Git. **No restaurarlo sobre ediciones nuevas**; confirmar el estado remoto antes de cualquier futura escritura.
+
 ## Qué está funcionando
 
 - Carta pública: https://inch-carta-demo.pages.dev/ · Gestión: https://inch-carta-demo.pages.dev/admin. Último despliegue de código comprobado: `https://aa9b0e1f.inch-carta-demo.pages.dev/` (corrección de compresión de fotos). Proyecto Pages y D1 `inch-carta-demo`; no se usa la antigua integración Netlify/PostgreSQL.
