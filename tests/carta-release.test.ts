@@ -5,6 +5,7 @@ import {menuSections} from "../src/app/inch/menu";
 import {approvedCartaDishes} from "../src/lib/carta-release";
 import {cartaReleaseStatements} from "../src/lib/carta-release";
 import {Miniflare} from "miniflare";
+import {publicHtml} from "../src/cloudflare/html";
 
 test("publicación aprobada toma precios originales, conserva fotos y Sushi y no copia valores de QA",()=>{
  const legacy=initialDraft.filter(d=>!d.id.startsWith("carta-")).map(d=>d.id==="entrantes-0"?{...d,price:14.14}:d);
@@ -52,5 +53,23 @@ test("la publicación completa es atómica en D1 y no pisa una revisión concurr
   for(const statement of statements)await db.prepare(statement).run();
   assert.equal((await db.prepare("SELECT dishes FROM inch_draft").first<{dishes:string}>())!.dishes,concurrent,"No sobrescribir otro cambio después del respaldo");
   assert.equal((await db.prepare("SELECT html FROM inch_publication").first<{html:string}>())!.html,before.publication.html);
+ }finally{await runtime.dispose();}
+});
+
+test("una carta de más de cien platos cabe en el límite SQL de D1 sin perder el guardado atómico",async()=>{
+ const runtime=new Miniflare({host:"127.0.0.1",port:0,enableDevRegistry:false,telemetry:{enabled:false},workers:[{config:{name:"release-large-qa",compatibilityDate:"2026-10-29",manifest:{mainModule:"worker.js",modules:{"worker.js":{type:"esm",contents:'export default {fetch(){return new Response("QA")}}'}}},env:{DB:{type:"d1",id:"release-large-qa"}}}}]});
+ try{
+  await runtime.ready;const db=await runtime.getD1Database("DB");
+  await db.prepare("CREATE TABLE inch_draft(id TEXT PRIMARY KEY,dishes TEXT,revision INTEGER,updated_at TEXT)").run();
+  await db.prepare("CREATE TABLE inch_publication(id TEXT PRIMARY KEY,html TEXT,revision INTEGER,source_revision INTEGER,updated_at TEXT)").run();
+  const beforeDishes=initialDraft;
+  const afterDishes=initialDraft.map((dish,index)=>index===0?{...dish,price:dish.price+0.01}:dish);
+  const oldHtml=publicHtml(beforeDishes);const newHtml=publicHtml(afterDishes);
+  const baseline={draft:{dishes:JSON.stringify(beforeDishes),revision:1},publication:{html:oldHtml,revision:1,source_revision:1}};
+  await db.prepare("INSERT INTO inch_draft VALUES('inch',?,1,'old')").bind(baseline.draft.dishes).run();
+  await db.prepare("INSERT INTO inch_publication VALUES('inch',?,1,1,'old')").bind(oldHtml).run();
+  for(const statement of cartaReleaseStatements(baseline,afterDishes,newHtml))await db.prepare(statement).run();
+  assert.deepEqual(JSON.parse((await db.prepare("SELECT dishes FROM inch_draft").first<{dishes:string}>())!.dishes),afterDishes);
+  assert.equal((await db.prepare("SELECT html FROM inch_publication").first<{html:string}>())!.html,newHtml);
  }finally{await runtime.dispose();}
 });

@@ -38,9 +38,14 @@ const bases:Record<string,Translation>={
  "Menú infantil":{en:["Kids Menu","Choose noodles or rice with chicken, beef or king prawns."],de:["Kindermenü","Nudeln oder Reis mit Hähnchen, Rindfleisch oder Riesengarnelen zur Wahl."]},
 };
 export const categoryNoteTranslations:Record<string,{en:string;de:string}>={
- curry:{en:"Served with steamed rice",de:"Serviert mit gedämpftem Reis"},
- arroces:{en:"All rice dishes include vegetables and egg",de:"Alle Reisgerichte enthalten Gemüse und Ei"},
- noodles:{en:"All noodle dishes include vegetables",de:"Alle Nudelgerichte enthalten Gemüse"},
+  curry:{en:"Served with steamed rice",de:"Serviert mit gedämpftem Reis"},
+  arroces:{en:"All rice dishes include vegetables and egg",de:"Alle Reisgerichte enthalten Gemüse und Ei"},
+  noodles:{en:"All noodle dishes include vegetables",de:"Alle Nudelgerichte enthalten Gemüse"},
+  nigiris:{en:"2 pieces",de:"2 Stück"},
+  maki:{en:"8 pieces",de:"8 Stück"},
+  temaki:{en:"1 piece",de:"1 Stück"},
+  gunkan:{en:"2 pieces",de:"2 Stück"},
+  uramaki:{en:"8 pieces",de:"8 Stück"},
 };
 export const cartaDishTranslations:Record<string,Translation>={};
 for(const category of cartaOriginal) for(const item of category.items){

@@ -15,8 +15,10 @@ export function cartaReleaseStatements(before:CartaReleaseBaseline,dishes:AdminD
  const stamp="strftime('%Y-%m-%dT%H:%M:%fZ','now')";
  // A narrowly matched, temporary trigger makes the one guarded catalogue UPDATE
  // publish its HTML in the same SQLite statement/transaction. Never drop images.
+ // OLD.dishes is checked by the guarded UPDATE below; repeating it in the
+ // trigger would exceed D1's SQL statement length for the expanded catalogue.
  return [
-  `CREATE TRIGGER ${trigger} AFTER UPDATE OF dishes ON inch_draft WHEN NEW.id='inch' AND OLD.revision=${before.draft.revision} AND NEW.revision=${revision} AND OLD.dishes=${quote(before.draft.dishes)} AND NEW.dishes=${quote(payload)} BEGIN UPDATE inch_publication SET html=${quote(html)},revision=${publicationRevision},source_revision=${revision},updated_at=${stamp} WHERE ${publicationGuard}; SELECT CASE WHEN changes()!=1 THEN RAISE(ABORT,'La publicación cambió después del respaldo') END; END`,
+  `CREATE TRIGGER ${trigger} AFTER UPDATE OF dishes ON inch_draft WHEN NEW.id='inch' AND OLD.revision=${before.draft.revision} AND NEW.revision=${revision} AND NEW.dishes=${quote(payload)} BEGIN UPDATE inch_publication SET html=${quote(html)},revision=${publicationRevision},source_revision=${revision},updated_at=${stamp} WHERE ${publicationGuard}; SELECT CASE WHEN changes()!=1 THEN RAISE(ABORT,'La publicación cambió después del respaldo') END; END`,
   `UPDATE inch_draft SET dishes=${quote(payload)},revision=${revision},updated_at=${stamp} WHERE id='inch' AND revision=${before.draft.revision} AND dishes=${quote(before.draft.dishes)} AND EXISTS(SELECT 1 FROM inch_publication WHERE ${publicationGuard})`,
   `DROP TRIGGER ${trigger}`,
  ];

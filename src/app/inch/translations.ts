@@ -52,3 +52,18 @@ export const dishTranslations: Record<string, { en: [string, string]; de: [strin
   ...cartaDishTranslations,
 };
 
+// The owner renamed these existing Sushi entries; retain their known
+// translations without changing the new names or inventing descriptions.
+for (const [name, previous] of Object.entries({
+  "Sashimi de Salmón": "Sashimi de salmón",
+  "Nigiri de Salmón": "Nigiri de salmón",
+  "Uramaki de Salmón": "Uramaki de salmón",
+  "Uramaki California": "California Roll",
+  "Uramaki de Langostino en Tempura": "Langostino Tempura Roll",
+})) {
+  dishTranslations[name] = {
+    en: [name, dishTranslations[previous].en[1]],
+    de: [name, dishTranslations[previous].de[1]],
+  };
+}
+

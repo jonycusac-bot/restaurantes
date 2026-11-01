@@ -2,6 +2,8 @@
 window.checkGlobalSearch = async () => {
   const check = (condition, message) => { if (!condition) throw new Error(message); };
   check(location.origin === "http://127.0.0.1:4173", "Solo QA local");
+  document.getElementById("inch-tab-carta").click();
+  await new Promise(resolve => setTimeout(resolve, 100));
   const input = document.querySelector(".inch-search input");
   const type = async value => {
     Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value").set.call(input, value);
@@ -14,9 +16,9 @@ window.checkGlobalSearch = async () => {
   await type("pollo");
   check(document.querySelectorAll(".inch-category").length > 1, "Coincidencias agrupadas en varias categorías");
   check(!!document.querySelector(".inch-searchScope"), "Búsqueda global indicada");
-  await type("inch roll");
+  await type("uramaki california");
   check([...document.querySelectorAll(".inch-category h2")].map(node => node.textContent).join(" ").includes("Uramaki"), "Sushi aparece desde Carta");
-  check([...document.querySelectorAll(".inch-dish h3")].some(node => node.textContent === "Inch Roll"), "Inch Roll aparece");
+  check([...document.querySelectorAll(".inch-dish h3")].some(node => node.textContent === "Uramaki California"), "Uramaki California aparece");
   await type("no-existe-un-plato-asi");
   check(document.querySelectorAll(".inch-category").length === 0 && !!document.querySelector(".inch-empty"), "Cero resultados globales");
   await type("");

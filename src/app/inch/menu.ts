@@ -1,6 +1,7 @@
 import type { PresentableDish } from "../../lib/menu-presentation";
 import { cartaOriginal } from "../../lib/carta-original";
 import { buildCartaCategories } from "../../lib/carta-menu";
+import { sushiOriginal, sushiItemId } from "../../lib/sushi-original";
 
 export type Dish = PresentableDish;
 export type Category = { id: string; name: string; subtitle?: string; note?: string; dishes: Dish[] };
@@ -51,16 +52,32 @@ export const menuSections: { id: MenuSection; categoryIds: string[] }[] = [
   { id: "sushi", categoryIds: ["entradas", "tartar", "poke", "sashimi", "nigiris", "maki", "temaki", "gunkan", "uramaki"] },
 ];
 
-const existing = (id: string) => prototypeCategories.find(c => c.id === id)!.dishes;
+const existing = (id: string) => {
+  const category = prototypeCategories.find(c => c.id === id);
+  if (!category) throw new Error(`Categoría prototype no encontrada: ${id}`);
+  return category.dishes;
+};
+const findDish = (categoryId: string, name: string) => {
+  const dish = existing(categoryId).find(d => d.name === name);
+  if (!dish) throw new Error(`Plato prototype no encontrado: ${name} en ${categoryId}`);
+  return dish;
+};
+const legacySushi = new Map<string, Dish>([
+  ["entradas-0", findDish("entrantes", "Edamame")],
+  ["sashimi-0", findDish("sushi", "Sashimi de salmón")],
+  ["nigiris-0", findDish("sushi", "Nigiri de salmón")],
+  ["uramaki-0", findDish("sushi", "Uramaki de salmón")],
+  ["uramaki-1", findDish("sushi", "California Roll")],
+  ["uramaki-3", findDish("sushi", "Langostino Tempura Roll")],
+]);
+const sushiNames: Record<string, string> = { entradas: "Entradas", tartar: "Tartar", poke: "Poke Bowls", sashimi: "Sashimi", nigiris: "Nigiris", maki: "Maki", temaki: "Temaki", gunkan: "Gunkan", uramaki: "Uramaki" };
 export const categories: Category[] = [
   ...buildCartaCategories(cartaOriginal),
-  { id: "entradas", name: "Entradas", dishes: existing("entrantes").filter(d => d.name === "Edamame") },
-  { id: "tartar", name: "Tartar", dishes: [] },
-  { id: "poke", name: "Poke Bowls", dishes: [] },
-  { id: "sashimi", name: "Sashimi", dishes: existing("sushi").filter(d => d.name.startsWith("Sashimi")) },
-  { id: "nigiris", name: "Nigiris", dishes: existing("sushi").filter(d => d.name.startsWith("Nigiri")) },
-  { id: "maki", name: "Maki", dishes: [] },
-  { id: "temaki", name: "Temaki", dishes: [] },
-  { id: "gunkan", name: "Gunkan", dishes: [] },
-  { id: "uramaki", name: "Uramaki", dishes: existing("sushi").filter(d => !d.name.startsWith("Sashimi") && !d.name.startsWith("Nigiri")) },
+  ...sushiOriginal.map(category => ({
+    id: category.id, name: sushiNames[category.id], note: category.note,
+    dishes: category.items.map(item => {
+      const previous = legacySushi.get(item.legacyId ?? "");
+      return { ...previous, id: sushiItemId(category.id, item), name: item.name, description: previous?.description ?? "", price: item.price, note: item.note };
+    }),
+  })),
 ];

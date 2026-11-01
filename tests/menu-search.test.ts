@@ -6,14 +6,14 @@ import { applyDraftToMenu, initialDraft } from "../src/lib/inch-draft";
 
 const text = (dish: { name: string; description: string }) => `${dish.name} ${dish.description}`;
 
-test("buscar desde Entrantes encuentra Tom Kha en Sopas e Inch Roll en Sushi, agrupados en orden", () => {
+test("buscar desde Entrantes encuentra Tom Kha en Sopas y Uramaki California en Sushi, agrupados en orden", () => {
   const soups = visibleMenuCategories(categories, "carta", "entrantes", "tom kha", text);
   assert.deepEqual(soups.map(category => category.id), ["sopas"]);
   assert.ok(soups[0].dishes.some(dish => dish.name.includes("Tom Kha")));
 
-  const sushi = visibleMenuCategories(categories, "carta", "entrantes", "inch roll", text);
+  const sushi = visibleMenuCategories(categories, "carta", "entrantes", "uramaki california", text);
   assert.deepEqual(sushi.map(category => category.id), ["uramaki"]);
-  assert.deepEqual(sushi[0].dishes.map(dish => dish.name), ["Inch Roll"]);
+  assert.deepEqual(sushi[0].dishes.map(dish => dish.name), ["Uramaki California"]);
 });
 
 test("sin búsqueda se conserva la categoría activa y con cero resultados no aparecen categorías vacías", () => {
