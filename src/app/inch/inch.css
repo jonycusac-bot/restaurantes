@@ -41,10 +41,12 @@
 .inch-search > span:first-child { font-size: 22px; }
 .inch-search input { width: 100%; min-width: 0; font-size: 12px; padding: 9px 0; background: transparent; border: 0; color: var(--ink); }
 .inch-search input::placeholder { color: var(--muted); opacity: 1; }
+.inch-searchScope { margin: 14px 0 0; color: var(--muted); font-size: 12px; }
 .inch-category { margin: 33px 0 42px; }
 .inch-categoryHeading { display: flex; gap: 20px; align-items: center; justify-content: center; margin-bottom: 28px; }
 .inch-categoryHeading > span { width: 35px; height: 1px; background: var(--red); }
 .inch-categoryHeading h2 { font-family: Georgia, serif; font-size: 37px; line-height: 1.2; font-weight: 700; letter-spacing: -1px; }
+.inch-categorySection { font: 400 13px/1.4 sans-serif; letter-spacing: 0; white-space: nowrap; color: var(--muted); }
 .inch-dishList { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); column-gap: 36px; row-gap: 27px; padding: 0; margin: 0; list-style: none; }
 .inch-dish { min-width: 0; padding-bottom: 22px; border-bottom: 1px solid var(--rule); }
 .inch-dishLine { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; margin-bottom: 13px; }
