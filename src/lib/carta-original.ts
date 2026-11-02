@@ -1,4 +1,4 @@
-export type CartaVariant={id:string;label:string;price:number;sourceLine:number;legacyId?:string;image?:string;imageAlt?:string};
+export type CartaVariant={id:string;label:string;name?:string;description?:string;price:number;sourceLine:number;legacyId?:string;image?:string;imageAlt?:string};
 export type CartaItem={id:string;name:string;description:string;note?:string;price?:number;sourceLine?:number;variants?:CartaVariant[];legacyId?:string;image?:string;imageAlt?:string;role?:"supplement";pricePrefix?:"+"};
 export type CartaCategory={id:string;name:string;note?:string;items:CartaItem[]};
 // Reference transcribed from the owner-provided CARTA. Existing D1 is not migrated.

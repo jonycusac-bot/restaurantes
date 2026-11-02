@@ -1,0 +1,627 @@
+{
+  "matched": [
+    {
+      "category": "entrantes",
+      "id": "entrantes-0",
+      "oldName": "Poh Pia",
+      "newLabel": "Poh Pia [Rollitos de Verduras Fritos] (2 uds)",
+      "old": 7.5,
+      "new": 5.2,
+      "sourceLine": 2
+    },
+    {
+      "category": "entrantes",
+      "id": "carta-poh-pia-sod",
+      "oldName": "Poh Pia Sod",
+      "newLabel": "Poh Phia Sod [Rollitos Vietnamitas Fritos con Pollo y Gambas] (4 uds)",
+      "old": 9.7,
+      "new": 7.9,
+      "sourceLine": 3
+    },
+    {
+      "category": "entrantes",
+      "id": "carta-pollo-sesamo",
+      "oldName": "Pollo con Sésamo",
+      "newLabel": "Pollo con Sésamo (4 uds)",
+      "old": 13.13,
+      "new": 7.5,
+      "sourceLine": 4
+    },
+    {
+      "category": "entrantes",
+      "id": "entrantes-1",
+      "oldName": "Satay de Pollo",
+      "newLabel": "Chicken Satay [Pinchitos de Pollo con Salsa de Cacahuetes] (2 uds)",
+      "old": 8.1,
+      "new": 6.3,
+      "sourceLine": 5
+    },
+    {
+      "category": "entrantes",
+      "id": "carta-alitas-pollo",
+      "oldName": "Alitas de Pollo",
+      "newLabel": "Alitas de Pollo Inch (6 uds)",
+      "old": 10,
+      "new": 7.5,
+      "sourceLine": 6
+    },
+    {
+      "category": "entrantes",
+      "id": "entrantes-3",
+      "oldName": "Gyozas · Verduras",
+      "newLabel": "Gyozas de Verduras (6 uds)",
+      "old": 9.6,
+      "new": 7.1,
+      "sourceLine": 7
+    },
+    {
+      "category": "entrantes",
+      "id": "entrantes-2",
+      "oldName": "Gyozas · Pollo",
+      "newLabel": "Gyozas de Pollo (6 uds)",
+      "old": 10,
+      "new": 7.1,
+      "sourceLine": 8
+    },
+    {
+      "category": "entrantes",
+      "id": "carta-gyozas-gambas",
+      "oldName": "Gyozas · Gambas",
+      "newLabel": "Gyozas de Gambas (6 uds)",
+      "old": 10.3,
+      "new": 8.1,
+      "sourceLine": 9
+    },
+    {
+      "category": "entrantes",
+      "id": "carta-gyozas-okonomiyaki-pollo",
+      "oldName": "Gyozas Okonomiyaki · Pollo",
+      "newLabel": "Gyozas Okonomiyaki de Pollo con Escamas de Bonito (6 uds)",
+      "old": 12,
+      "new": 9.5,
+      "sourceLine": 10
+    },
+    {
+      "category": "entrantes",
+      "id": "entrantes-4",
+      "oldName": "Tempura",
+      "newLabel": "Tempura de Langostinos Tigre con Mahonesa de Kimchi",
+      "old": 12.75,
+      "new": 10.3,
+      "sourceLine": 11
+    },
+    {
+      "category": "ensaladas",
+      "id": "carta-ensalada-inch",
+      "oldName": "Inch",
+      "newLabel": "Ensalada Inch [Pollo Teriyaki]",
+      "old": 15.4,
+      "new": 11.9,
+      "sourceLine": 13
+    },
+    {
+      "category": "ensaladas",
+      "id": "carta-yam-woonsen",
+      "oldName": "Yam Woonsen",
+      "newLabel": "Ensalada Yam Woonsen [Fideos de Arroz y Gambas]",
+      "old": 14.2,
+      "new": 10.9,
+      "sourceLine": 14
+    },
+    {
+      "category": "ensaladas",
+      "id": "carta-ensalada-ginger",
+      "oldName": "Ginger",
+      "newLabel": "Ensalada Ginger [Pollo Marinado estilo Coreano]",
+      "old": 14.2,
+      "new": 10.9,
+      "sourceLine": 15
+    },
+    {
+      "category": "sopas",
+      "id": "carta-sopa-miso",
+      "oldName": "Sopa de Miso",
+      "newLabel": "Sopa de Miso",
+      "old": 5.95,
+      "new": 4.9,
+      "sourceLine": 21
+    },
+    {
+      "category": "sopas",
+      "id": "carta-tom-yum-pollo",
+      "oldName": "Tom Yum · Pollo",
+      "newLabel": "Sopa Tom Yum de Pollo [Agripicante]",
+      "old": 8.7,
+      "new": 6.9,
+      "sourceLine": 22
+    },
+    {
+      "category": "sopas",
+      "id": "carta-tom-yum-gambas",
+      "oldName": "Tom Yum · Gambas",
+      "newLabel": "Sopa Tom Yum de Gambas [Agripicante]",
+      "old": 9.6,
+      "new": 7.9,
+      "sourceLine": 23
+    },
+    {
+      "category": "sopas",
+      "id": "sopas-2",
+      "oldName": "Tom Kha · Pollo",
+      "newLabel": "Sopa Tom Kha de Pollo [Leche de Coco]",
+      "old": 8.7,
+      "new": 6.9,
+      "sourceLine": 24
+    },
+    {
+      "category": "sopas",
+      "id": "carta-tom-kha-gambas",
+      "oldName": "Tom Kha · Gambas",
+      "newLabel": "Sopa Tom Kha de Gambas [Leche de Coco]",
+      "old": 9.6,
+      "new": 7.9,
+      "sourceLine": 25
+    },
+    {
+      "category": "sopas",
+      "id": "sopas-3",
+      "oldName": "Laksa Lemak",
+      "newLabel": "Laksa Lemak [Tallarines de Arroz, Pollo, Gambas, Tofu y Huevo en Sopa de Coco]",
+      "old": 17.6,
+      "new": 13.5,
+      "sourceLine": 26
+    },
+    {
+      "category": "sopas",
+      "id": "sopas-1",
+      "oldName": "Ramen · Verduras",
+      "newLabel": "Ramen de Verduras",
+      "old": 13.2,
+      "new": 9.9,
+      "sourceLine": 27
+    },
+    {
+      "category": "sopas",
+      "id": "sopas-0",
+      "oldName": "Ramen · Pollo",
+      "newLabel": "Ramen de Pollo",
+      "old": 14.45,
+      "new": 10.9,
+      "sourceLine": 28
+    },
+    {
+      "category": "sopas",
+      "id": "carta-ramen-ternera",
+      "oldName": "Ramen · Ternera",
+      "newLabel": "Ramen de Ternera",
+      "old": 15.2,
+      "new": 11.5,
+      "sourceLine": 29
+    },
+    {
+      "category": "sopas",
+      "id": "carta-ramen-gambas",
+      "oldName": "Ramen · Gambas",
+      "newLabel": "Ramen de Gambas",
+      "old": 15.7,
+      "new": 11.9,
+      "sourceLine": 30
+    },
+    {
+      "category": "salteados",
+      "id": "carta-kapraw-tofu-verduras",
+      "oldName": "Kapraw · Tofu - Verduras",
+      "newLabel": "Salteado Kapraw [Chile y Albahaca] - Tofu y Verduras",
+      "old": 13.2,
+      "new": 9.9,
+      "sourceLine": 32
+    },
+    {
+      "category": "salteados",
+      "id": "carta-kapraw-pollo",
+      "oldName": "Kapraw · Pollo",
+      "newLabel": "Salteado Kapraw [Chile y Albahaca] - Pollo",
+      "old": 14.45,
+      "new": 10.9,
+      "sourceLine": 33
+    },
+    {
+      "category": "salteados",
+      "id": "carta-kapraw-ternera",
+      "oldName": "Kapraw · Ternera",
+      "newLabel": "Salteado Kapraw [Chile y Albahaca] - Ternera",
+      "old": 15.2,
+      "new": 11.9,
+      "sourceLine": 34
+    },
+    {
+      "category": "salteados",
+      "id": "carta-kapraw-langostinos",
+      "oldName": "Kapraw · Langostinos",
+      "newLabel": "Salteado Kapraw [Chile y Albahaca] - Langostinos",
+      "old": 16.4,
+      "new": 12.9,
+      "sourceLine": 35
+    },
+    {
+      "category": "salteados",
+      "id": "carta-kapraw-pato",
+      "oldName": "Kapraw · Pato",
+      "newLabel": "Salteado Kapraw [Chile y Albahaca] - Pato",
+      "old": 19.3,
+      "new": 15.9,
+      "sourceLine": 36
+    },
+    {
+      "category": "salteados",
+      "id": "carta-gai-pad-med",
+      "oldName": "Gai Pad Med",
+      "newLabel": "Gai Pad Med [Pollo con Anacardos]",
+      "old": 16.4,
+      "new": 11.9,
+      "sourceLine": 37
+    },
+    {
+      "category": "salteados",
+      "id": "carta-morning-glory",
+      "oldName": "Morning Glory",
+      "newLabel": "Morning Glory [Pak Choi, Espinacas, Brotes de Soja y Salsa de Ajo]",
+      "old": 14.45,
+      "new": 10.9,
+      "sourceLine": 38
+    },
+    {
+      "category": "salteados",
+      "id": "carta-salteados-arroz-vapor",
+      "oldName": "Opciones para elegir · Arroz al vapor",
+      "newLabel": "Guarnición: Arroz al Vapor",
+      "old": 3,
+      "new": 2.7,
+      "sourceLine": 39
+    },
+    {
+      "category": "salteados",
+      "id": "carta-salteados-arroz-frito",
+      "oldName": "Opciones para elegir · Arroz frito con huevo",
+      "newLabel": "Guarnición: Arroz Frito con Huevo",
+      "old": 4.3,
+      "new": 3.9,
+      "sourceLine": 40
+    },
+    {
+      "category": "curry",
+      "id": "curry-1",
+      "oldName": "Curry · Tofu - Verduras",
+      "newLabel": "Curry - Tofu y Verduras",
+      "old": 13.2,
+      "new": 9.9,
+      "sourceLine": 43
+    },
+    {
+      "category": "curry",
+      "id": "curry-0",
+      "oldName": "Curry · Pollo",
+      "newLabel": "Curry - Pollo",
+      "old": 14.45,
+      "new": 10.9,
+      "sourceLine": 44
+    },
+    {
+      "category": "curry",
+      "id": "carta-curry-ternera",
+      "oldName": "Curry · Ternera",
+      "newLabel": "Curry - Ternera",
+      "old": 15.6,
+      "new": 11.9,
+      "sourceLine": 45
+    },
+    {
+      "category": "curry",
+      "id": "carta-curry-langostinos",
+      "oldName": "Curry · Langostinos",
+      "newLabel": "Curry - Langostinos",
+      "old": 16.8,
+      "new": 12.9,
+      "sourceLine": 46
+    },
+    {
+      "category": "curry",
+      "id": "carta-curry-pato",
+      "oldName": "Curry · Pato",
+      "newLabel": "Curry - Pato",
+      "old": 19.3,
+      "new": 15.9,
+      "sourceLine": 47
+    },
+    {
+      "category": "curry",
+      "id": "carta-massaman-pollo",
+      "oldName": "Massaman · Pollo",
+      "newLabel": "Curry Mussa Man - Pollo",
+      "old": 14.45,
+      "new": 10.9,
+      "sourceLine": 48
+    },
+    {
+      "category": "curry",
+      "id": "curry-2",
+      "oldName": "Massaman · Ternera",
+      "newLabel": "Curry Mussa Man - Ternera",
+      "old": 15.6,
+      "new": 11.9,
+      "sourceLine": 49
+    },
+    {
+      "category": "curry",
+      "id": "carta-massaman-langostinos",
+      "oldName": "Massaman · Langostinos",
+      "newLabel": "Curry Mussa Man - Langostinos",
+      "old": 16.8,
+      "new": 12.9,
+      "sourceLine": 50
+    },
+    {
+      "category": "curry",
+      "id": "carta-massaman-pato",
+      "oldName": "Massaman · Pato",
+      "newLabel": "Curry Mussa Man - Pato",
+      "old": 19.3,
+      "new": 15.9,
+      "sourceLine": 51
+    },
+    {
+      "category": "curry",
+      "id": "curry-3",
+      "oldName": "Katsukaré",
+      "newLabel": "Katsu Kare [Pollo Crujiente con Curry Japonés]",
+      "old": 15.65,
+      "new": 12.9,
+      "sourceLine": 52
+    },
+    {
+      "category": "arroces",
+      "id": "carta-arroz-frito-verduras",
+      "oldName": "Arroz Frito · Verduras",
+      "newLabel": "Arroz Frito con Verduras",
+      "old": 10.8,
+      "new": 8.5,
+      "sourceLine": 56
+    },
+    {
+      "category": "arroces",
+      "id": "carta-arroz-frito-pollo",
+      "oldName": "Arroz Frito · Pollo",
+      "newLabel": "Arroz Frito con Pollo",
+      "old": 12,
+      "new": 9.5,
+      "sourceLine": 57
+    },
+    {
+      "category": "arroces",
+      "id": "carta-arroz-frito-ternera",
+      "oldName": "Arroz Frito · Ternera",
+      "newLabel": "Arroz Frito con Ternera",
+      "old": 12.75,
+      "new": 9.9,
+      "sourceLine": 58
+    },
+    {
+      "category": "arroces",
+      "id": "carta-arroz-frito-langostinos",
+      "oldName": "Arroz Frito · Langostinos",
+      "newLabel": "Arroz Frito con Langostinos",
+      "old": 13.2,
+      "new": 10.5,
+      "sourceLine": 59
+    },
+    {
+      "category": "arroces",
+      "id": "carta-arroz-frito-mezcla-2",
+      "oldName": "Arroz Frito · Mezcla de 2 ingredientes",
+      "newLabel": "Arroz Frito Mix 2 Ingredientes",
+      "old": 14.45,
+      "new": 11.5,
+      "sourceLine": 60
+    },
+    {
+      "category": "arroces",
+      "id": "carta-arroz-frito-mezcla-3",
+      "oldName": "Arroz Frito · Mezcla de 3 ingredientes",
+      "newLabel": "Arroz Frito Mix 3 Ingredientes",
+      "old": 15.65,
+      "new": 12.5,
+      "sourceLine": 61
+    },
+    {
+      "category": "noodles",
+      "id": "carta-al-huevo-verduras",
+      "oldName": "Al Huevo · Verduras",
+      "newLabel": "Noodles al Huevo con Verduras",
+      "old": 10.8,
+      "new": 8.5,
+      "sourceLine": 65
+    },
+    {
+      "category": "noodles",
+      "id": "carta-al-huevo-pollo",
+      "oldName": "Al Huevo · Pollo",
+      "newLabel": "Noodles al Huevo con Pollo",
+      "old": 12,
+      "new": 9.5,
+      "sourceLine": 66
+    },
+    {
+      "category": "noodles",
+      "id": "carta-al-huevo-ternera",
+      "oldName": "Al Huevo · Ternera",
+      "newLabel": "Noodles al Huevo con Ternera",
+      "old": 12.75,
+      "new": 9.9,
+      "sourceLine": 67
+    },
+    {
+      "category": "noodles",
+      "id": "noodles-0",
+      "oldName": "Al Huevo · Langostinos",
+      "newLabel": "Noodles al Huevo con Langostinos",
+      "old": 13.2,
+      "new": 10.5,
+      "sourceLine": 68
+    },
+    {
+      "category": "noodles",
+      "id": "carta-al-huevo-mezcla-2",
+      "oldName": "Al Huevo · Mezcla de 2 ingredientes",
+      "newLabel": "Noodles al Huevo Mix 2 Ingredientes",
+      "old": 14.45,
+      "new": 11.5,
+      "sourceLine": 69
+    },
+    {
+      "category": "noodles",
+      "id": "carta-al-huevo-mezcla-3",
+      "oldName": "Al Huevo · Mezcla de 3 ingredientes",
+      "newLabel": "Noodles al Huevo Mix 3 Ingredientes",
+      "old": 15.65,
+      "new": 12.5,
+      "sourceLine": 70
+    },
+    {
+      "category": "noodles",
+      "id": "carta-pad-thai-verduras",
+      "oldName": "Pad Thai Original · Verduras",
+      "newLabel": "Pad Thai con Verduras",
+      "old": 12,
+      "new": 8.9,
+      "sourceLine": 72
+    },
+    {
+      "category": "noodles",
+      "id": "noodles-1",
+      "oldName": "Pad Thai Original · Pollo",
+      "newLabel": "Pad Thai con Pollo",
+      "old": 13.2,
+      "new": 9.9,
+      "sourceLine": 73
+    },
+    {
+      "category": "noodles",
+      "id": "carta-pad-thai-ternera",
+      "oldName": "Pad Thai Original · Ternera",
+      "newLabel": "Pad Thai con Ternera",
+      "old": 13.95,
+      "new": 10.9,
+      "sourceLine": 74
+    },
+    {
+      "category": "noodles",
+      "id": "noodles-2",
+      "oldName": "Pad Thai Original · Langostinos",
+      "newLabel": "Pad Thai con Langostinos",
+      "old": 14.45,
+      "new": 11.4,
+      "sourceLine": 75
+    },
+    {
+      "category": "noodles",
+      "id": "carta-pad-thai-mezcla-2",
+      "oldName": "Pad Thai Original · Mezcla de 2 ingredientes",
+      "newLabel": "Pad Thai Mix 2 Ingredientes",
+      "old": 15.2,
+      "new": 11.9,
+      "sourceLine": 76
+    },
+    {
+      "category": "noodles",
+      "id": "carta-pad-thai-mezcla-3",
+      "oldName": "Pad Thai Original · Mezcla de 3 ingredientes",
+      "newLabel": "Pad Thai Mix 3 Ingredientes",
+      "old": 16.4,
+      "new": 12.9,
+      "sourceLine": 77
+    },
+    {
+      "category": "noodles",
+      "id": "noodles-3",
+      "oldName": "Udon Japonés · Verduras",
+      "newLabel": "Udon Japonés con Verduras",
+      "old": 12.75,
+      "new": 8.9,
+      "sourceLine": 79
+    },
+    {
+      "category": "noodles",
+      "id": "carta-udon-pollo",
+      "oldName": "Udon Japonés · Pollo",
+      "newLabel": "Udon Japonés con Pollo",
+      "old": 13.95,
+      "new": 9.9,
+      "sourceLine": 80
+    },
+    {
+      "category": "noodles",
+      "id": "carta-udon-ternera",
+      "oldName": "Udon Japonés · Ternera",
+      "newLabel": "Udon Japonés con Ternera",
+      "old": 14.45,
+      "new": 10.9,
+      "sourceLine": 81
+    },
+    {
+      "category": "noodles",
+      "id": "carta-udon-langostinos",
+      "oldName": "Udon Japonés · Langostinos",
+      "newLabel": "Udon Japonés con Langostinos",
+      "old": 15.2,
+      "new": 11.4,
+      "sourceLine": 82
+    },
+    {
+      "category": "noodles",
+      "id": "carta-udon-mezcla-2",
+      "oldName": "Udon Japonés · Mezcla de 2 ingredientes",
+      "newLabel": "Udon Japonés Mix 2 Ingredientes",
+      "old": 15.65,
+      "new": 11.9,
+      "sourceLine": 83
+    },
+    {
+      "category": "noodles",
+      "id": "carta-udon-mezcla-3",
+      "oldName": "Udon Japonés · Mezcla de 3 ingredientes",
+      "newLabel": "Udon Japonés Mix 3 Ingredientes",
+      "old": 16.8,
+      "new": 12.9,
+      "sourceLine": 84
+    },
+    {
+      "category": "noodles",
+      "id": "noodles-4",
+      "oldName": "Vermicelli de Singapur · Mezcla de Pollo + Ternera + Langostinos",
+      "newLabel": "Singapore Vermicelli Mix (Pollo + Ternera + Langostinos)",
+      "old": 16.8,
+      "new": 12.9,
+      "sourceLine": 86
+    },
+    {
+      "category": "infantil",
+      "id": "carta-menu-infantil",
+      "oldName": "Menú infantil",
+      "newLabel": "Menú Infantil (Noodles o Arroz con Pollo / Ternera / Langostinos)",
+      "old": 10.3,
+      "new": 7.5,
+      "sourceLine": 88
+    }
+  ],
+  "oldOnly": [
+    "Gyozas Okonomiyaki · Gambas",
+    "Gyozas Pato",
+    "Suplemento por arroz frito"
+  ],
+  "newOnly": [
+    "Poke Bowl Vegano [Shiitake y Tofu]",
+    "Poke Bowl de Salmón",
+    "Poke Bowl de Atún",
+    "Acompañamiento: Arroz al Vapor"
+  ]
+}

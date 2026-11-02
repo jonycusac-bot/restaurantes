@@ -1,0 +1,88 @@
+ENTRANTES
+Poh Pia [Rollitos de Verduras Fritos] (2 uds): 5,20 €
+Poh Phia Sod [Rollitos Vietnamitas Fritos con Pollo y Gambas] (4 uds): 7,90 €
+Pollo con Sésamo (4 uds): 7,50 €
+Chicken Satay [Pinchitos de Pollo con Salsa de Cacahuetes] (2 uds): 6,30 €
+Alitas de Pollo Inch (6 uds): 7,50 €
+Gyozas de Verduras (6 uds): 7,10 €
+Gyozas de Pollo (6 uds): 7,10 €
+Gyozas de Gambas (6 uds): 8,10 €
+Gyozas Okonomiyaki de Pollo con Escamas de Bonito (6 uds): 9,50 €
+Tempura de Langostinos Tigre con Mahonesa de Kimchi: 10,30 €
+ENSALADAS
+Ensalada Inch [Pollo Teriyaki]: 11,90 €
+Ensalada Yam Woonsen [Fideos de Arroz y Gambas]: 10,90 €
+Ensalada Ginger [Pollo Marinado estilo Coreano]: 10,90 €
+POKE BOWL
+Poke Bowl Vegano [Shiitake y Tofu]: 12,90 €
+Poke Bowl de Salmón: 13,90 €
+Poke Bowl de Atún: 15,50 €
+SOPAS
+Sopa de Miso: 4,90 €
+Sopa Tom Yum de Pollo [Agripicante]: 6,90 €
+Sopa Tom Yum de Gambas [Agripicante]: 7,90 €
+Sopa Tom Kha de Pollo [Leche de Coco]: 6,90 €
+Sopa Tom Kha de Gambas [Leche de Coco]: 7,90 €
+Laksa Lemak [Tallarines de Arroz, Pollo, Gambas, Tofu y Huevo en Sopa de Coco]: 13,50 €
+Ramen de Verduras: 9,90 €
+Ramen de Pollo: 10,90 €
+Ramen de Ternera: 11,50 €
+Ramen de Gambas: 11,90 €
+SALTEADOS (WOK)
+Salteado Kapraw [Chile y Albahaca] - Tofu y Verduras: 9,90 €
+Salteado Kapraw [Chile y Albahaca] - Pollo: 10,90 €
+Salteado Kapraw [Chile y Albahaca] - Ternera: 11,90 €
+Salteado Kapraw [Chile y Albahaca] - Langostinos: 12,90 €
+Salteado Kapraw [Chile y Albahaca] - Pato: 15,90 €
+Gai Pad Med [Pollo con Anacardos]: 11,90 €
+Morning Glory [Pak Choi, Espinacas, Brotes de Soja y Salsa de Ajo]: 10,90 €
+Guarnición: Arroz al Vapor: + 2,70 €
+Guarnición: Arroz Frito con Huevo: + 3,90 €
+CURRY
+(Opciones de curry: Amarillo / Rojo / Verde)
+Curry - Tofu y Verduras: 9,90 €
+Curry - Pollo: 10,90 €
+Curry - Ternera: 11,90 €
+Curry - Langostinos: 12,90 €
+Curry - Pato: 15,90 €
+Curry Mussa Man - Pollo: 10,90 €
+Curry Mussa Man - Ternera: 11,90 €
+Curry Mussa Man - Langostinos: 12,90 €
+Curry Mussa Man - Pato: 15,90 €
+Katsu Kare [Pollo Crujiente con Curry Japonés]: 12,90 €
+Acompañamiento: Arroz al Vapor: + 2,70 €
+ARROCES
+(Todos los arroces incluyen verduras y huevo)
+Arroz Frito con Verduras: 8,50 €
+Arroz Frito con Pollo: 9,50 €
+Arroz Frito con Ternera: 9,90 €
+Arroz Frito con Langostinos: 10,50 €
+Arroz Frito Mix 2 Ingredientes: 11,50 €
+Arroz Frito Mix 3 Ingredientes: 12,50 €
+NOODLES / TALLARINES
+(Todos los noodles incluyen verduras)
+Noodles al Huevo [Fino de Trigo]
+Noodles al Huevo con Verduras: 8,50 €
+Noodles al Huevo con Pollo: 9,50 €
+Noodles al Huevo con Ternera: 9,90 €
+Noodles al Huevo con Langostinos: 10,50 €
+Noodles al Huevo Mix 2 Ingredientes: 11,50 €
+Noodles al Huevo Mix 3 Ingredientes: 12,50 €
+Pad Thai Original [Tallarines Anchos de Arroz]
+Pad Thai con Verduras: 8,90 €
+Pad Thai con Pollo: 9,90 €
+Pad Thai con Ternera: 10,90 €
+Pad Thai con Langostinos: 11,40 €
+Pad Thai Mix 2 Ingredientes: 11,90 €
+Pad Thai Mix 3 Ingredientes: 12,90 €
+Udon Japonés [Grueso de Trigo]
+Udon Japonés con Verduras: 8,90 €
+Udon Japonés con Pollo: 9,90 €
+Udon Japonés con Ternera: 10,90 €
+Udon Japonés con Langostinos: 11,40 €
+Udon Japonés Mix 2 Ingredientes: 11,90 €
+Udon Japonés Mix 3 Ingredientes: 12,90 €
+Singapore Vermicelli [Finos de Guisantes]
+Singapore Vermicelli Mix (Pollo + Ternera + Langostinos): 12,90 €
+MENÚ INFANTIL
+Menú Infantil (Noodles o Arroz con Pollo / Ternera / Langostinos): 7,50 €

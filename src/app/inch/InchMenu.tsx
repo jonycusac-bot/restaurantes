@@ -6,7 +6,7 @@ import { categories, menuSections, type MenuSection } from "./menu";
 import { dishTranslations, languages, ui, type Language } from "./translations";
 import { applyDraftToMenu, parseDraft, readLocalPreviewSnapshot, serverDraftSnapshot, subscribeToDraft, type AdminDish } from "../../lib/inch-draft";
 import { groupMenuDishes } from "../../lib/menu-presentation";
-import {cartaOriginal} from "../../lib/carta-original";
+import {cartaActualizada} from "../../lib/carta-actualizada";
 import {categoryNoteTranslations,variantTranslations} from "../../lib/carta-translations";
 import {visibleMenuCategories} from "./menu-search";
 
@@ -30,7 +30,7 @@ export default function InchMenu({ publishedDishes, publicOnly = false }: { publ
   }
   const euro = (price: number) => new Intl.NumberFormat(t.locale, { style: "currency", currency: "EUR" }).format(price);
   const localize = (name: string, description: string) => {
-    const originalText = categories.some(c => c.dishes.some(d => d.name === name && d.description === description)) || cartaOriginal.some(c => c.items.some(d => d.name === name && d.description === description));
+    const originalText = categories.some(c => c.dishes.some(d => d.name === name && d.description === description)) || cartaActualizada.some(c => c.items.some(d => d.name === name && d.description === description));
     return language === "es" || !originalText ? [name, description] : dishTranslations[name]?.[language] ?? [name, description];
   };
   const sectionCategories = menuSections.find(s => s.id === section)!.categoryIds.map(id => menuCategories.find(c => c.id === id)!);
@@ -88,7 +88,7 @@ export default function InchMenu({ publishedDishes, publicOnly = false }: { publ
                 <div className="inch-dishLine"><div className="inch-dishTitle"><h3>{localize(d.name, d.description)[0]}</h3>{d.note && <span className="inch-portion">{language === "es" ? d.note : `${d.note.split(" ")[0]} ${t.pieces}`}</span>}</div>{!d.grouped && <span className="inch-price">{d.pricePrefix && `${d.pricePrefix} `}{euro(d.items[0].price)}</span>}</div>
                 {(d.image || d.imageSrc) && <figure className="inch-dishFigure"><img src={d.imageSrc || `/inch/${d.image}.webp`} alt={language === "es" ? d.imageAlt ?? d.name : `${t.sample}: ${localize(d.name, d.description)[0]}`} width="1100" height="825" loading="lazy" /><figcaption>{t.sample}{d.imageVariant && ` · ${language === "es" ? d.imageVariant : variantTranslations[d.imageVariant]?.[language] ?? d.imageVariant}`}</figcaption></figure>}
                 {d.description && <div className="inch-dishDescription"><p>{localize(d.name, d.description)[1]}</p></div>}
-                {d.grouped && <ul className="inch-variants">{d.items.map(item => <li className="inch-variant" key={item.id ?? item.name} data-dish-id={item.id}><div><span>{language === "es" ? item.label : variantTranslations[item.label]?.[language] ?? item.label}</span>{!d.description && item.description && <p>{localize(item.name, item.description)[1]}</p>}</div><span className="inch-variantPrice">{d.pricePrefix && `${d.pricePrefix} `}{euro(item.price)}</span></li>)}</ul>}
+                {d.grouped && <ul className="inch-variants">{d.items.map(item => <li className="inch-variant" key={item.id ?? item.name} data-dish-id={item.id}><div><span>{language === "es" ? item.label : variantTranslations[item.label]?.[language] ?? localize(item.name, item.description)[0]}</span>{!d.description && item.description && <p>{localize(item.name, item.description)[1]}</p>}</div><span className="inch-variantPrice">{d.pricePrefix && `${d.pricePrefix} `}{euro(item.price)}</span></li>)}</ul>}
               </li>)}</ul>
             </section>)}
           </div>

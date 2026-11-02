@@ -6,10 +6,10 @@ import Home from "../src/app/page";
 test("Home serves the INCH menu and its dish photos without waiting for the old database API", () => {
   const html = renderToStaticMarkup(Home());
   assert.match(html, /Nuestra /);
-  assert.match(html, /Satay de Pollo/);
-  assert.match(html, /Poh Pia Sod/);
+  assert.match(html, /Chicken Satay/);
+  assert.match(html, /Poh Phia Sod/);
   assert.match(html, /tempura-gyozas\.webp/);
-  assert.match(html, /12,75/);
+  assert.match(html, /10,30/);
   assert.doesNotMatch(html, /Toda la carta|California Roll/);
   assert.doesNotMatch(html, /Cargando menú|Burger La Bestia|Create Next App/);
 });

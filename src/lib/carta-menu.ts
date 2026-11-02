@@ -7,7 +7,7 @@ export function buildCartaCategories(definitions:CartaCategory[]):Category[] {
   dishes:category.items.flatMap(item=>{
    const common={description:item.description,note:item.note,role:item.role,pricePrefix:item.pricePrefix};
    if(item.variants?.length) return item.variants.map(variant=>({
-    ...common,id:variant.legacyId??variant.id,name:`${item.name} · ${variant.label}`,price:variant.price,
+    ...common,id:variant.legacyId??variant.id,name:variant.name??`${item.name} · ${variant.label}`,description:variant.description??item.description,price:variant.price,
     familyId:item.id,familyName:item.name,variantLabel:variant.label,
     image:variant.image,imageAlt:variant.imageAlt,
    }));

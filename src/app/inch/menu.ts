@@ -1,5 +1,5 @@
 import type { PresentableDish } from "../../lib/menu-presentation";
-import { cartaOriginal } from "../../lib/carta-original";
+import { cartaActualizada } from "../../lib/carta-actualizada";
 import { buildCartaCategories } from "../../lib/carta-menu";
 import { sushiOriginal, sushiItemId } from "../../lib/sushi-original";
 
@@ -72,7 +72,7 @@ const legacySushi = new Map<string, Dish>([
 ]);
 const sushiNames: Record<string, string> = { entradas: "Entradas", tartar: "Tartar", poke: "Poke Bowls", sashimi: "Sashimi", nigiris: "Nigiris", maki: "Maki", temaki: "Temaki", gunkan: "Gunkan", uramaki: "Uramaki" };
 export const categories: Category[] = [
-  ...buildCartaCategories(cartaOriginal),
+  ...buildCartaCategories(cartaActualizada),
   ...sushiOriginal.map(category => ({
     id: category.id, name: sushiNames[category.id], note: category.note,
     dishes: category.items.map(item => {

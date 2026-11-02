@@ -7,11 +7,11 @@ import {cartaReleaseStatements} from "../src/lib/carta-release";
 import {Miniflare} from "miniflare";
 import {publicHtml} from "../src/cloudflare/html";
 
-test("publicación aprobada toma precios originales, conserva fotos y Sushi y no copia valores de QA",()=>{
+test("preparación heredada usa la plantilla vigente, conserva fotos y Sushi y no copia valores de QA",()=>{
  const legacy=initialDraft.filter(d=>!d.id.startsWith("carta-")).map(d=>d.id==="entrantes-0"?{...d,price:14.14}:d);
  const result=approvedCartaDishes(legacy,legacy);
  const carta=new Set(menuSections.find(s=>s.id==="carta")!.categoryIds);
- assert.equal(result.find(d=>d.id==="entrantes-0")!.price,6.3);
+ assert.equal(result.find(d=>d.id==="entrantes-0")!.price,5.2);
  assert.deepEqual(result.filter(d=>!carta.has(d.categoryId)),legacy.filter(d=>!carta.has(d.categoryId)));
  for(const old of legacy.filter(d=>!!d.imageSrc)){const next=result.find(d=>d.id===old.id)!;assert.equal(next.imageSrc,old.imageSrc);assert.equal(next.imageName,old.imageName);}
  assert.equal(result.length,initialDraft.length);

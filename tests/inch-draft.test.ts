@@ -11,7 +11,7 @@ test("Draft preview shows new dishes, edited prices and uploaded photos while om
   assert.equal(starters.find(d => d.id === "entrantes-0")!.imageSrc, "data:image/png;base64,aGVsbG8=");
   assert.ok(!starters.some(d => d.id === "entrantes-1"));
   assert.equal(menu.find(c => c.id === "infantil")!.dishes.find(d => d.id === "new-dish")!.name, "Plato de prueba");
-  assert.equal(initialDraft[0].price, 6.3);
+  assert.equal(initialDraft[0].price, 5.2);
 });
 
 test("Malformed drafts never replace the original menu", () => {

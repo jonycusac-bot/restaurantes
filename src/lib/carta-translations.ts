@@ -1,4 +1,5 @@
 import {cartaOriginal} from "./carta-original";
+import {cartaActualizada} from "./carta-actualizada";
 type Translation={en:[string,string];de:[string,string]};
 export const variantTranslations:Record<string,{en:string;de:string}>={
  "Verduras":{en:"Vegetables",de:"Gemüse"},"Pollo":{en:"Chicken",de:"Hähnchen"},"Ternera":{en:"Beef",de:"Rindfleisch"},"Gambas":{en:"Prawns",de:"Garnelen"},"Langostinos":{en:"King prawns",de:"Riesengarnelen"},"Pato":{en:"Duck",de:"Ente"},"Tofu - Verduras":{en:"Tofu - Vegetables",de:"Tofu - Gemüse"},
@@ -56,5 +57,56 @@ for(const category of cartaOriginal) for(const item of category.items){
   const label=variantTranslations[variant.label];
   if(!label) throw new Error(`Traducción de variante ausente: ${variant.label}`);
   cartaDishTranslations[`${item.name} · ${variant.label}`]={en:[`${base.en[0]} · ${label.en}`,base.en[1]],de:[`${base.de[0]} · ${label.de}`,base.de[1]]};
+ }
+}
+
+// New owner-supplied labels are stored per existing ID. Keep the historical
+// group headers and old-only variant translations; only attach translations
+// to the renamed existing rows, never to unrelated owner edits.
+const titles:Record<string,[string,string]>={
+ "carta-poh-pia-sod":["Poh Phia Sod","Poh Phia Sod"],
+ "carta-alitas-pollo":["Inch Chicken Wings","Inch-Hähnchenflügel"],
+ "entrantes-1":["Chicken Satay","Hähnchen-Satay"],
+ "entrantes-4":["Tiger Prawn Tempura","Tigergarnelen-Tempura"],
+ "carta-ensalada-inch":["Inch Salad","Inch-Salat"],
+ "carta-yam-woonsen":["Yam Woonsen Salad","Yam-Woonsen-Salat"],
+ "carta-ensalada-ginger":["Ginger Salad","Ginger-Salat"],
+ "curry-3":["Katsu Kare","Katsu Kare"],
+ "carta-menu-infantil":["Kids Menu","Kindermenü"],
+};
+const explicitText:Record<string,[string,string]>={
+ "carta-ensalada-inch":["Teriyaki chicken","Teriyaki-Hähnchen"],
+ "carta-yam-woonsen":["Rice noodles and prawns","Reisnudeln und Garnelen"],
+ "carta-ensalada-ginger":["Korean-style marinated chicken","Hähnchen nach koreanischer Art mariniert"],
+ "sopas-3":["Rice noodles, chicken, prawns, tofu and egg in coconut soup","Reisnudeln, Hähnchen, Garnelen, Tofu und Ei in Kokossuppe"],
+ "curry-3":["Crispy chicken with Japanese curry","Knuspriges Hähnchen mit japanischem Curry"],
+ "carta-menu-infantil":["Noodles or rice with chicken, beef or king prawns","Nudeln oder Reis mit Hähnchen, Rindfleisch oder Riesengarnelen"],
+};
+const groupTitles:Record<string,[string,string]>={
+ "carta-tom-yum":["Tom Yum Soup","Tom-Yum-Suppe"],
+ "carta-tom-kha":["Tom Kha Soup","Tom-Kha-Suppe"],
+ "carta-kapraw":["Kapraw Stir-fry","Kapraw-Wokgericht"],
+ "carta-salteados-acompanamientos":["Side dish","Beilage"],
+ "carta-massaman":["Mussa Man Curry","Mussa-Man-Curry"],
+ "carta-al-huevo":["Egg Noodles","Eiernudeln"],
+ "carta-vermicelli":["Singapore Vermicelli","Singapur-Vermicelli"],
+};
+for(const [categoryIndex,category] of cartaActualizada.entries()) for(const [itemIndex,item] of category.items.entries()){
+ const original=cartaOriginal[categoryIndex].items[itemIndex];
+ const base=bases[original.name];
+ if(item.variants){
+  const group=groupTitles[item.id];
+  if(group)cartaDishTranslations[item.name]={en:[group[0],base.en[1]],de:[group[1],base.de[1]]};
+  for(const [index,variant] of item.variants.entries()){
+   if(!variant.name)continue;
+   const originalVariant=original.variants![index];
+   const label=variantTranslations[originalVariant.label];
+   const text=explicitText[variant.legacyId??variant.id];
+   cartaDishTranslations[variant.name]={en:[`${group?.[0]??base.en[0]} · ${label.en}`,text?.[0]??base.en[1]],de:[`${group?.[1]??base.de[0]} · ${label.de}`,text?.[1]??base.de[1]]};
+  }
+ }else if(item.name!==original.name || item.description!==original.description){
+  const id=item.legacyId??item.id;
+  const text=explicitText[id];
+  cartaDishTranslations[item.name]={en:[titles[id]?.[0]??base.en[0],text?.[0]??base.en[1]],de:[titles[id]?.[1]??base.de[0],text?.[1]??base.de[1]]};
  }
 }
