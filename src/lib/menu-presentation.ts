@@ -1,4 +1,5 @@
-export type PresentableDish = {id?:string;name:string;description:string;price:number;note?:string;image?:string;imageSrc?:string;imageAlt?:string;familyId?:string;familyName?:string;variantLabel?:string;role?:"supplement";pricePrefix?:"+"};
+import type { AllergenId } from './allergen-legend';
+export type PresentableDish = {allergens?:AllergenId[];id?:string;name:string;description:string;price:number;note?:string;image?:string;imageSrc?:string;imageAlt?:string;familyId?:string;familyName?:string;variantLabel?:string;role?:"supplement";pricePrefix?:"+"};
 export type MenuCard = {id:string;familyId?:string;name:string;description:string;note?:string;role?:"supplement";pricePrefix?:"+";grouped:boolean;items:(PresentableDish&{label:string})[];image?:string;imageSrc?:string;imageAlt?:string;imageVariant?:string};
 export function groupMenuDishes(dishes:PresentableDish[]):MenuCard[] {
  const cards:MenuCard[]=[];

@@ -1,0 +1,46 @@
+// Real UI -> compiled Worker -> disposable D1; NEVER run on production.
+window.checkEditableAllergens=async()=>{
+ const check=(ok,msg)=>{if(!ok)throw Error(msg);};
+ check(location.origin==='http://127.0.0.1:8794','Only isolated local D1');
+ const wait=async(fn,msg)=>{for(let i=0;i<100;i++){if(fn())return;await new Promise(r=>setTimeout(r,50));}throw Error(msg);};
+ const menu=async()=>{const r=await fetch('/api/admin/menu');check(r.ok,'GET');return r.json();};
+ const published=async()=>{const t=await(await fetch('/qa/public')).text();return JSON.parse(t.match(/<script id="inch-menu-data" type="application\/json">([\s\S]*?)<\/script>/)[1]);};
+ const original=(await menu()).dishes.find(d=>d.id==='carta-poh-pia-sod');check(original,'Pilot fixture');
+ const expected=original.allergens??['gluten','crustaceans','eggs'];
+ const open=async()=>{document.querySelector(`[aria-label="Editar ${original.name}"]`).click();await wait(()=>document.querySelector('dialog[open]'),'Open editor');};
+ const checked=()=>[...document.querySelectorAll('input[name=allergens]:checked')].map(i=>i.value);
+ const set=async(id,value)=>{const input=document.querySelector(`input[name=allergens][value=${id}]`);check(input,`Checkbox ${id}`);if(input.checked!==value){input.click();await wait(()=>document.querySelector(`input[name=allergens][value=${id}]`).checked===value,'Checkbox state');}};
+ const save=async()=>{document.querySelector('dialog form').requestSubmit();await wait(()=>!document.querySelector('dialog'),'Save closes editor');};
+ await open();
+ check(!!document.querySelector('.admin-allergen-selector'),'Dropdown mounted in real editor');
+ document.querySelector('.admin-allergen-selector summary').click();
+ check(document.querySelectorAll('input[name=allergens]').length===14,'14 choices');
+ check(JSON.stringify(checked())===JSON.stringify(expected),'Pilot checked');
+ await set('milk',true);
+ document.querySelector('.admin-editor-actions button[type=button]').click();await wait(()=>!document.querySelector('dialog'),'Cancel');
+ check(JSON.stringify((await menu()).dishes.find(d=>d.id===original.id))===JSON.stringify(original),'Cancel does not save');
+ await open();document.querySelector('.admin-allergen-selector summary').click();
+ for(const input of [...document.querySelectorAll('input[name=allergens]')])await set(input.value,false);
+ await save();
+ let current=(await menu()).dishes.find(d=>d.id===original.id);
+ check(Array.isArray(current.allergens)&&current.allergens.length===0,'Explicit clear persisted');
+ check((await published()).find(d=>d.id===original.id).allergens.length===0,'Public clear persisted');
+ await open();check(checked().length===0,'Pilot does not reappear');
+ document.querySelector('.admin-allergen-selector summary').click();
+ for(const id of ['gluten','crustaceans','eggs'])await set(id,true);
+ await save();
+ current=(await menu()).dishes.find(d=>d.id===original.id);
+ check(JSON.stringify(current.allergens)===JSON.stringify(['gluten','crustaceans','eggs']),'Selection saved');
+ for(const key of ['price','name','description','imageSrc','imageName','hidden','categoryId'])check(current[key]===original[key],`Unchanged ${key}`);
+ check(JSON.stringify((await published()).find(d=>d.id===original.id).allergens)===JSON.stringify(current.allergens),'Public selection matches');
+ // New dish uses the same selector and single Save.
+ [...document.querySelectorAll('button')].find(b=>b.textContent.includes('+ Añadir plato')).click();await wait(()=>document.querySelector('dialog[open]'),'Create editor');
+ const name=`QA alérgenos ${Date.now()}`;
+ const type=async(selector,value)=>{const input=document.querySelector(selector);Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(input,value);input.dispatchEvent(new Event('input',{bubbles:true}));await new Promise(r=>setTimeout(r,50));};
+ await type('input[name=name]',name);await type('input[name=price]','6.50');
+ document.querySelector('.admin-allergen-selector summary').click();await set('milk',true);await save();
+ const created=(await menu()).dishes.find(d=>d.name===name);
+ check(!!created&&JSON.stringify(created.allergens)==='["milk"]','New dish persisted');
+ check((await published()).some(d=>d.id===created.id&&d.allergens[0]==='milk'),'New dish published');
+ return {passed:true,width:innerWidth,pilot:original.id,created:created.id,cancel:true,clear:true,reopen:true,savePublishes:true,fieldsPreserved:true};
+};

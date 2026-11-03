@@ -1,12 +1,13 @@
+import { validAllergens, dishAllergens } from './dish-allergens';
 import { categories } from "../app/inch/menu";
 import { parseCloudDishes } from "./cloud-draft";
 import type { AdminDish } from "./inch-draft";
 
-export type LiveField = "name" | "description" | "price" | "hidden" | "categoryId" | "image";
+export type LiveField = "name" | "description" | "price" | "hidden" | "categoryId" | "image" | "allergens";
 export type LiveImage = { imageSrc: string; imageName: string };
 export type LiveEditRequest = { kind: "update"; id: string; changes: Partial<Record<LiveField, { before: unknown; value: unknown }>> } | { kind: "create"; dish: AdminDish };
 export type LiveConflict = { field: LiveField; label: string; before: unknown; value: unknown; current: unknown };
-export const LIVE_FIELD_LABELS: Record<LiveField,string> = { name: "Nombre", description: "Descripción", price: "Precio", hidden: "Visibilidad", categoryId: "Categoría", image: "Foto" };
+export const LIVE_FIELD_LABELS: Record<LiveField,string> = { name: "Nombre", description: "Descripción", price: "Precio", hidden: "Visibilidad", categoryId: "Categoría", image: "Foto", allergens: "Alérgenos" };
 export const LIVE_FIELDS = Object.keys(LIVE_FIELD_LABELS) as LiveField[];
 const record = (value: unknown): value is Record<string,unknown> => !!value && typeof value === "object" && !Array.isArray(value);
 const keysOnly = (value: Record<string,unknown>, allowed: string[]) => Object.keys(value).every(key => allowed.includes(key));
@@ -17,9 +18,11 @@ function canonical(value: unknown): unknown {
 }
 export const canonicalEqual = (a: unknown,b: unknown): boolean => JSON.stringify(canonical(a)) === JSON.stringify(canonical(b));
 export function liveFieldValue(dish: AdminDish, field: LiveField): unknown {
+  if(field === "allergens") return dishAllergens(dish);
   return field === "image" ? { imageSrc: dish.imageSrc, imageName: dish.imageName } : dish[field];
 }
 function validField(field: LiveField,value: unknown): boolean {
+  if (field === "allergens") return validAllergens(value);
   if (field === "price") return typeof value === "number" && Number.isFinite(value) && value >= 0 && value <= 999999.99;
   if (field === "hidden") return typeof value === "boolean";
   if (field === "categoryId") return typeof value === "string" && categories.some(category=>category.id===value);

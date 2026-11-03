@@ -28,5 +28,5 @@ export function parseCloudDishes(value: unknown): AdminDish[] | null {
   const parsed = parseDraft(JSON.stringify(value));
   if (!parsed || parsed.some(d => d.id.length > 160 || d.name.length > 160 || d.description.length > 2000 || d.imageName.length > 255 || d.imageSrc.startsWith("data:"))) return null;
   // Persist only expected fields, never arbitrary client properties.
-  return parsed.map(({ id, categoryId, name, description, price, hidden, imageSrc, imageName }) => ({ id, categoryId, name: name.trim(), description, price, hidden, imageSrc, imageName }));
+  return parsed.map(({ id, categoryId, name, description, price, hidden, imageSrc, imageName, allergens }) => ({ id, categoryId, name: name.trim(), description, price, hidden, imageSrc, imageName, ...(allergens === undefined ? {} : {allergens:[...allergens]}) }));
 }

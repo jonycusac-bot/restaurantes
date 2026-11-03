@@ -1,0 +1,137 @@
+[
+  {
+    "width": 320,
+    "lang": "es",
+    "ids": [
+      "gluten",
+      "crustaceans",
+      "eggs"
+    ],
+    "labels": "Con glutenCrustáceosHuevos",
+    "underPhoto": true,
+    "within": true,
+    "overflow": false,
+    "photoLoaded": true,
+    "totalAssignments": 1
+  },
+  {
+    "width": 320,
+    "lang": "en",
+    "ids": [
+      "gluten",
+      "crustaceans",
+      "eggs"
+    ],
+    "labels": "With glutenCrustaceansEggs",
+    "underPhoto": true,
+    "within": true,
+    "overflow": false,
+    "photoLoaded": true,
+    "totalAssignments": 1
+  },
+  {
+    "width": 320,
+    "lang": "de",
+    "ids": [
+      "gluten",
+      "crustaceans",
+      "eggs"
+    ],
+    "labels": "Mit GlutenKrebstiereEier",
+    "underPhoto": true,
+    "within": true,
+    "overflow": false,
+    "photoLoaded": true,
+    "totalAssignments": 1
+  },
+  {
+    "width": 390,
+    "lang": "es",
+    "ids": [
+      "gluten",
+      "crustaceans",
+      "eggs"
+    ],
+    "labels": "Con glutenCrustáceosHuevos",
+    "underPhoto": true,
+    "within": true,
+    "overflow": false,
+    "photoLoaded": true,
+    "totalAssignments": 1
+  },
+  {
+    "width": 390,
+    "lang": "en",
+    "ids": [
+      "gluten",
+      "crustaceans",
+      "eggs"
+    ],
+    "labels": "With glutenCrustaceansEggs",
+    "underPhoto": true,
+    "within": true,
+    "overflow": false,
+    "photoLoaded": true,
+    "totalAssignments": 1
+  },
+  {
+    "width": 390,
+    "lang": "de",
+    "ids": [
+      "gluten",
+      "crustaceans",
+      "eggs"
+    ],
+    "labels": "Mit GlutenKrebstiereEier",
+    "underPhoto": true,
+    "within": true,
+    "overflow": false,
+    "photoLoaded": true,
+    "totalAssignments": 1
+  },
+  {
+    "width": 1280,
+    "lang": "es",
+    "ids": [
+      "gluten",
+      "crustaceans",
+      "eggs"
+    ],
+    "labels": "Con glutenCrustáceosHuevos",
+    "underPhoto": true,
+    "within": true,
+    "overflow": false,
+    "photoLoaded": true,
+    "totalAssignments": 1
+  },
+  {
+    "width": 1280,
+    "lang": "en",
+    "ids": [
+      "gluten",
+      "crustaceans",
+      "eggs"
+    ],
+    "labels": "With glutenCrustaceansEggs",
+    "underPhoto": true,
+    "within": true,
+    "overflow": false,
+    "photoLoaded": true,
+    "totalAssignments": 1
+  },
+  {
+    "width": 1280,
+    "lang": "de",
+    "ids": [
+      "gluten",
+      "crustaceans",
+      "eggs"
+    ],
+    "labels": "Mit GlutenKrebstiereEier",
+    "underPhoto": true,
+    "within": true,
+    "overflow": false,
+    "photoLoaded": true,
+    "totalAssignments": 1
+  }
+]

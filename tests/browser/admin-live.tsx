@@ -5,7 +5,7 @@ import type { CloudDraft } from "../../src/lib/cloud-draft";
 import "tailwindcss/preflight.css";
 import "../../src/app/admin/preview/admin.css";
 
-if (location.origin !== "http://127.0.0.1:8794") throw new Error("Solo QA de carta central aislada");
+if (!["http://127.0.0.1:8794", "http://127.0.0.1:8796"].includes(location.origin)) throw new Error("Solo QA de carta central aislada");
 // Deliberately stale legacy data must never become the central displayed menu.
 localStorage.setItem(storageKey, JSON.stringify(initialDraft.map((dish,index) => index === 0 ? { ...dish, price: 99 } : dish)));
 createRoot(document.getElementById("root")!).render(<AdminPreview cloudflare />);

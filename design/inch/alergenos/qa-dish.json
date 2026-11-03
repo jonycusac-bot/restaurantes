@@ -1,0 +1,119 @@
+[
+  {
+    "width": 320,
+    "language": "es",
+    "ids": [
+      "gluten",
+      "crustaceans",
+      "eggs"
+    ],
+    "labels": "Con glutenCrustáceosHuevos",
+    "assigned": 1,
+    "overflow": false,
+    "right": true
+  },
+  {
+    "width": 320,
+    "language": "en",
+    "ids": [
+      "gluten",
+      "crustaceans",
+      "eggs"
+    ],
+    "labels": "With glutenCrustaceansEggs",
+    "assigned": 1,
+    "overflow": false,
+    "right": true
+  },
+  {
+    "width": 320,
+    "language": "de",
+    "ids": [
+      "gluten",
+      "crustaceans",
+      "eggs"
+    ],
+    "labels": "Mit GlutenKrebstiereEier",
+    "assigned": 1,
+    "overflow": false,
+    "right": true
+  },
+  {
+    "width": 390,
+    "language": "es",
+    "ids": [
+      "gluten",
+      "crustaceans",
+      "eggs"
+    ],
+    "labels": "Con glutenCrustáceosHuevos",
+    "assigned": 1,
+    "overflow": false,
+    "right": true
+  },
+  {
+    "width": 390,
+    "language": "en",
+    "ids": [
+      "gluten",
+      "crustaceans",
+      "eggs"
+    ],
+    "labels": "With glutenCrustaceansEggs",
+    "assigned": 1,
+    "overflow": false,
+    "right": true
+  },
+  {
+    "width": 390,
+    "language": "de",
+    "ids": [
+      "gluten",
+      "crustaceans",
+      "eggs"
+    ],
+    "labels": "Mit GlutenKrebstiereEier",
+    "assigned": 1,
+    "overflow": false,
+    "right": true
+  },
+  {
+    "width": 1280,
+    "language": "es",
+    "ids": [
+      "gluten",
+      "crustaceans",
+      "eggs"
+    ],
+    "labels": "Con glutenCrustáceosHuevos",
+    "assigned": 1,
+    "overflow": false,
+    "right": true
+  },
+  {
+    "width": 1280,
+    "language": "en",
+    "ids": [
+      "gluten",
+      "crustaceans",
+      "eggs"
+    ],
+    "labels": "With glutenCrustaceansEggs",
+    "assigned": 1,
+    "overflow": false,
+    "right": true
+  },
+  {
+    "width": 1280,
+    "language": "de",
+    "ids": [
+      "gluten",
+      "crustaceans",
+      "eggs"
+    ],
+    "labels": "Mit GlutenKrebstiereEier",
+    "assigned": 1,
+    "overflow": false,
+    "right": true
+  }
+]

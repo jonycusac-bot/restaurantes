@@ -1,0 +1,38 @@
+[
+  {
+    "language": "es",
+    "labels": "Con glutenCrustáceosHuevos",
+    "ids": [
+      "gluten",
+      "crustaceans",
+      "eggs"
+    ],
+    "belowPhoto": true,
+    "overflow": false,
+    "loaded": true
+  },
+  {
+    "language": "en",
+    "labels": "With glutenCrustaceansEggs",
+    "ids": [
+      "gluten",
+      "crustaceans",
+      "eggs"
+    ],
+    "belowPhoto": true,
+    "overflow": false,
+    "loaded": true
+  },
+  {
+    "language": "de",
+    "labels": "Mit GlutenKrebstiereEier",
+    "ids": [
+      "gluten",
+      "crustaceans",
+      "eggs"
+    ],
+    "belowPhoto": true,
+    "overflow": false,
+    "loaded": true
+  }
+]

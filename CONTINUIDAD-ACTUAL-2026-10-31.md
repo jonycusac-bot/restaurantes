@@ -2,11 +2,29 @@
 
 Este documento es la referencia **actual**; `CONTINUIDAD-2026-10-31.md`, `CLOUDFLARE.md` y `design/inch/revision-movil/carta-original-local.md` conservan detalles y etapas históricas, incluidas afirmaciones antiguas de «solo local» que ya no describen el estado de hoy.
 
+## Guardado conjunto en Git
+
+El dueño ha aprobado guardar todos los cambios publicados de alérgenos, administración e iconos en un único commit local. No se ha autorizado push en este paso. Los respaldos privados y credenciales se mantienen excluidos. Las menciones anteriores a «sin commit» describen el estado de cada despliegue antes de este cierre.
+
+## Iconos de inicio publicados (estado más reciente)
+
+Aprobados y publicados los iconos distintos de INCH Carta e INCH Admin (franja negra ADMIN), favicon y metadatos/manifiestos separados. Despliegue `https://ab0af912.inch-carta-demo.pages.dev`. Verificados `/`, `/admin`, `/admin/preview`, ocho PNG y dos manifiestos. D1 anterior/posterior idéntica, 130 fichas, revisión 40 y 16 BLOB; 19 fotos verificadas. Sin escritura de catálogo, commit ni push. Pendiente que el dueño añada ambos accesos al inicio del iPhone y confirme apariencia/destino. Detalles `design/inch/ICONOS-LOCAL.md`.
+
+## Selector de alérgenos publicado (estado más reciente)
+
+Autorizado y desplegado el selector múltiple en crear/editar plato, guardado único y separación compacta de iconos por plato: `https://000c536e.inch-carta-demo.pages.dev`. No se escribieron datos remotos ni se copiaron pruebas locales: exportaciones completas anterior/posterior iguales (130 fichas, borrador 38, 16 BLOB); 19 fotos e iconos verificados. JS/CSS de admin y carta remotos idénticos al build. Suite 124 correctas/una omitida; tsc/lint/build y UI→Worker→D1 temporal en móvil/escritorio correctos. El piloto heredado solo se usa si falta `allergens`; guardar `[]` elimina su visualización definitivamente. Pestaña para gestionar nuevos tipos pendiente. Documentación: `design/inch/alergenos/PUBLICACION-ADMIN.md`. **Sin commit/push por petición expresa del dueño.** El entorno local de pruebas del usuario en 8794 se conserva; no es producción.
+
+## Alérgenos: leyenda y ejemplo publicados
+
+Con autorización del dueño se publicó la leyenda general y el ejemplo `carta-poh-pia-sod` (Poh Phia Sod): Con gluten, Crustáceos y Huevos. Despliegue `https://2e40a4a7.inch-carta-demo.pages.dev`; verificado en dominio estable y navegador móvil emulado en es/en/de. Se usa asignación piloto por ID en código; la edición desde admin queda pendiente y deberá migrar el piloto a datos persistidos. No se escribió D1: exportaciones completas anterior/posterior con integridad correcta y filas de borrador/publicación/imágenes idénticas (130 fichas, revisión borrador 38, 16 BLOB). Las 19 rutas de fotos y los 14 iconos públicos verificados. Suite 118 correctas y una omitida; build/tsc/lint correctos. Sin commit/push todavía. Detalles: `design/inch/alergenos/PUBLICACION.md`. Las notas de «solo local» en QA-LOCAL.md son anteriores a este despliegue.
+
 ## Corrección CARTA publicada y verificada
 
 Tras autorización explícita para sustituir la exportación fallida por lecturas directas, se leyeron íntegramente `inch_draft`, `inch_publication` y los 16 BLOB de `inch_images` mediante SELECT de D1 remoto. Coincidían exactamente con el baseline; se repitió la comparación inmediatamente antes de escribir. Se ejecutaron suite, TypeScript y ensayo Miniflare; código desplegado en `https://86d0cf35.inch-carta-demo.pages.dev`. SQL CAS aplicado y leído posteriormente: borrador 36, publicación 33, origen 36, 130 fichas, cero triggers. Los 68 cambios coinciden con el catálogo preparado; Sushi/Poke y las tres fichas antiguas excluidas permanecen sin cambios. Katsu Kare está a 12,90 €. Los 16 BLOB permanecen idénticos y las 19 rutas de fotos públicas respondieron 200 con bytes correctos; JSON público del dominio estable coincide exactamente con el plan. API privada sin sesión devuelve 401. No se perdió ninguna foto. Copias directas y verificadores privados bajo `backups-private/2026-11-01-carta-price-correction/`; no son una exportación completa de todas las tablas. Corrección guardada y enviada a `origin/feat/bootstrap` en el commit `e6487c955656af36593400c01c74b1ddfa57107d`, con coincidencia local/remota verificada.
 
 ## Próxima sesión: revisión del dueño en sus dispositivos
+
+El dueño confirmó después que modificó precios desde el teléfono y los cambios aparecieron correctamente en la web. Nueva tarea solicitada: alérgenos por plato, facilitados por el dueño, editables también al crear o editar platos desde Administración; aclarar la gestión del catálogo de tipos de alérgeno antes de cambiar la estructura. No inferir alérgenos de recetas ni considerar un campo vacío como «sin alérgenos».
 
 El dueño pidió guardar y continuar después con su revisión en sus dispositivos (incluido iPhone). No quedan publicaciones pendientes de esta corrección. Al retomar, preguntar por lo observado en precios, nombres, fotos, búsqueda y presentación; pedir plato/sección, dispositivo/navegador y captura si hay diferencias. No asumir una prueba física completada. No realizar nuevas modificaciones o despliegues sin consultarle. Cualquier edición posterior del dueño prevalece sobre los respaldos de esta sesión.
 

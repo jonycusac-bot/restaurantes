@@ -1,12 +1,14 @@
+import { validAllergens } from './dish-allergens';
+import type { AllergenId } from './allergen-legend';
 import { categories, type Category, type Dish } from "../app/inch/menu";
 
-export type AdminDish = { id: string; categoryId: string; name: string; description: string; price: number; hidden: boolean; imageSrc: string; imageName: string };
+export type AdminDish = { id: string; categoryId: string; name: string; description: string; price: number; hidden: boolean; imageSrc: string; imageName: string; allergens?: AllergenId[] };
 export const storageKey = "inch-admin-preview-draft-v1";
 const changeEvent = "inch-admin-preview-updated";
 export const initialDraft: AdminDish[] = categories.flatMap(c => c.dishes.map((d, i) => ({ id: d.id ?? `${c.id}-${i}`, categoryId: c.id, name: d.name, description: d.description, price: d.price, hidden: false, imageSrc: d.image ? `/inch/${d.image}.webp` : "", imageName: d.image ? `${d.image}.webp` : "Sin imagen" })));
 const originals = new Map<string, Dish>(categories.flatMap(c => c.dishes.map((d, i) => [d.id ?? `${c.id}-${i}`, d] as const)));
 export function menuDishWithMetadata(dish: AdminDish): Dish {
-  return { ...originals.get(dish.id), id: dish.id, name: dish.name, description: dish.description, price: dish.price, image: undefined, imageSrc: dish.imageSrc };
+  return { ...originals.get(dish.id), id: dish.id, name: dish.name, description: dish.description, price: dish.price, image: undefined, imageSrc: dish.imageSrc, allergens: dish.allergens };
 }
 export function applyDraftToMenu(dishes: AdminDish[]): Category[] {
   return categories.map(c => ({ ...c, dishes: dishes.filter(d => d.categoryId === c.id && !d.hidden).map(menuDishWithMetadata) }));
@@ -18,6 +20,7 @@ export function parseDraft(raw: string): AdminDish[] | null {
     const value: unknown = JSON.parse(raw);
     if (!Array.isArray(value) || value.length > 500 || new Set(value.map(d => d?.id)).size !== value.length) return null;
     if (!value.every(d => d && typeof d.id === "string" && d.id.length > 0 && categories.some(c => c.id === d.categoryId) && typeof d.name === "string" && d.name.trim().length > 0 && typeof d.description === "string" && typeof d.price === "number" && Number.isFinite(d.price) && d.price >= 0 && d.price <= 999999.99 && typeof d.hidden === "boolean" && typeof d.imageName === "string" && typeof d.imageSrc === "string" && (!d.imageSrc || /^\/inch\/[a-z0-9-]+\.webp$/.test(d.imageSrc) || /^\/media\/[a-f0-9]{64}\.(webp|jpg|png)$/.test(d.imageSrc) || /^data:image\/(png|jpeg|webp);base64,/.test(d.imageSrc)))) return null;
+    if(value.some(d => d.allergens !== undefined && !validAllergens(d.allergens))) return null;
     return value as AdminDish[];
   } catch { return null; }
 }

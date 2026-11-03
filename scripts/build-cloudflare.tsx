@@ -4,6 +4,8 @@ import path from "node:path";
 import { build } from "esbuild";
 import { initialDraft } from "../src/lib/inch-draft";
 import { publicHtml } from "../src/cloudflare/html";
+import { appIconFiles,appManifest } from '../src/lib/app-icons';
+import { allergenLegend } from "../src/lib/allergen-legend";
 
 async function main() {
   const output = path.resolve("dist-cloudflare");
@@ -18,8 +20,9 @@ async function main() {
   for (const [name, file] of [["carta", "src/app/inch/inch.css"], ["admin", "src/app/admin/preview/admin.css"]]) {
     await writeFile(path.join(output, `${name}.css`), `${preflight}\nbody{margin:0}\n${await readFile(file, "utf8")}`);
   }
-  const assets = new Set(["inch-logo.webp", "cabecera-inch.png", "flag-es.webp", "flag-gb.webp", "flag-de.webp", ...initialDraft.flatMap(d => d.imageSrc ? [d.imageSrc.split("/").pop()!] : [])]);
+  const assets = new Set([...appIconFiles, "inch-logo.webp", "cabecera-inch.png", "flag-es.webp", "flag-gb.webp", "flag-de.webp", ...allergenLegend.map(a => path.basename(a.icon)), ...initialDraft.flatMap(d => d.imageSrc ? [d.imageSrc.split("/").pop()!] : [])]);
   for (const file of assets) await copyFile(path.join("public/inch", file), path.join(output, "inch", file));
+  for (const app of ["carta","admin"] as const) await writeFile(path.join(output,"inch",`app-${app}.webmanifest`),JSON.stringify(appManifest(app)));
   const html = publicHtml(initialDraft);
   await writeFile(path.join(output, "index.html"), html);
   await writeFile(path.join(output, "404.html"), "<!doctype html><html lang='es'><meta charset='utf-8'><title>INCH</title><p>Página no encontrada. <a href='/'>Volver a la carta</a></p></html>");

@@ -8,15 +8,20 @@ import { listLiveEdits, persistLiveEdit, removeLiveEdit, type SavedLiveEdit } fr
 import { isDisplayablePhoto } from "../../../lib/cloud-conflict";
 import type { LiveField, LiveImage } from "../../../lib/live-menu";
 import { prepareDishImage } from "../../../lib/prepare-dish-image";
+import AllergenSelector from './AllergenSelector';
+import { dishAllergens } from '../../../lib/dish-allergens';
+import { allergenLegend } from '../../../lib/allergen-legend';
+import { canonicalEqual } from '../../../lib/live-menu';
 import { useLiveMenu } from "./useLiveMenu";
 
 const money = (value: number) => new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR" }).format(value);
-const sameDish = (a: AdminDish, b: AdminDish) => ["id", "categoryId", "name", "description", "price", "hidden", "imageSrc", "imageName"].every(key => a[key as keyof AdminDish] === b[key as keyof AdminDish]);
+const sameDish = (a: AdminDish, b: AdminDish) => ["id", "categoryId", "name", "description", "price", "hidden", "imageSrc", "imageName"].every(key => a[key as keyof AdminDish] === b[key as keyof AdminDish]) && canonicalEqual(dishAllergens(a),dishAllergens(b));
 function fieldText(field: LiveField, value: unknown): string {
   if (field === "price" && typeof value === "number") return money(value);
   if (field === "hidden") return value ? "Oculto" : "Visible";
   if (field === "categoryId") return categories.find(c => c.id === value)?.name ?? String(value);
   if (field === "image") return "foto";
+  if (field === "allergens" && Array.isArray(value)) return value.map(id => allergenLegend.find(a=>a.id===id)?.labels.es ?? id).join(", ") || "Ninguno seleccionado";
   return String(value ?? "");
 }
 function applyField(dish: AdminDish, field: LiveField, value: unknown): AdminDish {
@@ -180,6 +185,7 @@ export default function LiveAdminPreview() {
             <label>Precio (€)<input name="price" type="number" min="0" max="999999.99" step="0.01" value={edit.priceText} onChange={event => change({}, event.target.value)} required /></label>
             <label>Descripción<textarea name="description" value={edit.dish.description} onChange={event => change({ description: event.target.value })} rows={3} maxLength={2000} /></label>
             <label>Categoría<select name="categoryId" value={edit.dish.categoryId} onChange={event => change({ categoryId: event.target.value })}>{categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}</select></label>
+            <AllergenSelector selected={dishAllergens(edit.dish)} onChange={allergens=>change({allergens})}/>
             <label className="admin-checkbox"><input name="hidden" type="checkbox" checked={edit.dish.hidden} onChange={event => change({ hidden: event.target.checked })} /> Ocultar plato</label>
             <label>Cambiar foto<input name="image" type="file" accept="image/jpeg,image/png,image/webp" disabled={imageLoading} onChange={event => void chooseImage(event.target.files?.[0])} /><span className="admin-file-name">{imageLoading ? "Preparando foto…" : edit.dish.imageName}</span></label>
             {/* Optimized local/media images; no Next image service is deployed on Pages. */}

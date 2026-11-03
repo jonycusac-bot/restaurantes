@@ -13,7 +13,7 @@ const base = initialDraft[0];
 const photo = { imageSrc: `/media/${"a".repeat(64)}.webp`, imageName: "plato.webp" };
 
 test("labelled fields cover every whitelisted live field", () => {
-  assert.deepEqual(Object.keys(LIVE_FIELD_LABELS).sort(), ["categoryId", "description", "hidden", "image", "name", "price"]);
+  assert.deepEqual(Object.keys(LIVE_FIELD_LABELS).sort(), ["allergens", "categoryId", "description", "hidden", "image", "name", "price"]);
 });
 
 test("validateLiveEditRequest rejects unknown fields, malformed entries and non-whitelisted keys", () => {
