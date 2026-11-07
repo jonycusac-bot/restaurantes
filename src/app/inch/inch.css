@@ -78,8 +78,13 @@
 .inch-allergens summary span { float: right; }
 .inch-allergens p { max-width: 750px; margin-top: 12px; }
 .inch-empty { padding: 40px 0; font-size: 14px; line-height: 1.7; }
-.inch-footer { display: flex; justify-content: space-between; gap: 20px; padding: 23px 0 30px; font-size: 9px; letter-spacing: 1px; color: var(--muted); }
+.inch-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px; padding: 23px 0 30px; font-size: 9px; letter-spacing: 1px; color: var(--muted); }
 .inch-footer a { letter-spacing: 0; }
+.inch-developer-wrap { flex-basis: 100%; display: flex; justify-content: center; padding-top: 4px; }
+.inch-footer .inch-developer-credit { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; width: 80px; max-width: 100%; min-height: 44px; padding: 8px 0; background: transparent; text-align: center; text-decoration: none; }
+.inch-developer-credit strong { color: #34382f; font-size: 15px; font-weight: 700; line-height: 1; letter-spacing: 1.5px; }
+.inch-developer-credit span { color: #4e563d; font-size: 9px; font-weight: 600; line-height: 1.4; letter-spacing: 0.4px; white-space: nowrap; }
+.inch-developer-credit:hover strong { color: var(--red); }
 .inch-srOnly { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 @media(max-width:760px) {
  .inch-allergenGrid { grid-template-columns: repeat(auto-fit, 68px); justify-content: center; gap: 11px 6px; }

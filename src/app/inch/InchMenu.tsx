@@ -98,7 +98,14 @@ export default function InchMenu({ publishedDishes, publicOnly = false }: { publ
           <AllergenLegend language={language} />
           <details className="inch-allergens"><summary>{t.information} <span aria-hidden="true">+</span></summary><p>{t.allergy}</p><p>{t.photos}</p></details>
         </section>
-        <footer className="inch-footer"><span>INCH · ASIAN FOOD</span><a href="#inch-inicio">{t.back} ↑</a></footer>
+        <footer className="inch-footer">
+          <span>INCH · ASIAN FOOD</span><a href="#inch-inicio">{t.back} ↑</a>
+          <div className="inch-developer-wrap" id="inch-developer-credit">
+            <a className="inch-developer-credit" href="https://cusac-web-designer.ai.studio/" target="_blank" rel="noopener noreferrer" lang="en">
+              <strong>CUSAC</strong><span>WEB PROJECTS</span>
+            </a>
+          </div>
+        </footer>
       </div>
     </main>
   );
